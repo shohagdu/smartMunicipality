@@ -5,8 +5,10 @@ class Home extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->library('session');
 
 		$this->load->model('Manage_admin','manageAdmin');
+		$this->load->model('End_user','EndUser');
 	}
 	public function _remap($method, $params=array()){
 		$funcs = get_class_methods($this);
@@ -582,6 +584,181 @@ public function all_news()
 		$this->load->view('home/footer');
 	}
 /*============ new section start ====================*/
+
+// end user area start
+public function signup()
+{
+	 $data = array();
+	 $data['title'] = "নিবন্ধন ";
+	 $data['all_data']=$this->setup->getdata();
+	 $this->load->view('home/header',$data);
+	 $this->load->view('home/endUser/signup');
+	 $this->load->view('home/right_content');
+	 $this->load->view('home/footer');
+ }
+ public function signup_action()
+ {
+	 if(isset($_POST['submit_btn'])){
+		 
+		 $name             = $_POST['name'];
+		 $mobile           = $_POST['mobile'];
+		 $nid              = $_POST['nid'];
+		 $birth_id         = $_POST['birth_id'];
+		 $password         = $_POST['password'];
+		 $confirm_password = $_POST['confirm_password'];
+		 $pass     = md5($password);
+
+		if(trim($name == '')){
+			echo "অনুগ্রহপূর্বক নাম দিন ।";exit;
+		}
+		if(trim($password != $confirm_password)){
+			echo "দুঃখিত!!! পাসওয়ার্ড এবং পুনরায় পাসওয়ার্ড মিলছে না, আবার চেষ্টা করুন  । ";exit;
+		}
+
+		$signup_data = [
+				"name"                => $name,
+				"mobile"              => $mobile,
+				"nid"                 => $nid,
+				"birthcertificate_no" => $birth_id,
+				"password"            => $pass,
+				"is_active"           => 1,
+				"created_at"          => date('Y-m-d H:i:a'),
+		 	];
+		
+		// echo "<pre>";
+		// print_r($signup_data); exit;
+
+		 $insert = $this->EndUser->enduserSignup_action($signup_data, 'end_users');
+
+		 if($insert==true){
+			$this->session->set_flashdata('success', true);
+			$this->session->set_flashdata('flsh_msg', 'সফলভাবে নিবন্ধন সম্পূর্ণ হয়েছে। লগইন করুন ');
+            redirect('home/login'); 
+		
+		 }
+		 else{
+			$this->session->set_flashdata('error', true);
+			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
+            redirect('home/login'); 
+			
+		 }
+	 }
+ }
+
+public function login()
+{
+	 $data = array();
+	 $data['title'] = "লগইন ";
+	 $data['all_data']=$this->setup->getdata();
+	 $this->load->view('home/header',$data);
+	 $this->load->view('home/endUser/login');
+	 $this->load->view('home/right_content');
+	
+}
+
+public function login_action()
+{
+	if(isset($_POST['submit_btn'])){
+		 
+		$mobile_nid_birth_id =  $_POST['mobile_nid_birth_id'];
+		$password           = $_POST['password'];
+	
+		if(trim($mobile_nid_birth_id == '')){
+			echo "অনুগ্রহপূর্বক মোবাইল/ন্যাশনাল আইডি অথবা জন্ম নিবন্ধন দিন ।";exit;
+		}
+		if(trim($password == '')){ 
+			echo "দুঃখিত!!! পাসওয়ার্ড এবং পুনরায় পাসওয়ার্ড মিলছে না, আবার চেষ্টা করুন  । ";exit;
+		}
+
+		 $login = $this->EndUser->login_action($mobile_nid_birth_id, $password);
+
+		 if($login==true){
+			$this->session->set_flashdata('success', true);
+			$this->session->set_flashdata('flsh_msg', 'সফলভাবে লগইন  হয়েছে।  ');
+            redirect('home/login'); 
+		
+		 }else{
+			$this->session->set_flashdata('error', true);
+			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
+            redirect('home/login'); 
+		 }
+	 }
+
+	if(isset($_GET['sessionend'])){
+		$sessionend = $this->input->get('sessionend');
+		$sesID      = $this->session->userdata('id');
+	
+		if($sessionend == $sesID){
+			
+			$logout_time = date("Y-m-d H:i:s");
+			$login_history=array(
+				'logout_time'	=>	$logout_time
+			);
+			// $this->db->where('history_id',$sessionend);
+			// $this->db->update('dcb_login_history',$login_history);
+			$this->session->sess_destroy();
+			redirect('/','location');
+		}
+		
+	}
+ }
+public function profile()
+{
+	 $data = array();
+	 $data['title'] = " প্রোফাইল";
+	 $data['all_data']=$this->setup->getdata();
+	 $this->load->view('home/header',$data);
+	 $this->load->view('home/endUser/profile');
+	 $this->load->view('home/right_content');
+}
+
+public function change_password()
+ {
+	 if(isset($_POST['submit_btn'])){
+		 
+		 $pre_password     = $_POST['pre_password'];
+		 $password         = $_POST['password'];
+		 $confirm_password = $_POST['confirm_password'];
+		 $pass             = md5($password);
+		 $prepass          = md5($pre_password);
+		 $sesID            = $this->session->userdata('id');
+
+		$previous_data = $this->db->query("SELECT id, password FROM end_users WHERE id='$sesID' AND password='$prepass'")->num_rows();
+	    
+		if($previous_data!='1'){
+			echo "পূর্বের পাসওয়ার্ড  মিলছে না , আবার চেষ্টা করুন ।";exit;
+		}
+
+		if($pre_password == ''){
+			echo "পূর্বের পাসওয়ার্ড  দিন ।";exit;
+		}
+		if(trim($password != $confirm_password)){
+			echo "দুঃখিত!!! পাসওয়ার্ড এবং পুনরায় পাসওয়ার্ড মিলছে না, আবার চেষ্টা করুন  । ";exit;
+		}
+
+		$change_password_data = [
+				"password"   => $pass,
+				"is_active"  => 1,
+				"updated_at" => date('Y-m-d H:i:a'),
+		 	];
+		
+		 $insert = $this->EndUser->enduserChangePasswordAction($change_password_data, 'end_users');
+
+		 if($insert==true){
+			$this->session->set_flashdata('success', true);
+			$this->session->set_flashdata('flsh_msg', 'সফলভাবে পাসওয়ার্ড পরিবর্তন হয়েছে। লগইন করুন ');
+            redirect('home/login'); 
+		 }
+		 else{
+			$this->session->set_flashdata('error', true);
+			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
+            redirect('home/login'); 
+			
+		 }
+	 }
+ }
+
+// end user area end
 }
 
 /* End of file welcome.php */

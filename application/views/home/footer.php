@@ -80,7 +80,7 @@
 					
 					<div class="col-md-6">
 						<div class="panel panel-success">
-							<div class="panel-heading" style="background-color:#004884"><!---<i class="fa fa-map-marker"></i> -->&nbsp; Find Us With Google Map</div>
+							<div class="panel-heading" style="background-color:#642a5d"><!---<i class="fa fa-map-marker"></i> -->&nbsp; Find Us With Google Map</div>
 							<div class="panel-body" style="min-height:185px;">
 								<div id="googleMap" class="col-lg-12">
 									<?php 
@@ -103,7 +103,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="panel panel-success">
-							<div class="panel-heading" style="background-color:#004884">
+							<div class="panel-heading" style="background-color:#642a5d">
 								<!---<i class="fa fa-map-marker"></i>--> &nbsp; Contact Us
 							</div>
 							<div class="panel-body" style="min-height:185px;">
@@ -132,7 +132,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="footer" style="background-color:#004884;color: #fff;width:100%;margin:0px auto; "><!--Footer Start -->
+				<div class="footer" style="background-color:#642a5d;color: #fff;width:100%;margin:0px auto; "><!--Footer Start -->
 					<div class="row content">
 						<div class="col-md-8">
 							<p>&copy; copyright 2020. <a href="#" style="color:#fff;"><?php echo $all_data->full_name_english?></a> </p>

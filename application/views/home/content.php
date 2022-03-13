@@ -55,7 +55,7 @@ $news = $this->db->select("*")->from("tbl_news")->where("status","1")->order_by(
 			<div class="row">
 				<div class="col-md-12"><!-- Welcome Massage Start-->
 					<div class="panel panel-primary">
-						<div class="panel-heading" style="font-weight:400; font-size:17px; letter-spacing: 1px;background:#004884;">স্বাগতম  <?php echo $all_data->full_name;?></div>
+						<div class="panel-heading" style="font-weight:400; font-size:17px; letter-spacing: 1px;background:#642a5d;">স্বাগতম  <?php echo $all_data->full_name;?></div>
 						<div class="panel-body" style="min-height:250px;">
 							<p style="text-align: justify;">
 								<img style="width: 250px; height: 230px; float: left; border: 1px solid #EDEDED; padding: 5px; margin: 5px 10px 0px 0px;" class="img-thumbnail" src="<?php echo base_url('library/profile/'.$query->pic) ?>" alt="চেয়ারম্যানের ছবি" />
@@ -75,7 +75,7 @@ $news = $this->db->select("*")->from("tbl_news")->where("status","1")->order_by(
 				
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
-						<div class="panel-heading" style="background:#004884;"><i class="fa fa-picture-o"></i> &nbsp ইউপি চেয়ারম্যান ও ওয়ার্ড মেম্বারদের প্রোপাইল</div>
+						<div class="panel-heading" style="background:#642a5d;"><i class="fa fa-picture-o"></i> &nbsp ইউপি চেয়ারম্যান ও ওয়ার্ড মেম্বারদের প্রোফাইল</div>
 						<div class="panel-body">
 							<div id="demo"> 
 								<div id="owl-demo" class="owl-carousel">
@@ -121,7 +121,7 @@ $news = $this->db->select("*")->from("tbl_news")->where("status","1")->order_by(
 				<div class="col-md-12"> 
 					<div class="photo_gallery"><!--Photo Gallery Start -->
 						<div class="panel panel-primary">
-							<div class="panel-heading" style="background:#004884;"><i class="fa fa-picture-o"></i> &nbsp ইউনিয়ন কর্মকর্তা ও কর্মচারীবৃন্দ</div>
+							<div class="panel-heading" style="background:#642a5d;"><i class="fa fa-picture-o"></i> &nbsp ইউনিয়ন কর্মকর্তা ও কর্মচারীবৃন্দ</div>
 							<div class="panel-body">
 								<marquee behavior="scroll" align="middle" direction="left" scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">
 									<div class="row second-slide">

@@ -46,8 +46,7 @@
 				document.getElementById('error').innerHTML='Empty Role';
 				return false;
 			}
-
-
+			
 			else if(phone==''){
 				document.getElementById('error').innerHTML='Empty Phone Number';
 				return false;

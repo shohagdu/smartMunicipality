@@ -16,7 +16,7 @@
 			<!---This is right content strat-->
 			<div class="col-md-3 right_con"><!-- Right Content Start--> 
 				<div class="panel panel-primary"><!-- IMPORTANT Link Start-->
-					<div class="panel-heading custom-heading" style="background-color:#004884;font-size: 13px;"><i class="fa fa-anchor"></i>&nbsp; ই-সেবা কেন্দ্র, <?php echo $all_data->full_name;?></div>
+					<div class="panel-heading custom-heading" style="background-color:#642a5d;font-size: 13px;"><i class="fa fa-anchor"></i>&nbsp; ই-সেবা কেন্দ্র, <?php echo $all_data->full_name;?></div>
 					<div class="panel-body right-menu">
 						<span>
 							<i class="fa fa-hand-o-right"></i> &nbsp;
@@ -42,7 +42,7 @@
 				</div><!-- IMPORTANT Link End-->
 				
 				<div class="panel panel-primary"><!-- IMPORTANT Link Start-->
-					<div class="panel-heading custom-heading" style="background-color:#004884;font-size:16px;"><i class="fa fa-anchor"></i>&nbsp;আবেদন পত্রের অবস্থান যাচাই করুন </div>
+					<div class="panel-heading custom-heading" style="background-color:#642a5d;font-size:16px;"><i class="fa fa-anchor"></i>&nbsp;আবেদন পত্রের অবস্থান যাচাই করুন </div>
 					<div class="panel-body right-menu">
 						<span>
 							<i class="fa fa-hand-o-right"></i> &nbsp;
@@ -64,7 +64,7 @@
 				</div><!-- IMPORTANT Link End-->
 				
 				<div class="panel panel-primary"><!-- IMPORTANT Link Start-->
-					<div class="panel-heading custom-heading" style="background-color:#004884;"><i class="fa fa-anchor"></i>&nbsp;  সনদপত্র যাচাই করুন </div>
+					<div class="panel-heading custom-heading" style="background-color:#642a5d;"><i class="fa fa-anchor"></i>&nbsp;  সনদপত্র যাচাই করুন </div>
 					<div class="panel-body right-menu">
 						<span>
 							<i class="fa fa-hand-o-right"></i> &nbsp;
@@ -93,7 +93,7 @@
 					</div>
 				</div><!-- IMPORTANT Link start-->
 				<div class="panel panel-primary">
-					<div class="panel-heading custom-heading" style="background-color:#004884;"><i class="fa fa-anchor"></i>&nbsp;  গুরুত্বপূর্ণ লিঙ্ক সমূহ </div>
+					<div class="panel-heading custom-heading" style="background-color:#642a5d;"><i class="fa fa-anchor"></i>&nbsp;  গুরুত্বপূর্ণ লিঙ্ক সমূহ </div>
 					<div class="panel-body right-menu">
 						<span>
 							<i class="fa fa-hand-o-right"></i> &nbsp;
@@ -130,7 +130,7 @@
 				<!-- IMPORTANT Link End-->
 				
 				<div class="panel panel-primary"><!-- IMPORTANT Link Start-->
-					<div class="panel-heading custom-heading" style="background-color:#004884;"><i class="fa fa-archive"></i> &nbsp;  অভিযোগ</div>
+					<div class="panel-heading custom-heading" style="background-color:#642a5d;"><i class="fa fa-archive"></i> &nbsp;  অভিযোগ</div>
 					<div class="panel-body right-menu">
 						
 					</div>

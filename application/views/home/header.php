@@ -79,7 +79,7 @@
 	<!-- Main Start-->
 		<div class="menu"> <!-- Menu Start-->
 			<div class="navbar navbar-default navbar-static-top" role="navigation">
-				<div class="container" style="background-color:#003A6A;width:100%;">
+				<div class="container" style="background-color:#642a5d;width:100%;">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 							<span class="sr-only">Toggle navigation</span>
@@ -222,6 +222,23 @@
 									<li class="divider"></li>
 								</ul>
 							</li>
+						    <li> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+							<?php if(empty($this->session->userdata('id'))){  ?>
+							<li><a href="home/signup">  নিবন্ধন করুন </a></li>
+							<li><a href="home/login">  লগইন  </a></li>
+							<?php }else{?>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="100" data-close-others="false"> <?php echo $this->session->userdata('name'); ?>  &nbsp;
+									<b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="home/profile"> প্রোফাইল </a></li>
+									<li class="divider"></li>
+									<li><a href="home/login_action?sessionend=<?php echo $this->session->userdata('id')?>" id="logout"> লগআউট </a></li>
+								</ul>
+							</li>
+							<?php }?>
+	
 						</ul>
 					</div>
 				</div>
