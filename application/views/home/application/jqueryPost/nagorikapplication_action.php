@@ -34,6 +34,13 @@
 			exit;
 		}
 	}
+	// user id
+	$user_id = $this->session->userdata('id');
+
+	if(empty($user_id)){
+		echo "দয়া করে আগে নিবন্ধন করুন , তারপর আবেদন করুন ";exit;
+	}
+
 	if(trim($nationid)!=""){
 		$this->db->select('*')->from('personalinfo')->where('nationid',$nationid)->get();
 		if($this->db->affected_rows()>0){ echo "2";exit;}
@@ -51,10 +58,10 @@
 		if($this->db->affected_rows()>0){ echo "6";exit;}
 	} */
 	
-	$holding = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get();
-	if($holding->num_rows() < 1){
-		echo "আপনার হোল্ডিং নম্বরটি আমাদের কাছে নাই! দয়া করে সর্বপ্রথম হোল্ডিং নম্বরটি নিবন্ধন করূন, এই জন্য আপনাকে আমাদের ইউনিয়ন পরিষদ আসতে হবে!";exit;
-	}
+	// $holding = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get();
+	// if($holding->num_rows() < 1){
+	// 	echo "আপনার হোল্ডিং নম্বরটি আমাদের কাছে নাই! দয়া করে সর্বপ্রথম হোল্ডিং নম্বরটি নিবন্ধন করূন, এই জন্য আপনাকে আমাদের ইউনিয়ন পরিষদ আসতে হবে!";exit;
+	// }
 	
 	if(($gender=='female' || $gender=='male') && ($mstatus==2)){
 		$eHname = "";
@@ -87,6 +94,7 @@
 	$cDate=date("Y-m-d"); 											// current date .....
 	
 	$data=array(
+		'user_id'		=> $user_id,
 		'trackid'		=> $trackid,
 		'delivery_type'	=> $delivery_type,
 		'nationid'		=> $nationid,
@@ -139,6 +147,7 @@
 		'attachment'	=> $attachment,
 		'profile'		=> $profile_info,
 		'status'		=> '0',
+		'type'		    => '1',
 		'insert_time'	=> $cDate
 	);
 	// for tracking id....

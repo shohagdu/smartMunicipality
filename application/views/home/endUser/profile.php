@@ -26,9 +26,7 @@
 			return true;
 		}
 	}
-	// var timeout = 3000; // in miliseconds (3*1000)
-    // $('.alert').delay(timeout).fadeOut(300);
-	$(".myElemMessage").show().delay(5000).fadeOut();
+	
 </script>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
@@ -40,16 +38,13 @@
 						
 							<div class="row">
 								<div class="col-xs-12">
-								    <?php if( $this->session->flashdata('success') == true) {?>
-									<div class="alert alert-success myElemMessage">
-										<?php echo $this->session->flashdata('flsh_msg'); ?>
+									<?php if($this->session->flashdata('success')){ ?>
+									<div class="alert alert-success text-center">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+										<p><?php echo $this->session->flashdata('success'); ?></p>
 									</div>
-									<?php }?>
-									<?php if( $this->session->flashdata('error') == true) {?>
-									<div class="alert alert-danger myElemMessage">
-										<?php echo $this->session->flashdata('flsh_msg'); ?>
-									</div>
-									<?php }?>
+									<?php } ?>
+									
 									<!-- tabs -->
 									<div class="tabbable tabs-left">
 										<ul class="nav nav-tabs">

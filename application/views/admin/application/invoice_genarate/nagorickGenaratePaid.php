@@ -1,24 +1,24 @@
 	<div id="content" class="col-lg-10 col-sm-10">
 		<script type="text/javascript">
-			// $(document).ready(function(){
-			// 	$('#nagorickGenarate').submit(function() {
-			// 		$.post(
-			// 		"InvoiceGenarate/nagorickGenarate_action",
-			// 		$("#nagorickGenarate").serialize(),
-			// 		function(data){
-			// 			if(data==1)
-			// 			{
-			// 				alert('Confirm page problem!!!!!!!!!!!!!!!!!!!');
-			// 			}
-			// 			if(data==3){
-			// 				window.location='Confirm/nagorikConfirm';
-			// 			}
-			// 			else {alert(data);}
-			// 		});
+			$(document).ready(function(){
+				$('#nagorickGenarate').submit(function() {
+					$.post(
+					"Genarate/nagorickGenarate_action",
+					$("#nagorickGenarate").serialize(),
+					function(data){
+						if(data==1)
+						{
+							alert('Confirm page problem!!!!!!!!!!!!!!!!!!!');
+						}
+						if(data==3){
+							window.location='Confirm/nagorikConfirm';
+						}
+						else {alert(data);}
+					});
 
-			// 		return false;
-			// 	});
-			// });
+					return false;
+				});
+			});
 			
 			$(function() {
 				$("#dofb").datepicker();
@@ -33,8 +33,8 @@
 		<!-- Content (Right Column)-->
 		<div class="row">
 			<div class="col-lg-12 col-sm-12">
-				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-align:center;">নাগরিক সনদ ইনভয়েস  ফি  জেনারেট  </h3>
-				<form action="InvoiceGenerate/nagorikInvoice" method="post" id="" enctype="multipart/form-data" class="form-horizontal" role="form">
+				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-align:center;">নাগরিক সনদ  ফি ফরম </h3>
+				<form action="Genarate/nagorickGenarate_action" method="post" id="nagorickGenarate" enctype="multipart/form-data" class="form-horizontal" role="form">
 					<div class="form-group"> 
 						<div class="col-sm-6 col-sm-offset-2"> 
 							<img src="<?php echo $row->profile?>" width="160" height="150"/>
@@ -100,7 +100,7 @@
 					<div class="form-group" style="color: red;">
 						<label class="control-label col-sm-2 highlisht_font" for="fee">ফি :</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control highlisht_font"  name="fee" id="fee" value="0.00"  style="color: red;"/>
+							<input type="text" class="form-control highlisht_font"  name="fee" id="fee"   style="color: red;" value="<?php echo $invoice_data->total_fee?>" readonly/>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -113,9 +113,8 @@
 					</div>
 					<div class="form-group"> 
 						<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit"  value="Invoice Generate" class="btn btn-info btn-sm"/>
-							<input type="hidden" name="id" value="<?php echo $row->id;?>">
-							<input type="hidden" name='user_id' value='<?php echo $row->user_id;?>'/>
+							<input type="submit"  value="Generate" class="btn btn-info btn-sm"/>
+							<input type="hidden" name="uid" value="<?php echo $row->id;?>">
 							<input type="hidden" name="gentype" value="Generate">
 						</div>
 					</div>

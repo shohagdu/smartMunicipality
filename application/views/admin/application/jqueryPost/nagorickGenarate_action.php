@@ -6,9 +6,9 @@
 		
 		if($gentype=='Generate'){
 			
-			if(empty($holding_no)){
-				echo "Something went wrong. Holding number not found. Kindly check holding number"; exit;
-			}
+			// if(empty($holding_no)){
+			// 	echo "Something went wrong. Holding number not found. Kindly check holding number"; exit;
+			// }
 			
 			$result = $this->db->select("payment.id as p_id, payment.invoice, payment.holding_no, payment.dag_no, payment.sub_amount, payment.payment_date, year.id as y_id")
 				->join("tbl_fiscal_year as year", "year.id=payment.fisyal_year_id", "INNER")
@@ -16,9 +16,9 @@
 					'payment.holding_no' => (int)$holding_no,
 					'year.is_current' => 1
 				]);
-			if($result->num_rows() < 1){
-				echo "Oops! You are not eligible for operation. At first pay your current year holding tax."; exit;
-			}
+			// if($result->num_rows() < 1){
+			// 	echo "Oops! You are not eligible for operation. At first pay your current year holding tax."; exit;
+			// }
 			
 			$sData=array(
 				'name'			=> $name,
@@ -147,7 +147,7 @@
 				if($msg): $this->db->insert('inbox',$inbox); endif;
 				
 				//update bank....
-				$this->db->query("update personalinfo set attachment='$attachment',sonodno='$sonod',status='1' where id='$uid' LIMIT 1"); 
+				$this->db->query("update personalinfo set attachment='$attachment',sonodno='$sonod',status='1',is_process='3' where id='$uid' LIMIT 1"); 
 				$this->mgenerate->common_update_bankLedger("acinfo", "balance", "acno", $acno, $fee);
 				$this->mgenerate->common_update_bankLedger("mainctg", "balance", "id", $fRow->mc_id, $fee);
 				$this->mgenerate->common_update_bankLedger("subctg", "balance", "id",$fRow->id, $fee);

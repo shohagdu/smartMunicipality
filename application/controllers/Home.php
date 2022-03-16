@@ -673,14 +673,12 @@ public function login_action()
 		 $login = $this->EndUser->login_action($mobile_nid_birth_id, $password);
 
 		 if($login==true){
-			$this->session->set_flashdata('success', true);
-			$this->session->set_flashdata('flsh_msg', 'সফলভাবে লগইন  হয়েছে।  ');
-            redirect('home/login'); 
+			$this->session->set_flashdata('success', 'সফলভাবে লগইন  হয়েছে।');
+            redirect('home/profile'); 
 		
 		 }else{
-			$this->session->set_flashdata('error', true);
-			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
-            redirect('home/login'); 
+			$this->session->set_flashdata('errors', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন।');
+            redirect('home/profile'); 
 		 }
 	 }
 
@@ -744,25 +742,21 @@ public function payment_action()
 				"updated_at"   => date('Y-m-d H:i:a'),
 		 	];
 	
-		$trade_data = [
+		$sonod_status_data = [
             'is_process' => 2,
         ];
-
-        $trade_insert = $this->EndUser->enduserTradeStatusAction($trade_data, $record_id);
+	
+        $sonod_insert = $this->EndUser->enduserSonodStatusAction($sonod_status_data, $record_id, $type);
 
 		$insert = $this->EndUser->enduserPaymentAction($payment_data, $inv_id);
 
 		 if($insert==true){
-			$this->session->set_flashdata('success', true);
-			$this->session->set_flashdata('flsh_msg', 'সফলভাবে পেমেন্ট সম্পূর্ণ হয়েছে। ');
+			$this->session->set_flashdata('success', 'সফলভাবে পেমেন্ট সম্পূর্ণ হয়েছে।');
             redirect('home/profile'); 
 		
-		 }
-		 else{
-			$this->session->set_flashdata('error', true);
-			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
+		 }else{
+			$this->session->set_flashdata('error', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন।');
             redirect('home/profile'); 
-			
 		 }
 	 }
  }

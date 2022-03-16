@@ -21,7 +21,7 @@ class End_user extends CI_Model{
 			redirect('home/login','location');
 		}
 		$password = md5($password);
-		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE  mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' &&  password='$password' ");
+		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE password='$password' AND mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' ");
 	    
 		$login = $query->num_rows();
 
@@ -62,10 +62,14 @@ class End_user extends CI_Model{
 				'last_login_time'=> $login_time,
 				'is_active'      =>'1'
 			];
-			$update = $this->db->where('id',$row->id)->update('end_users',$end_user_data);
 
-			if($update){
-				redirect('home/profile','location');
+			$this->db->where('id',$row->id)->update('end_users',$end_user_data);
+
+			if($this->db->affected_rows()>0){
+				return true;
+			}
+			else{
+				return false;
 			}
 		}
 	}
@@ -103,9 +107,16 @@ class End_user extends CI_Model{
 		}
 	}
 
-	public function enduserTradeStatusAction($invoice_data,$id)
+	public function enduserSonodStatusAction($sonod_status_data,$id, $type)
 	{
-	    $this->db->where('id',$id)->update('tradelicense',$invoice_data);
+		if($type == 1){
+	    	$this->db->where('id',$id)->update('tradelicense',$sonod_status_data);
+		}else if($type == 2){
+			$this->db->where('id',$id)->update('personalinfo',$sonod_status_data);
+		}else{
+			return false;
+		}
+
 		if($this->db->affected_rows()>0){
 			return true;
 		}
@@ -152,6 +163,28 @@ class End_user extends CI_Model{
 		$query = $this->db->where('sha1(trackid)',$id)
 						 ->where('is_paid', 1)
 						 ->where('type', 1)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
+	public function enduserNagorikStatusAction($nagorik_data,$id)
+	{
+	    $this->db->where('id',$id)->update('personalinfo',$nagorik_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function getUserInvoiceGenerateNagorik($id)
+	{
+		$query = $this->db->where('sha1(record_id)',$id)
+						 ->where('is_paid', 1)
+						 ->where('type', 2)
 						 ->order_by('id','DESC')				
 						 ->get("end_user_invoice");
 		if(!empty($query)):

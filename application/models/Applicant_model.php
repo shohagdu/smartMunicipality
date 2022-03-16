@@ -10,7 +10,7 @@
 			
 			// for new applicant 
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("SELECT id, name, trackid, delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 			}
 			
 			// for certificate generate applicant 
@@ -48,7 +48,7 @@
 			
 			// for defalut new applicant
 			else {
-				$query=$this->db->query("SELECT id, name, trackid, delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 				
 			}
 			//echo $this->db->last_query();

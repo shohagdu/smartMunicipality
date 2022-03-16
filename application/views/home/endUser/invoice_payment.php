@@ -101,7 +101,24 @@
 									</div>
 								</div>
 								<?php }else{ ?>
-									others
+									<div class="row">
+										<div class="col-sm-12"> 
+											<div class="form-group">
+												<label for="Name-english" class="col-sm-3 control-label">  ফি  <span>*</span></label>
+												<div class="col-sm-5">
+													<input type="text" name="fee" id="fee" class="form-control" value="<?php echo $invoice_data->fee?>"  readonly  />
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-12"> 
+										<div class="form-group">
+											<label for="Name-bangla" class="col-sm-3 control-label"> মোট পরিমান  </label>
+											<div class="col-sm-5">
+												<input type="text" name="total_fee" id="total_fee" class="form-control" value="<?php echo $invoice_data->total_fee?>"  readonly />
+											</div>
+										</div>
+									</div>
+								    </div>
 							    <?php }?>		
 								
 								<div class="row">
@@ -109,6 +126,7 @@
 									<div class="col-sm-2 "> 
 									    <input type="hidden" name="inv_id" id="inv_id" value="<?php echo $invoice_data->id?>" />
 									    <input type="hidden" name="record_id" id="record_id" value="<?php echo $invoice_data->record_id?>" />
+									    <input type="hidden" name="type" id="type" value="<?php echo $invoice_data->type?>" />
 										<input type='submit' value="পেমেন্ট" name='submit_btn' class="btn btn-success btn-sm"/>
 										
 									</div>

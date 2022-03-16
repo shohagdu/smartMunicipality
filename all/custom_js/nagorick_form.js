@@ -153,26 +153,26 @@
 						}
 					}
 				},
-				holding_no: {
-					verbose: false,
-					validators: {
-						notEmpty: {
-							message: 'The Holding No field is required'
-						},
-						stringLength: {
-							min: 2,
-							max: 10,
-							message: 'Holding number must be between 2 and 10 characters'
-						},
-						numeric: {
-							message: 'Only allowed numeric number'
-						},
-						remote: {
-							url: 'index.php/validation/check_holding_no',
-							type: 'POST'
-						}
-					}
-				},
+				// holding_no: {
+				// 	verbose: false,
+				// 	validators: {
+				// 		notEmpty: {
+				// 			message: 'The Holding No field is required'
+				// 		},
+				// 		stringLength: {
+				// 			min: 2,
+				// 			max: 10,
+				// 			message: 'Holding number must be between 2 and 10 characters'
+				// 		},
+				// 		numeric: {
+				// 			message: 'Only allowed numeric number'
+				// 		},
+				// 		remote: {
+				// 			url: 'index.php/validation/check_holding_no',
+				// 			type: 'POST'
+				// 		}
+				// 	}
+				// },
 				bashinda: {
 					validators: {
 						notEmpty: {
