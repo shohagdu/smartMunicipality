@@ -53,7 +53,7 @@
 										<div class="form-group">
 											<label for="Name-bangla" class="col-sm-3 control-label"> পাসওয়ার্ড   <span>*</span></label>
 											<div class="col-sm-5">
-												<input type="text" name="password" id="password" class="form-control" placeholder="পাসওয়ার্ড"  />
+												<input type="password" name="password" id="password" class="form-control" placeholder="পাসওয়ার্ড"  />
 											</div>
 										</div>
 									</div>

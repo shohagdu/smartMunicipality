@@ -21,9 +21,8 @@ class End_user extends CI_Model{
 			redirect('home/login','location');
 		}
 		$password = md5($password);
-		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' AND password='$password'");
+		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE  mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' &&  password='$password' ");
 	    
- 
 		$login = $query->num_rows();
 
 		if($login!='1'){
@@ -71,4 +70,94 @@ class End_user extends CI_Model{
 		}
 	}
 	
+	public function enduserChangePasswordAction($data1,$sesID)
+	{
+	    $this->db->where('id',$sesID)->update('end_users',$data1);
+		if($this->db->affected_rows()>0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public function getUserApplicationTrade($user_id){
+		$query = $this->db->where('user_id',$user_id)
+						 ->where('type', 1)				
+						 ->get("tradelicense");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
+
+	public function enduserInvoiceAction($data1,$tbl1)
+	{
+		$this->db->insert($tbl1,$data1);
+		if($this->db->affected_rows()>0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function enduserTradeStatusAction($invoice_data,$id)
+	{
+	    $this->db->where('id',$id)->update('tradelicense',$invoice_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function getUserInvoiceInfo($user_id)
+	{
+		$query = $this->db->where('user_id',$user_id)
+						 //->where('is_paid', 0)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->result();
+		else:
+			return false;
+		endif;	
+	}
+	public function getUserInvoice($id)
+	{
+		$query = $this->db->where('sha1(id)',$id)
+						 ->where('is_paid', 0)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
+	public function enduserPaymentAction($payment_data,$id)
+	{
+		$this->db->where('id',$id)->update('end_user_invoice',$payment_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function getUserInvoiceGenerate($id)
+	{
+		$query = $this->db->where('sha1(trackid)',$id)
+						 ->where('is_paid', 1)
+						 ->where('type', 1)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
 } 

@@ -60,7 +60,7 @@
 			
 			// for new applicant
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("select tradelicense.id id,trackid,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+				$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
 			}
 			// for expire trade license
 			else if(isset($_GET['napply']) && $_GET['napply']=='expire'){
@@ -100,7 +100,7 @@
 			}
 			// for new applicant defalut query
 			else {
-				$query=$this->db->query("select tradelicense.id id,trackid,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+				$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
 			}
 			return $query;
 		}

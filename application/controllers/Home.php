@@ -598,7 +598,7 @@ public function signup()
  }
  public function signup_action()
  {
-	 if(isset($_POST['submit_btn'])){
+	if(isset($_POST['submit_btn'])){
 		 
 		 $name             = $_POST['name'];
 		 $mobile           = $_POST['mobile'];
@@ -704,13 +704,68 @@ public function login_action()
  }
 public function profile()
 {
+	 $user_id         = $this->session->userdata('id');
 	 $data = array();
 	 $data['title'] = " প্রোফাইল";
 	 $data['all_data']=$this->setup->getdata();
+	 $data['trade_data']=$this->EndUser->getUserApplicationTrade($user_id);
+	 $data['invoice_data']=$this->EndUser->getUserInvoiceInfo($user_id);
+	//  echo $this->db->last_query($data['invoice_data']);exit;
 	 $this->load->view('home/header',$data);
 	 $this->load->view('home/endUser/profile');
 	 $this->load->view('home/right_content');
 }
+public function invoice_payment(){
+	 $id = $_GET['id']; 
+	 $user_id         = $this->session->userdata('id');
+	 $data = array();
+	 $data['title'] = " প্রোফাইল";
+	 $data['all_data']=$this->setup->getdata();
+	 $data['invoice_data']=$this->EndUser->getUserInvoice($id);
+	 $this->load->view('home/header',$data);
+	 $this->load->view('home/endUser/invoice_payment');
+	 $this->load->view('home/right_content');
+}
+public function payment_action()
+ {
+	if(isset($_POST['submit_btn'])){
+		extract($_POST);
+		$ip = $this->input->ip_address();
+
+		if(trim($total_fee == '')){
+			echo "মোট ফি দিন  ";exit;
+		}
+
+		$payment_data = [
+				"is_paid"      => 1,
+				"is_active"    => 1,
+				"updated_ip"   => $ip,
+				"payment_date" => date('Y-m-d'),
+				"updated_at"   => date('Y-m-d H:i:a'),
+		 	];
+	
+		$trade_data = [
+            'is_process' => 2,
+        ];
+
+        $trade_insert = $this->EndUser->enduserTradeStatusAction($trade_data, $record_id);
+
+		$insert = $this->EndUser->enduserPaymentAction($payment_data, $inv_id);
+
+		 if($insert==true){
+			$this->session->set_flashdata('success', true);
+			$this->session->set_flashdata('flsh_msg', 'সফলভাবে পেমেন্ট সম্পূর্ণ হয়েছে। ');
+            redirect('home/profile'); 
+		
+		 }
+		 else{
+			$this->session->set_flashdata('error', true);
+			$this->session->set_flashdata('flsh_msg', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন ');
+            redirect('home/profile'); 
+			
+		 }
+	 }
+ }
 
 public function change_password()
  {
@@ -742,7 +797,7 @@ public function change_password()
 				"updated_at" => date('Y-m-d H:i:a'),
 		 	];
 		
-		 $insert = $this->EndUser->enduserChangePasswordAction($change_password_data, 'end_users');
+		 $insert = $this->EndUser->enduserChangePasswordAction($change_password_data, $sesID);
 
 		 if($insert==true){
 			$this->session->set_flashdata('success', true);

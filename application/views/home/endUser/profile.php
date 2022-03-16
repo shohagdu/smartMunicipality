@@ -26,6 +26,9 @@
 			return true;
 		}
 	}
+	// var timeout = 3000; // in miliseconds (3*1000)
+    // $('.alert').delay(timeout).fadeOut(300);
+	$(".myElemMessage").show().delay(5000).fadeOut();
 </script>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
@@ -37,6 +40,16 @@
 						
 							<div class="row">
 								<div class="col-xs-12">
+								    <?php if( $this->session->flashdata('success') == true) {?>
+									<div class="alert alert-success myElemMessage">
+										<?php echo $this->session->flashdata('flsh_msg'); ?>
+									</div>
+									<?php }?>
+									<?php if( $this->session->flashdata('error') == true) {?>
+									<div class="alert alert-danger myElemMessage">
+										<?php echo $this->session->flashdata('flsh_msg'); ?>
+									</div>
+									<?php }?>
 									<!-- tabs -->
 									<div class="tabbable tabs-left">
 										<ul class="nav nav-tabs">
@@ -57,14 +70,40 @@
 													<img src="all/assets/image/avatar.png" class="profileImg" class="img-responsive">
 													</div>
 												</div>
+
 											</div>
 											<div class="tab-pane" id="sonodApplicant">
-												<div class="">
+												<div class="row">
 													<h3>সনদের আবেদন</h3>
-													<p>
-														because they are the most important for an encyclopedia to have, as determined by the community of participating editors. They may also be of interest to readers as an alternative to lists of overview
-														articles.
-													</p>
+													<div class="col-sm-9">
+														<table class="table table-bordered">
+															<thead>
+															<tr>
+																<th>আবেদনের তারিখ </th>
+																<th>স্ট্যাটাস</th>
+																<th>আকশন </th>
+															</tr>
+															</thead>
+															<tbody>
+															
+															<tr>
+																<td> <?php echo date('d-m-Y', strtotime($trade_data->insert_time)); ?></td>
+																<td>
+																	<?php if($trade_data->is_process==0){?>
+																		<span class="badge badge-primary">Pending</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-primary">Approve </span>
+																	<?php }?>
+																
+																</td>
+																<td> 
+																	<a class=" btn btn-sm btn-info"> View </a>
+																</td>
+															</tr>
+															
+															</tbody>
+														</table>
+									                </div>
 												</div>
 											</div>
 
@@ -79,27 +118,63 @@
 											</div>
 
 											<div class="tab-pane" id="paymentStatus">
-												<div class="">
+												
+												<div class="row">
 													<h3>পেমেন্ট স্ট্যাটাস</h3>
-													<p>
-														deserve editor attention because they are the most important for an encyclopedia to have, as determined by the community of participating editors. They may also be of interest to readers as an alternative to
-														lists of overview articles.
-													</p>
+													<div class="col-sm-9 ">
+														<table class="table table-bordered">
+															<thead>
+															<tr>
+																<th>  ক্রঃ নং </th>
+																<th>  সনদের নাম </th>
+																<th>  ফি  </th>
+																<th>  মোট ফি  </th>
+																<th>স্ট্যাটাস</th>
+																<th>আকশন </th>
+															</tr>
+															</thead>
+															<tbody>
+																<?php
+																$i= 0;
+																foreach($invoice_data as $item) {?>
+																<tr>
+																	<td><?php echo  $i+1?></td>
+																	<td>
+																		<?php  if($item->type == 1){ ?>
+																			ট্রেড লাইসেন্স
+																	    <?php  }else if($item->type == 2 ){ ?>
+																			নাগরিক সনদপত্র
+																	    <?php  }else{?>
+																			অন্যান্য
+																		<?php }?>
+																	</td>
+																	<td><?php echo  $item->fee?></td>
+																	<td><?php echo  $item->total_fee?></td>
+																	<td>
+																	<?php if($item->is_paid==0){?>
+																		<span class="badge badge-primary">Unpaid</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-success">Paid </span>
+																	<?php }?>
+																    </td>
+																	<td>
+																	<?php if($item->is_paid!=0){?>
+																		<a href='Home/viewInvoice?id=<?php echo sha1($item->id)?>'  class="btn btn-success btn-info btn-sm"> View </a>
+																	<?php }else{ ?>
+																		<a href='index.php/home/invoice_payment?id=<?php echo sha1($item->id)?>'  class="btn btn-success btn-success btn-sm"> Payment </a>
+																	<?php }?>
+																    </td>
+																</tr>
+																<?php }?>
+															</tbody>
+														</table>
+									                </div>
 												</div>
 											</div>
 											<div class="tab-pane" id="changePassword">
-												<div class="">
+												<div class="row">
 													<h3>পাসওয়ার্ড পরিবর্তন</h3><br>
-													<?php if( $this->session->flashdata('success') == true) {?>
-													<div class="alert alert-success">
-														<?php echo $this->session->flashdata('flsh_msg'); ?>
-													</div>
-													<?php }?>
-													<?php if( $this->session->flashdata('error') == true) {?>
-													<div class="alert alert-danger">
-														<?php echo $this->session->flashdata('flsh_msg'); ?>
-													</div>
-													<?php }?>
+													
 													<form action="index.php/home/change_password" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 													<div class="row">
 													<p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>

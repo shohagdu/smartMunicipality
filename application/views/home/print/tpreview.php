@@ -32,6 +32,7 @@ $row=$query->row();
 			<img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php //}?>
+	<a href="index.php/home/profile"> Profile </a>
 	<a  target='_blank' href="javaScript:window.print();<?php if(isset($_GET['scode'])){?>home/tpreview?pcode=<?php echo $scode;}?>" title="Print">
 		<img src="<?php echo base_url();?>library/print.png"/>
 	</a>

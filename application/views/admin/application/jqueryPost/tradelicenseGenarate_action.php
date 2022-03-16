@@ -172,7 +172,7 @@
 				if($msg): $this->db->insert('inbox',$inbox); endif;
 				
 				//update bank....
-				$this->db->query("update tradelicense set sno='$sonod', issue_date='$issue_date',expire_date='$expire_date',status='2' where trackid='$trackid' LIMIT 1");
+				$this->db->query("update tradelicense set sno='$sonod', issue_date='$issue_date',expire_date='$expire_date',status='2', is_process='3' where trackid='$trackid' LIMIT 1");
 				$this->mgenerate->common_update_bankLedger("acinfo", "balance", "acno", $acno, $total);
 				$this->mgenerate->common_update_bankLedger("mainctg", "balance", "id", $fRow->mc_id, $total);
 				$this->mgenerate->common_update_bankLedger("subctg", "balance", "id",$fRow->id, $total);

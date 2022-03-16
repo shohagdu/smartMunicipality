@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Genarate extends CI_Controller {
+class InvoiceGenerate extends CI_Controller {
 	
 	public function __construct(){
 		ob_start();
@@ -9,6 +9,7 @@ class Genarate extends CI_Controller {
 		
 		$this->load->model('Transition_model','transition');
 		$this->load->model('Generate_model','mgenerate');
+        $this->load->model('End_user','EndUser');
 		$this->load->model('applicant_model','applicant');
 		$this->load->model('dashboard');
 		$this->load->model('Role_chk', 'chk');
@@ -82,7 +83,7 @@ class Genarate extends CI_Controller {
 		$data['row']=$this->web->getTinfo($id);
 		$this->load->view('admin/topBar');
 		$this->load->view('admin/leftMenu');
-		$this->load->view('admin/application/genarate/tradelicenseGenarate',$data);
+		$this->load->view('admin/application/invoice_genarate/tradelicenseGenarate',$data);
 		$this->load->view('admin/footer');
 	}
 	// 
@@ -90,10 +91,7 @@ class Genarate extends CI_Controller {
 	{
 		$total=0;
 		extract($_GET);
-		$fee_amount = floatval($fee);
-		$due_amount = floatval($due);
-		$ds_amount  = floatval($ds);
-		$total=($fee_amount+$due_amount)-$ds_amount;
+		$total=($fee+$due)-$ds;
 		$total=($total*15)/100;
 		echo "<input type='text' class='form-control highlisht_font' name='vat' value='$total' id='vat' readonly />";
 	}
@@ -102,20 +100,69 @@ class Genarate extends CI_Controller {
 	{
 		$total=0;
 		extract($_GET);
-		$fee_amount = floatval($fee);
-		$due_amount = floatval($due);
-		$vat_amount = floatval($vat);
-		$sbf_amount = floatval($sbf);
-		$sub_charge_amount = floatval($sub_charge);
-		$ds_amount  = floatval($ds);
-		
-		$total=($fee_amount+$due_amount+$vat_amount+$sbf_amount+$sub_charge_amount)-$ds_amount;
+		$total=($fee+$due+$vat+$sbf+$sub_charge)-$ds;
 		echo "<input type='text' class='form-control highlisht_font' name='total' value='$total' id='total' readonly />";
 	}
 	//
 	public function tradelicenseGenarate_action()
 	{
-		$this->load->view('admin/application/jqueryPost/tradelicenseGenarate_action');
+		if($_POST){
+            $user=$this->session->userdata('username');
+            extract($_POST);
+            if(trim($fee)==""){echo "দয়া করে ট্রেড লাইসেন্স ফি প্রবেশ করুন.";exit;}
+		    if(trim($scharge)==""){echo "দয়া করে সাব চার্জ পরিমান প্রবেশ করুন.";exit;}
+            $ip         = $this->input->ip_address();
+			$created_at = date("Y-m-d H:i:s");
+
+            $invoice_data = [
+                'user_id'            => $user_id,
+                'trackid'            => $trackid,
+                'record_id'          => $id,
+                'fee'                => $fee,
+                'signboard_fee'      => $sbfee,
+                'recommendation_fee' => $discount,
+                'due_fee'            => $due,
+                'vat'                => $vat,
+                'sub_charge'         => $scharge,
+                'total_fee'          => $total,
+                'account_no'         => $acno,
+                'invoice_date'       => date('Y-m-d', strtotime($payment_date)),
+                'type'               => 1,
+                'is_paid'            => 0,
+                'is_active'          => 1,
+                'created_by'         => $user,
+                'created_ip'         => $ip,
+                'created_at'         => $created_at,
+            ];
+
+			$trade_data = [
+                'is_process' => 1,
+            ];
+
+            $trade_insert = $this->EndUser->enduserTradeStatusAction($trade_data, $id);
+            $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
+
+            if($insert==true){
+               redirect('Applicant/tradelicenseapplicant?napply=new'); 
+            }
+            else{
+               redirect('Applicant/tradelicenseapplicant?napply=new'); 
+               
+            }
+        }
+	}
+
+	public function tradelicenseGenaratePaid()
+	{
+		extract($_GET);
+		$data['id']=$id;
+		$data['row']=$this->web->getTinfo($id);
+		$data['invoice_data']=$this->EndUser->getUserInvoiceGenerate($id);
+		//  echo $this->db->last_query($data['invoice_data']);exit;
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/application/invoice_genarate/tradelicenseGenaratePaid',$data);
+		$this->load->view('admin/footer');
 	}
 	
 	/* ======== tradelicense genarate section end =========*/

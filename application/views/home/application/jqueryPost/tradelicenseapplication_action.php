@@ -50,6 +50,12 @@
 		}
 	}
 	*/
+
+	$user_id = $this->session->userdata('id');
+
+	if(empty($user_id)){
+		echo "দয়া করে আগে নিবন্ধন করুন , তারপর আবেদন করুন ";exit;
+	}
  
 	$bw_bname="";
 	$bw_ename="";
@@ -57,6 +63,7 @@
 	$bw_bfname="";
 	$bw_emname="";
 	$bw_bmname="";
+	$bw_gender="";
 	
 	foreach ($ewname as $en):
 		$bw_ename.=$en.',';
@@ -87,19 +94,38 @@
 		$bw_bmname.=$en.',';
 	endforeach;
 	$bw_bmname=chop($bw_bmname,',');
+
+	foreach ($gender as $en):
+		$bw_gender.=$en.',';
+	endforeach;
+	$bw_gender=chop($bw_gender,',');
+
+	foreach ($mstatus as $en):
+		$bw_mstatus.=$en.',';
+	endforeach;
+	$bw_mstatus=chop($bw_mstatus,',');
 	
+	foreach ($esname as $en):
+		$bw_esname.=$en.',';
+	endforeach;
+	$bw_esname=chop($bw_esname,',');
+	
+	foreach ($bsname as $en):
+		$bw_bsname.=$en.',';
+	endforeach;
+	$bw_bsname=chop($bw_bsname,',');
 
-	if(!isset($_POST[gender])){$gender=0;}
-	else{$gender=implode(",",$gender);}
+	// if(!isset($_POST[gender])){$gender=0;}
+	// else{$gender=implode(",",$gender);}
 
-	if(!isset($_POST[mstatus])){$mstatus=0;}
-	else{$mstatus=implode(",",$mstatus);}
+	// if(!isset($_POST[mstatus])){$mstatus=0;}
+	// else{$mstatus=implode(",",$mstatus);}
 
-	if(!isset($_POST[bsname])){$bsname=0;}
-	else{$bsname=implode(",",$bsname);}
+	// if(!isset($_POST[bsname])){$bsname=0;}
+	// else{$bsname=implode(",",$bsname);}
 
-	if(!isset($_POST[esname])){$esname=0;}
-	else{$esname=implode(",",$esname);}
+	// if(!isset($_POST[esname])){$esname=0;}
+	// else{$esname=implode(",",$esname);}
 
 	$btypes=trim($business_type);$business_type=trim($btypes,'"'); // business type trim and remove (")...
 	//if($profile=='') $profile=base_url().'img/default/profile.png'; 	// default img url...
@@ -114,6 +140,7 @@
 	);
 	// for tradelicense....
 	$data = array(
+		'user_id'		=> $user_id,
 		'trackid'		=> $trackid,
 		'delivery_type'	=> $delivery_type,
 		'app_type'		=> $app_type,
@@ -122,12 +149,12 @@
 		'bcomname'		=> $bcomname,
 		'ewname'		=> $bw_ename,
 		'bwname'		=> $bw_bname,
-		'gender'		=> $gender,
-		'mstatus'		=> $mstatus,
+		'gender'		=> $bw_gender,
+		'mstatus'		=> $bw_mstatus,
 		'efname'		=> $bw_efname,
 		'bfname'		=> $bw_bfname,
-		'ehname'		=> $esname,
-		'bhname'		=> $bsname,
+		'ehname'		=> $bw_esname,
+		'bhname'		=> $bw_bsname,
 		'emname'		=> $bw_emname,
 		'bmane'			=> $bw_bmname,
 		'vatid'			=> $vatid,
@@ -152,6 +179,7 @@
 		'email'			=> $email,
 		'profile'		=> $profile_info,
 		'status'		=> 1,
+		'type'		    => 1,
 		'insert_time'	=> $insert_time,
 		'syn_status'	=> 1
 	);
@@ -164,8 +192,12 @@
 		'msg'=>$msg
 	);
 	$this->db->trans_start();
+		// echo "<pre>";
+		// print_r($data);exit;
+		
 		$this->db->insert("tbl_tracking",$tData);
-		$this->db->insert('tradelicense',$data);
+		$trans_data =  $this->db->insert('tradelicense',$data);
+
 		//$this->web->sendSms($mob,$msg);
 		$this->db->insert('inbox',$inbox);
 	$this->db->trans_complete();

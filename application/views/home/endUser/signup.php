@@ -76,6 +76,13 @@
 											<div class="col-sm-4">
 												<input type="text" name="name" id="name" class="form-control" placeholder="নাম"  />
 											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								   <p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
+									<div class="col-sm-12"> 
+										<div class="form-group">
 											<label for="Name-bangla" class="col-sm-2 control-label"> মোবাইল   <span>*</span></label>
 											<div class="col-sm-4">
 												<input type="text" name="mobile" id="mobile" class="form-control" placeholder="মোবাইল"  />
@@ -92,6 +99,8 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label for="bith_id" class="col-sm-4 control-label"> জন্ম নিবন্ধন নং </label>
@@ -106,21 +115,24 @@
 										<div class="form-group">
 											<label for="5" class="col-sm-4 control-label"> পাসওয়ার্ড </label>
 											<div class="col-sm-8">
-												<input type="text" name="password" id="password" class="form-control"  placeholder="পাসওয়ার্ড"/>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label for="Email" class="col-sm-4 control-label"> পুনরায় পাসওয়ার্ড</label>
-											<div class="col-sm-8">
-												<input type="text" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড  "/>
+												<input type="password" name="password" id="password" class="form-control"  placeholder="পাসওয়ার্ড"/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-offset-6 col-sm-6 button-style"> 
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="Email" class="col-sm-4 control-label"> পুনরায় পাসওয়ার্ড</label>
+											<div class="col-sm-8">
+												<input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড  "/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-6 button-style"> 
 										<input type='submit' value="সাবমিট করুন" name='submit_btn' class="btn btn-info btn-sm"/>
 										
 									</div>

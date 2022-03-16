@@ -121,6 +121,7 @@
 			?>
 				<tr style="font-size: 13px !important; font-family: SolaimanLipi;font-style: normal;">
 					<td>
+						
 						<img src="<?php if($row->profile !=''): echo $row->profile; else: echo "default.jpg";endif;?>" height='40' width='45'/>
 					</td>
 					<td style="white-space:normal;">
@@ -151,6 +152,7 @@
 					</td>
 					<td style="white-space:normal;">
 						<?php echo $row->bcomname?>
+						
 					</td>
 					
 					<?php if(($_GET['napply']=='new') || ($_GET['napply']=='5')):?>
@@ -174,7 +176,18 @@
 							<a href='Certificate/tradelicenseBangla?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseBangla'); ?> target='_blank' class="btn btn-primary btn-sm">বাংলা </a>
 							<a href='Certificate/tradelicenseEnglish?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseEnglish'); ?> target='_blank' class="btn btn-info btn-sm">ইংরেজী</a>
 						<?php } else {?>
+							 <?php if( $row->type !=1){ ?>
 							<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-info btn-sm"><?php echo $this->applicant->rePrint($row->trackid)?></a>
+						    <?php }else{?>
+								<?php if( $row->is_process ==1){ ?>
+								<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-danger btn-sm"> Unpaid </a>
+								<?php }else if( $row->is_process ==2){ ?>
+								<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Paid </a>
+								<?php }else{?>	
+									<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Accept </a>
+								<?php }?>
+
+							<?php }?>
 						<?php }?>
 					</td>
 					<?php endif;?>
