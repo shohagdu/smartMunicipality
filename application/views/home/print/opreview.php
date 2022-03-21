@@ -23,6 +23,7 @@ $listName = $query2->listName;
 </head>
 <body>
 <div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
+    <a href="index.php/home/profile"> Profile </a>
 	<?php if($this->session->userdata('sCode')){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
 			<img src="<?php echo base_url();?>img/home.png">

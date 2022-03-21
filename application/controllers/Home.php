@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 
 		$this->load->model('Manage_admin','manageAdmin');
 		$this->load->model('End_user','EndUser');
+		$this->load->model('applicant_model','applicant');
 	}
 	public function _remap($method, $params=array()){
 		$funcs = get_class_methods($this);
@@ -707,8 +708,11 @@ public function profile()
 	 $data['title'] = " প্রোফাইল";
 	 $data['all_data']=$this->setup->getdata();
 	 $data['trade_data']=$this->EndUser->getUserApplicationTrade($user_id);
+	//  echo $this->db->last_query($data['trade_data']);exit;
+	 $data['nagorik_data']=$this->EndUser->getUserApplicationNagorik($user_id);
+	 $data['others_nagorik_data']=$this->EndUser->getUserApplicationOthersNagorik($user_id);
 	 $data['invoice_data']=$this->EndUser->getUserInvoiceInfo($user_id);
-	//  echo $this->db->last_query($data['invoice_data']);exit;
+	 
 	 $this->load->view('home/header',$data);
 	 $this->load->view('home/endUser/profile');
 	 $this->load->view('home/right_content');
@@ -741,7 +745,7 @@ public function payment_action()
 				"payment_date" => date('Y-m-d'),
 				"updated_at"   => date('Y-m-d H:i:a'),
 		 	];
-	
+
 		$sonod_status_data = [
             'is_process' => 2,
         ];

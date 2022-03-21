@@ -57,14 +57,90 @@
 										<div class="tab-content">
 											<div class="tab-pane active" id="myProfile">
 												<div class="row">
-													<div class="col-sm-6">
+													<div class="col-sm-7">
 														<h3> নাম :  <?php echo $this->session->userdata('name'); ?>  </h3>
 														<p> মোবাইল : <?php echo $this->session->userdata('mobile'); ?> </p>
+														<table class="table table-bordered">
+															<thead>
+															<tr>
+																<th>সনদের নাম </th>
+																<th>স্ট্যাটাস</th>
+																<th>আকশন </th>
+															</tr>
+															</thead>
+															<tbody>
+															<?php if(!empty($trade_data)) {?>
+															<tr>
+																<td> ট্রেড লাইসেন্স  </td>
+																<td>
+																	<?php if($trade_data->is_process==0){?>
+																		<span class="badge badge-primary">Pending</span>
+																	<?php }else if($trade_data->is_process==3){?>
+																		<span class="badge badge-primary"> Complte</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-primary"> Processing</span>
+																	<?php }?>
+																
+																</td>
+																<td> 
+																<?php if($trade_data->is_process==3){?>
+																	<a class=" btn btn-sm btn-success"> বাংলা  </a>
+																	<a class=" btn btn-sm btn-info"> ইংরেজি  </a>
+																<?php }?>
+																</td>
+															</tr>
+															<?php } ?>
+															<?php if(!empty($nagorik_data)) {?>
+															<tr>
+																<td> নাগরিক সনদ   </td>
+																<td>
+																	<?php if($nagorik_data->is_process==0){?>
+																		<span class="badge badge-primary">Pending</span>
+																	<?php }else if($nagorik_data->is_process==3){?>
+																		<span class="badge badge-primary">  Complte</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-primary">Processing </span>
+																	<?php }?>
+																
+																</td>
+																<td> 
+																<?php if($nagorik_data->is_process==3){?>
+																	<a class=" btn btn-sm btn-success"> বাংলা  </a>
+																	<a class=" btn btn-sm btn-info"> ইংরেজি  </a>
+																<?php }?>
+																</td>
+															</tr>
+															<?php } ?>
+															<?php if(!empty($others_nagorik_data)) {?>
+															<tr>
+																<td> <?php echo $this->applicant->serviceNameShow($others_nagorik_data->serviceId)->listName;?> </td>
+																<td>
+																	<?php if($others_nagorik_data->is_process==0){?>
+																		<span class="badge badge-primary">Pending</span>
+																	<?php }else if($others_nagorik_data->is_process==3){?>
+																		<span class="badge badge-primary"> Complte</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-primary"> Processing  </span>
+																	<?php }?>
+																
+																</td>
+																<td> 
+																<?php if($others_nagorik_data->is_process==3){?>
+																	<a class=" btn btn-sm btn-success"> বাংলা  </a>
+																	<a class=" btn btn-sm btn-info"> ইংরেজি  </a>
+																<?php }?>
+																</td>
+															</tr>
+															<?php } ?>
+															
+															</tbody>
+														</table>
 													</div>
-													<div class="col-sm-3">
+													<div class="col-sm-2">
 													<img src="all/assets/image/avatar.png" class="profileImg" class="img-responsive">
 													</div>
 												</div>
+												
 
 											</div>
 											<div class="tab-pane" id="sonodApplicant">
@@ -130,10 +206,10 @@
 															</thead>
 															<tbody>
 																<?php
-																$i= 0;
+																$i= 1;
 																foreach($invoice_data as $item) {?>
 																<tr>
-																	<td><?php echo  $i+1?></td>
+																	<td><?php echo  $i++; ?></td>
 																	<td>
 																		<?php  if($item->type == 1){ ?>
 																			ট্রেড লাইসেন্স

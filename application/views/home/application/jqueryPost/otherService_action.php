@@ -34,6 +34,14 @@
 			exit;
 		}
 	}
+
+	// user id
+	$user_id = $this->session->userdata('id');
+
+	if(empty($user_id)){
+		echo "দয়া করে আগে নিবন্ধন করুন , তারপর আবেদন করুন ";exit;
+	}
+
 	/*
 	if(trim($nationid)!=""){
 		$this->db->select('*')->from('otherserviceinfo')->where('nationid',$nationid)->get();
@@ -102,6 +110,7 @@
 	}
 	
 	$data=array(
+		'user_id'		=> $user_id,
 		'trackid'		=> $trackid,
 		'delivery_type'	=> $delivery_type,
 		'serviceId'		=> $serviceList,
@@ -165,6 +174,7 @@
 		'attachment'	=> $attachment,
 		'profile'		=> $profile_info,
 		'status'		=> '0',
+		'type'		    => '1',
 		'insert_time'	=> $cDate
 	);
 	// for tracking id....

@@ -36,7 +36,7 @@
 		<!-- Content (Right Column)-->
 		<div class="row">
 			<div class="col-lg-12 col-sm-12">
-				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-indent:400px;"><?php echo $this->applicant->serviceNameShow($row->id)->listName;?> ফি ফরম </h3>
+				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-indent:400px;"><?php echo $this->applicant->serviceNameShow($row->serviceId)->listName;?> ফি ফরম </h3>
 				<form action="Genarate/otherServiceGenarate_action" method="post" id="otherServiceId" enctype="multipart/form-data" class="form-horizontal" role="form">
 					<div class="form-group"> 
 						<div class="col-sm-6 col-sm-offset-2"> 

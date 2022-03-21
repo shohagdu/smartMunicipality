@@ -49,7 +49,7 @@
 		}
 		// for other service information
 		public function otherServiceInfo($id){
-			$query = $this->db->select('id, trackid, serviceId, name, bfname, mobile, attachment, profile')->from('otherserviceinfo')->where('sha1(id)',$id)->get();
+			$query = $this->db->select('id, trackid,user_id, serviceId, name, bfname, mobile, attachment, profile')->from('otherserviceinfo')->where('sha1(id)',$id)->get();
 			return $query->row();
 		}
 	}

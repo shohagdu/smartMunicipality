@@ -63,61 +63,61 @@
 						}
 					}
 				},
-				nationid: {
-					verbose: false,
-					validators: {
-						stringLength: {
-							min: 15,
-							max: 17,
-							message: 'National id number more than 15 and less then 17 character'
-						},
-						numeric: {
-							message: 'Only allowed numeric number'
-						},
-						remote: {
-							message: 'Oops!!! Already  exist',
-							url: 'index.php/validation/check_uniqueNid?tbl='+"otherserviceinfo",
-							type: 'POST'
-						}
-					}
-				},
-				bcno: {
-					verbose: false,
-					validators: {
-						stringLength: {
-							min: 15,
-							max: 17,
-							message: 'Birth certficate number more than 15 and less then 17 character'
-						},
-						numeric: {
-							message: 'Only allowed numeric number'
-						},
-						different: {
-							field: 'nationid',
-							message: 'The field cannot be the same as nationid'
-						},
-						remote: {
-							message: 'Oops!!! Already  exist',
-							url: 'index.php/validation/check_uniqueBcno?tbl='+"otherserviceinfo",
-							type: 'POST'
-						}
-					}
-				},
-				pno: {
-					verbose: false,
-					validators: {
-						stringLength: {
-							min: 13,
-							max: 17,
-							message: 'Passport number more than 13 and less then 17 character'
-						},
-						remote: {
-							message: 'Oops!!! Already  exist',
-							url: 'index.php/validation/check_uniquePno?tbl='+"otherserviceinfo",
-							type: 'POST'
-						}
-					}
-				},
+				// nationid: {
+				// 	verbose: false,
+				// 	validators: {
+				// 		stringLength: {
+				// 			min: 15,
+				// 			max: 17,
+				// 			message: 'National id number more than 15 and less then 17 character'
+				// 		},
+				// 		numeric: {
+				// 			message: 'Only allowed numeric number'
+				// 		},
+				// 		remote: {
+				// 			message: 'Oops!!! Already  exist',
+				// 			url: 'index.php/validation/check_uniqueNid?tbl='+"otherserviceinfo",
+				// 			type: 'POST'
+				// 		}
+				// 	}
+				// },
+				// bcno: {
+				// 	verbose: false,
+				// 	validators: {
+				// 		stringLength: {
+				// 			min: 15,
+				// 			max: 17,
+				// 			message: 'Birth certficate number more than 15 and less then 17 character'
+				// 		},
+				// 		numeric: {
+				// 			message: 'Only allowed numeric number'
+				// 		},
+				// 		different: {
+				// 			field: 'nationid',
+				// 			message: 'The field cannot be the same as nationid'
+				// 		},
+				// 		remote: {
+				// 			message: 'Oops!!! Already  exist',
+				// 			url: 'index.php/validation/check_uniqueBcno?tbl='+"otherserviceinfo",
+				// 			type: 'POST'
+				// 		}
+				// 	}
+				// },
+				// pno: {
+				// 	verbose: false,
+				// 	validators: {
+				// 		stringLength: {
+				// 			min: 13,
+				// 			max: 17,
+				// 			message: 'Passport number more than 13 and less then 17 character'
+				// 		},
+				// 		remote: {
+				// 			message: 'Oops!!! Already  exist',
+				// 			url: 'index.php/validation/check_uniquePno?tbl='+"otherserviceinfo",
+				// 			type: 'POST'
+				// 		}
+				// 	}
+				// },
 				dofb: {
 					validators: {
 						notEmpty: {

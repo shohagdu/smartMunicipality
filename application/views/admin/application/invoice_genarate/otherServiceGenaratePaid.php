@@ -36,8 +36,8 @@
 		<!-- Content (Right Column)-->
 		<div class="row">
 			<div class="col-lg-12 col-sm-12">
-				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-indent:400px;"><?php echo $this->applicant->serviceNameShow($row->serviceId)->listName;?> ফি ইনভয়েস তৈরি </h3>
-				<form action="InvoiceGenerate/otherServiceGenarate_action" method="post" id="" enctype="multipart/form-data" class="form-horizontal" role="form">
+				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-indent:400px;"><?php echo $this->applicant->serviceNameShow($row->serviceId)->listName;?> ফি ফরম </h3>
+				<form action="Genarate/otherServiceGenarate_action" method="post" id="otherServiceId" enctype="multipart/form-data" class="form-horizontal" role="form">
 					<div class="form-group"> 
 						<div class="col-sm-6 col-sm-offset-2"> 
 							<img src="<?php echo $row->profile?>" width="160" height="150"/>
@@ -96,7 +96,7 @@
 					<div class="form-group" style="color: red;">
 						<label class="control-label col-sm-2 highlisht_font" for="fee">ফি :</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control highlisht_font"  name="fee" id="fee" value="0.00"  style="color: red;"/>
+							<input type="text" class="form-control highlisht_font"  name="fee" id="fee" value="<?php echo $invoice_data->total_fee?>" readonly  style="color: red;"/>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -109,9 +109,8 @@
 					</div>
 					<div class="form-group"> 
 						<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit"  value="Invoice Generate" class="btn btn-info btn-sm"/>
-							<input type="hidden" name="id" value="<?php echo $row->id;?>">
-							<input type="hidden" name='user_id' value='<?php echo $row->user_id;?>'/>
+							<input type="submit"  value="Generate" class="btn btn-info btn-sm"/>
+							<input type="hidden" name="uid" value="<?php echo $row->id;?>">
 							<input type="hidden" name="serviceId" value="<?php echo $row->serviceId;?>">
 							<input type="hidden" name="gentype" value="Generate">
 						</div>

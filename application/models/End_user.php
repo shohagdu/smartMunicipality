@@ -95,6 +95,26 @@ class End_user extends CI_Model{
 			return false;
 		endif;	
 	}
+	public function getUserApplicationNagorik($user_id){
+		$query = $this->db->where('user_id',$user_id)
+						 ->where('type', 1)				
+						 ->get("personalinfo");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
+	public function getUserApplicationOthersNagorik($user_id){
+		$query = $this->db->where('user_id',$user_id)
+						 ->where('type', 1)				
+						 ->get("otherserviceinfo");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
 
 	public function enduserInvoiceAction($data1,$tbl1)
 	{
@@ -113,6 +133,8 @@ class End_user extends CI_Model{
 	    	$this->db->where('id',$id)->update('tradelicense',$sonod_status_data);
 		}else if($type == 2){
 			$this->db->where('id',$id)->update('personalinfo',$sonod_status_data);
+		}else if($type == 3){
+			$this->db->where('id',$id)->update('otherserviceinfo',$sonod_status_data);
 		}else{
 			return false;
 		}
@@ -180,6 +202,15 @@ class End_user extends CI_Model{
 			return false;
 		}
 	}
+	public function enduserOthersNagorikStatusAction($nagorik_data,$id)
+	{
+	    $this->db->where('id',$id)->update('otherserviceinfo',$nagorik_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public function getUserInvoiceGenerateNagorik($id)
 	{
 		$query = $this->db->where('sha1(record_id)',$id)
@@ -192,5 +223,22 @@ class End_user extends CI_Model{
 		else:
 			return false;
 		endif;	
+	}
+	public function getUserInvoiceGenerateOthersNagorik($id)
+	{
+		$query = $this->db->where('sha1(trackid)',$id)
+						 ->where('is_paid', 1)
+						 //->where('type', 2)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
+	public function otherServiceInfo($id){
+		$query = $this->db->select('id, trackid,user_id, serviceId, name, bfname, mobile, attachment, profile')->from('otherserviceinfo')->where('sha1(trackid)',$id)->get();
+		return $query->row();
 	}
 } 

@@ -138,10 +138,29 @@
 					
 							<a href='Certificate/otherServiceBangla?id=<?php echo sha1($row->trackid)?>' target='_blank'  class="btn btn-primary btn-sm">বাংলা</a>
 							<!--<a href='Certificate/otherServiceEnglish?id=<?php echo sha1($row->trackid)?>' target='_blank'  class="btn btn-info btn-sm">ইংরেজী</a>-->
-						<?php } else {?>
-							<a href='Genarate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-info btn-sm" >
-								<?php echo $this->applicant->printOtherService($row->trackid)?>
-							</a>
+						<?php } else {?> 
+							<?php if( $row->type !=1){ ?>
+								<a href='Genarate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-info btn-sm" >
+									<?php echo $this->applicant->printOtherService($row->trackid)?>
+							    </a>
+							<?php }else{?>
+
+								<?php if( $row->is_process ==1){ ?>
+									<a href='Genarate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-danger btn-sm" >
+											Unpaid
+							   		    </a>
+									<?php }else if( $row->is_process ==2){ ?>
+										<a href='InvoiceGenerate/otherServiceGenaratePaid?id=<?php echo sha1($row->trackid)?>' class="btn btn-success btn-sm" >
+											Paid
+							   		    </a>
+									<?php }else{?>	
+										<a href='InvoiceGenerate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-success btn-sm" >
+											Accept
+							   			</a>
+									<?php }?>
+								
+							<?php }?>
+							
 						<?php }?>
 					</td>
 					

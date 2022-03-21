@@ -58,6 +58,9 @@
                                                     </select>
                                                 </div>
                                             </div>
+											<?php if(empty($this->session->userdata('id'))){  ?>
+											<h3 style="color:red;text-align:right"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন <h3>
+									     	<?php }?>
                                         </div>
                                         <div class="col-sm-3" id="img_div">
                                             <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">
@@ -232,7 +235,7 @@
 										<div class="form-group">
 											<label for="National-id-english" class="col-sm-6 control-label">ন্যাশনাল আইডি (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="nationid" id="nid" class="form-control" maxlength='17' onkeypress="return checkaccnumber(event);"  placeholder="" />
+												<input type="text" name="nationid" id="nid" class="form-control" maxlength='17' onkeypress="return checkaccnumber(event);" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('nid'); }?>" placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -240,7 +243,7 @@
 										<div class="form-group">
 											<label for="Birth-no" class="col-sm-6 control-label">জন্ম নিবন্ধন নং ( ইংরেজিতে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="bcno" id="bcno" class="form-control" maxlength="17" onkeypress="return checkaccnumber(event);"  placeholder="" />
+												<input type="text" name="bcno" id="bcno" class="form-control" maxlength="17" onkeypress="return checkaccnumber(event);"  value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('birthcertificate_no'); }?> " placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -277,7 +280,7 @@
 											</div>
 											<label for="Name-bangla" class="col-sm-3 control-label">নাম ( বাংলায় )  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bname" id="bname" class="form-control" placeholder="" required />
+												<input type="text" name="bname" id="bname" class="form-control" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('name'); }?> " placeholder="" required  />
 											</div>
 										</div>
 									</div>
@@ -747,7 +750,7 @@
 										<div class="form-group">
 											<label for="Mobile" class="col-sm-6 control-label">মোবাইল    <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress=""  required />
+												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress="" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('mobile'); }?>" required />
 											</div>
 										</div>
 									</div>
@@ -774,7 +777,7 @@
 	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
-										<button type="submit" name="save" id="submit_button" class="btn btn-primary">দাখিল করুন</button>
+										<button type="submit" name="save" id="submit_button" <?php if(empty($this->session->userdata('id'))){ echo "disabled";}else{ '';} ?> class="btn btn-primary">দাখিল করুন</button>
 										<input type="hidden" name="serviceList" value="<?php echo $service;?>" />
 									</div>
 								</div>

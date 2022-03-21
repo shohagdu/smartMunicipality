@@ -116,7 +116,7 @@ class InvoiceGenerate extends CI_Controller {
             $user=$this->session->userdata('username');
             extract($_POST);
 
-			if(trim($fee)==""){echo "দয়া করে ট্রেড লাইসেন্স ফি প্রবেশ করুন.";exit;}
+			if(trim($fee)==""){echo "দয়া করে ফি প্রদান করুন.";exit;}
 		   
             $ip         = $this->input->ip_address();
 			$created_at = date("Y-m-d H:i:s");
@@ -163,12 +163,61 @@ class InvoiceGenerate extends CI_Controller {
 		$data['row']=$this->mgenerate->otherServiceInfo($id);
 		$this->load->view('admin/topBar');
 		$this->load->view('admin/leftMenu');
-		$this->load->view('admin/application/genarate/otherServiceGenarate',$data);
+		$this->load->view('admin/application/invoice_genarate/otherServiceGenarate',$data);
+		$this->load->view('admin/footer');	
+	}
+	public function otherServiceGenaratePaid()
+	{
+		extract($_GET);
+		$data['row']=$this->EndUser->otherServiceInfo($id);
+		$data['invoice_data']=$this->EndUser->getUserInvoiceGenerateOthersNagorik($id);
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/application/invoice_genarate/otherServiceGenaratePaid',$data);
 		$this->load->view('admin/footer');	
 	}
 	public function otherServiceGenarate_action()
 	{
-		$this->load->view("admin/application/jqueryPost/otherServiceGenarate_action");
+		if($_POST){
+            $user=$this->session->userdata('username');
+            extract($_POST);
+
+			if(trim($fee)==""){echo "দয়া করে ফি প্রদান করুন.";exit;}
+		   
+            $ip         = $this->input->ip_address();
+			$created_at = date("Y-m-d H:i:s");
+
+            $invoice_data = [
+                'user_id'            => $user_id,
+                'trackid'            => $trackid,
+                'record_id'          => $id,
+                'fee'                => $fee,
+                'total_fee'          => $fee,
+                'account_no'         => $acno,
+                'invoice_date'       => date('Y-m-d', strtotime($payment_date)),
+                'type'               => 3,
+                'is_paid'            => 0,
+                'is_active'          => 1,
+                'created_by'         => $user,
+                'created_ip'         => $ip,
+                'created_at'         => $created_at,
+            ];
+
+			$nagorik_data = [
+                'is_process' => 1,
+            ];
+
+            $nagorik_insert = $this->EndUser->enduserOthersNagorikStatusAction($nagorik_data, $id);
+            $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
+
+            if($insert==true){
+				$this->session->set_flashdata('success', 'সফলভাবে ইনভয়েস তৈরি  হয়েছে।');
+               redirect('Applicant/otherService?napply=new'); 
+            }else{
+				$this->session->set_flashdata('errors', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন।');
+               redirect('Applicant/otherService?napply=new'); 
+            }
+		}
 	}
 	/*======== other service genarate section end  ==============*/
 	
