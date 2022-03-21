@@ -37,8 +37,8 @@
 		<!-- Content (Right Column)-->
 		<div class="row">
 			<div class="col-lg-12 col-sm-12">
-				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-align:center;">ওয়ারিশ সনদ  ইনভয়েস  ফি  জেনারেট </h3>
-				<form action="InvoiceGenerate/warishGenarate_action" method="post" id="" enctype="multipart/form-data" class=" form-horizontal" role="form">
+				<h3 class="tit" style="margin-top:0px;margin-bottom: 20px;background:lightgray;padding:5px;text-align:center;">ওয়ারিশ সনদ  ফি ফরম </h3>
+				<form action="Genarate/warishGenarate_action" method="post" id="validall" enctype="multipart/form-data" class="warishGenarate form-horizontal" role="form">
 					<div class="form-group">
 						<label class="control-label col-sm-2 highlisht_font" for="traking no">ট্র্যাকিং নং :</label>
 						<div class="col-sm-4">
@@ -90,7 +90,7 @@
 					<div class="form-group" style="color: red;">
 						<label class="control-label col-sm-2 highlisht_font" for="fee">ফি :</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control highlisht_font" name="fee" id="fee" value="0.00" style="color: red;" />
+							<input type="text" class="form-control highlisht_font" name="fee" id="fee" value="<?php echo $invoice_data->total_fee?>" readonly style="color: red;" />
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -103,9 +103,8 @@
 					</div>
 					<div class="form-group"> 
 						<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit" class="btn btn-info btn-sm" value="Invoice Generate" />
-							<input type="hidden" name="id" value="<?php echo $row->id;?>"/>
-							<input type="hidden" name='user_id' value='<?php echo $row->user_id;?>'/>
+							<input type="submit" class="btn btn-info btn-sm" value="Generate" />
+							<input type="hidden" name="uid" value="<?php echo $row->id;?>"/>
 							<input type='hidden' name='apno' value='<?php echo $row->id;?>'/>
 							<input type="hidden" name="gentype" value="Generate">
 						</div>

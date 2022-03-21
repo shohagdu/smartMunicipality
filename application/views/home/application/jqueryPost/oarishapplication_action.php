@@ -50,6 +50,13 @@
 		$this->db->select('*')->from('tbl_warishesinfo')->where('mobile',$mob)->get();
 		if($this->db->affected_rows()>0){ echo "6";exit;}
 	}*/
+
+	// user id
+	$user_id = $this->session->userdata('id');
+
+	if(empty($user_id)){
+		echo "দয়া করে আগে নিবন্ধন করুন , তারপর আবেদন করুন ";exit;
+	}
 	
 	if(($gender=='female' || $gender=='male') && ($mstatus==2)){
 		$eHname = "";
@@ -96,6 +103,7 @@
 		);
 	}
 	$data = array(
+		'user_id'		                => $user_id,
 		'trackid'						=>	$trackid,
 		'delivery_type'					=>	$delivery_type,
 		'nationid'						=>	$nationid,
@@ -148,6 +156,7 @@
 		'email'							=> 	$email,
 		'note'							=>  (empty(trim($appNote)) ? NULL : $appNote),
 		'status'						=>	'0',
+		'type'		                    =>  '1',
 		'ins_time'						=> 	$CuDate
 	);
 	// for tracking table.....

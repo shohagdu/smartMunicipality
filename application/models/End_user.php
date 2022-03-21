@@ -115,6 +115,16 @@ class End_user extends CI_Model{
 			return false;
 		endif;	
 	}
+	public function getUserApplicationWarish($user_id){
+		$query = $this->db->where('user_id',$user_id)
+						 ->where('type', 1)				
+						 ->get("tbl_warishesinfo");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
 
 	public function enduserInvoiceAction($data1,$tbl1)
 	{
@@ -135,6 +145,8 @@ class End_user extends CI_Model{
 			$this->db->where('id',$id)->update('personalinfo',$sonod_status_data);
 		}else if($type == 3){
 			$this->db->where('id',$id)->update('otherserviceinfo',$sonod_status_data);
+		}else if($type == 20){
+			$this->db->where('id',$id)->update('tbl_warishesinfo',$sonod_status_data);
 		}else{
 			return false;
 		}
@@ -193,6 +205,19 @@ class End_user extends CI_Model{
 			return false;
 		endif;	
 	}
+	public function getUserInvoiceGenerateWarish($id)
+	{
+		$query = $this->db->where('sha1(trackid)',$id)
+						 ->where('is_paid', 1)
+						 ->where('type', 20)
+						 ->order_by('id','DESC')				
+						 ->get("end_user_invoice");
+		if(!empty($query)):
+			return  $query->row();
+		else:
+			return false;
+		endif;	
+	}
 	public function enduserNagorikStatusAction($nagorik_data,$id)
 	{
 	    $this->db->where('id',$id)->update('personalinfo',$nagorik_data);
@@ -237,8 +262,22 @@ class End_user extends CI_Model{
 			return false;
 		endif;	
 	}
+	public function enduserWarishStatusAction($warish_data,$id)
+	{
+	    $this->db->where('id',$id)->update('tbl_warishesinfo',$warish_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public function otherServiceInfo($id){
 		$query = $this->db->select('id, trackid,user_id, serviceId, name, bfname, mobile, attachment, profile')->from('otherserviceinfo')->where('sha1(trackid)',$id)->get();
 		return $query->row();
+	}
+	public function wccinfo($id)
+	{
+	 $query=$this->db->select('*')->from('tbl_warishesinfo')->where('sha1(trackid)',$id)->get();
+	 return $query->row();
 	}
 } 

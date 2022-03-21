@@ -140,11 +140,11 @@
 									</a>
 								<?php }else if( $row->is_process ==2){ ?>
 									<a href='InvoiceGenerate/nagorickGenaratePaid?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
-										Paid
+										Payment Confirmation
 									</a>
 								     <?php }else{?>	
 										<a href='InvoiceGenerate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
-										    Accept
+										   Waiting for Accept
 										</a>
 								<?php }?>
 							<?php }?>	

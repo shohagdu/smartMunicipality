@@ -132,6 +132,27 @@
 																</td>
 															</tr>
 															<?php } ?>
+															<?php if(!empty($warish_data)) {?>
+															<tr>
+																<td>  ওয়ারিশ সনদ </td>
+																<td>
+																	<?php if($warish_data->is_process==0){?>
+																		<span class="badge badge-primary">Pending</span>
+																	<?php }else if($warish_data->is_process==3){?>
+																		<span class="badge badge-primary"> Complte</span>
+																	<?php }else{ ?>
+																		<span class="badge badge-primary"> Processing  </span>
+																	<?php }?>
+																
+																</td>
+																<td> 
+																<?php if($warish_data->is_process==3){?>
+																	<a class=" btn btn-sm btn-success"> বাংলা  </a>
+																	<a class=" btn btn-sm btn-info"> ইংরেজি  </a>
+																<?php }?>
+																</td>
+															</tr>
+															<?php } ?>
 															
 															</tbody>
 														</table>
@@ -215,6 +236,8 @@
 																			ট্রেড লাইসেন্স
 																	    <?php  }else if($item->type == 2 ){ ?>
 																			নাগরিক সনদপত্র
+																		<?php  }else if($item->type == 20 ){ ?>		
+																			ওয়ারিশ  সনদপত্র
 																	    <?php  }else{?>
 																			অন্যান্য
 																		<?php }?>

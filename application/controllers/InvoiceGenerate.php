@@ -321,13 +321,62 @@ class InvoiceGenerate extends CI_Controller {
 		$data['row']=$this->web->wccinfo($id);
 		$this->load->view('admin/topBar');
 		$this->load->view('admin/leftMenu');
-		$this->load->view("admin/application/genarate/warishGenarate",$data);
+		$this->load->view("admin/application/invoice_genarate/warishGenarate",$data);
 		$this->load->view('admin/footer');	
 	}
-	
+	public function warishGenaratePaid()
+	{
+		extract($_GET);
+		$data['row']=$this->EndUser->wccinfo($id);
+		$data['invoice_data']=$this->EndUser->getUserInvoiceGenerateWarish($id);
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view("admin/application/invoice_genarate/warishGenaratePaid",$data);
+		$this->load->view('admin/footer');	
+	}
+
 	public function warishGenarate_action()
 	{
-		$this->load->view('admin/application/jqueryPost/warishGenarate_action');
+		if($_POST){
+            $user=$this->session->userdata('username');
+            extract($_POST);
+
+			if(trim($fee)==""){echo "দয়া করে ফি প্রদান করুন.";exit;}
+		   
+            $ip         = $this->input->ip_address();
+			$created_at = date("Y-m-d H:i:s");
+
+            $invoice_data = [
+                'user_id'            => $user_id,
+                'trackid'            => $trackid,
+                'record_id'          => $id,
+                'fee'                => $fee,
+                'total_fee'          => $fee,
+                'account_no'         => $acno,
+                'invoice_date'       => date('Y-m-d', strtotime($payment_date)),
+                'type'               => 20,
+                'is_paid'            => 0,
+                'is_active'          => 1,
+                'created_by'         => $user,
+                'created_ip'         => $ip,
+                'created_at'         => $created_at,
+            ];
+
+			$warrish_data = [
+                'is_process' => 1,
+            ];
+
+            $warish_insert = $this->EndUser->enduserWarishStatusAction($warrish_data, $id);
+            $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
+
+            if($insert==true){
+				$this->session->set_flashdata('success', 'সফলভাবে ইনভয়েস তৈরি  হয়েছে।');
+               redirect('Applicant/warishapplicant?napply=new'); 
+            }else{
+				$this->session->set_flashdata('errors', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন।');
+               redirect('Applicant/warishapplicant?napply=new'); 
+            }
+		}
 	}
 	/*======== oarish genarate section end   ==============*/
 }

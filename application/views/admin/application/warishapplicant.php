@@ -136,9 +136,26 @@
 							<a href='Certificate/warishBangla?id=<?php echo sha1($row->trackid)?>'  class="btn btn-primary btn-sm" <?php $this->chk->acl('warishBangla'); ?> target='_blank'>বাংলা</a>
 							<a href='Certificate/warishEnglish?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('warishEnglish'); ?> class="btn btn-info btn-sm" target='_blank'>ইংরেজী</a>
 						<?php } else {?>
-							<a href='Genarate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-info btn-sm">
+							<?php if( $row->type !=1){ ?>
+								<a href='Genarate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-info btn-sm">
 								<?php echo $this->applicant->exPrintwcc($row->trackid);?>
-							</a>
+							    </a>
+							<?php }else{?>
+								  <?php if( $row->is_process ==1){ ?>
+									<a href='Genarate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-danger btn-sm">
+									  Unpaid
+							        </a>
+								  <?php }else if( $row->is_process ==2){ ?>
+									<a href='InvoiceGenerate/warishGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-success btn-sm">
+									   Payment Confirmation
+							        </a>
+								  <?php }else{?>
+									<a href='InvoiceGenerate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-success btn-sm">
+										Waiting for Accept
+							        </a>
+								  <?php }?>
+							<?php }?>
+
 						<?php }?>
 					</td>
 					

@@ -110,7 +110,7 @@
 			
 			// for new applicant 
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("SELECT id, bname, trackid, delivery_type, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
 			}
 			// for certificate generate
 			else if(isset($_GET['napply']) && $_GET['napply']=='5'){
@@ -146,7 +146,7 @@
 			}
 			// for new applicant defalut query 
 			else {
-				$query=$this->db->query("SELECT i.id, bname, trackid, delivery_type, mobile, ins_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT i.id, bname, trackid, delivery_type, type,is_process, mobile, ins_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
 			}
 			return $query;
 		}

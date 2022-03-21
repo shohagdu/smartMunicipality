@@ -711,6 +711,7 @@ public function profile()
 	//  echo $this->db->last_query($data['trade_data']);exit;
 	 $data['nagorik_data']=$this->EndUser->getUserApplicationNagorik($user_id);
 	 $data['others_nagorik_data']=$this->EndUser->getUserApplicationOthersNagorik($user_id);
+	 $data['warish_data']=$this->EndUser->getUserApplicationWarish($user_id);
 	 $data['invoice_data']=$this->EndUser->getUserInvoiceInfo($user_id);
 	 
 	 $this->load->view('home/header',$data);
