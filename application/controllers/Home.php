@@ -715,7 +715,7 @@ public function profile()
 	 $data['invoice_data']=$this->EndUser->getUserInvoiceInfo($user_id);
 	 
 	 $this->load->view('home/header',$data);
-	 $this->load->view('home/endUser/profile');
+	 $this->load->view('home/endUser/user_profile');
 	 $this->load->view('home/right_content');
 }
 public function invoice_payment(){

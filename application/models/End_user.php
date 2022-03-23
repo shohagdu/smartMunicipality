@@ -110,7 +110,7 @@ class End_user extends CI_Model{
 						 ->where('type', 1)				
 						 ->get("otherserviceinfo");
 		if(!empty($query)):
-			return  $query->row();
+			return  $query->result();
 		else:
 			return false;
 		endif;	
@@ -279,5 +279,27 @@ class End_user extends CI_Model{
 	{
 	 $query=$this->db->select('*')->from('tbl_warishesinfo')->where('sha1(trackid)',$id)->get();
 	 return $query->row();
+	}
+
+	public function smsSendAction($message, $mobile_no)
+	{
+		$url = 'https://www.24bulksmsbd.com/api/smsSendApi';
+			$data = array(
+				'customer_id' => 177,
+				'api_key' => 172808547692947701839707645,
+				'message' =>$message,	
+				'mobile_no' => $mobile_no
+			);
+
+			$curl = curl_init($url);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);     
+			$output = curl_exec($curl);
+			curl_close($curl);
+			//echo $output;
+
 	}
 } 

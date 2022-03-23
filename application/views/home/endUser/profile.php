@@ -270,42 +270,42 @@
 													<h3>পাসওয়ার্ড পরিবর্তন</h3><br>
 													
 													<form action="index.php/home/change_password" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
-													<div class="row">
-													<p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
-														<div class="col-sm-9"> 
-															<div class="form-group">
-																<label for="Name-english" class="col-sm-3 control-label"> পূর্বের পাসওয়ার্ড  <span>*</span></label>
-																<div class="col-sm-5">
-																	<input type="text" name="pre_password" id="pre_password" class="form-control" placeholder="পূর্বের পাসওয়ার্ড"  />
+														<div class="row">
+														<p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
+															<div class="col-sm-9"> 
+																<div class="form-group">
+																	<label for="Name-english" class="col-sm-3 control-label"> পূর্বের পাসওয়ার্ড  <span>*</span></label>
+																	<div class="col-sm-5">
+																		<input type="text" name="pre_password" id="pre_password" class="form-control" placeholder="পূর্বের পাসওয়ার্ড"  />
+																	</div>
+																</div>
+															</div>
+															<div class="col-sm-9"> 
+																<div class="form-group" >
+																	<label for="Name-bangla" class="col-sm-3 control-label"> নতুন পাসওয়ার্ড   <span>*</span></label>
+																	<div class="col-sm-5">
+																		<input type="text" name="password" id="password" class="form-control" placeholder="নতুন পাসওয়ার্ড"  />
+																	</div>
+																</div>
+															</div>
+															<div class="col-sm-9"> 
+																<div class="form-group" >
+																	<label for="Name-bangla" class="col-sm-3 control-label"> পুনরায়  পাসওয়ার্ড   <span>*</span></label>
+																	<div class="col-sm-5">
+																		<input type="text" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড"  />
+																	</div>
+																</div>
+															</div>
+															<div class="col-sm-9"> 
+																<div class="form-group" >
+																<div class="col-sm-3"></div>
+																	<div class="col-sm-5">
+																	<input type='submit' value="পাসওয়ার্ড পরিবর্তন" name='submit_btn' class="btn btn-info btn-sm"/><br>
+																	</div>
 																</div>
 															</div>
 														</div>
-														<div class="col-sm-9"> 
-															<div class="form-group" >
-																<label for="Name-bangla" class="col-sm-3 control-label"> নতুন পাসওয়ার্ড   <span>*</span></label>
-																<div class="col-sm-5">
-																	<input type="text" name="password" id="password" class="form-control" placeholder="নতুন পাসওয়ার্ড"  />
-																</div>
-															</div>
-														</div>
-														<div class="col-sm-9"> 
-															<div class="form-group" >
-																<label for="Name-bangla" class="col-sm-3 control-label"> পুনরায়  পাসওয়ার্ড   <span>*</span></label>
-																<div class="col-sm-5">
-																	<input type="text" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড"  />
-																</div>
-															</div>
-														</div>
-														<div class="col-sm-9"> 
-															<div class="form-group" >
-															<div class="col-sm-3"></div>
-																<div class="col-sm-5">
-																<input type='submit' value="পাসওয়ার্ড পরিবর্তন" name='submit_btn' class="btn btn-info btn-sm"/><br>
-																</div>
-															</div>
-														</div>
-													</div>
-												<form>
+												    <form>
 													
 												</div>
 											</div>

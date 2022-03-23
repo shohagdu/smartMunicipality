@@ -182,9 +182,9 @@
 								<?php if( $row->is_process ==1){ ?>
 								<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-danger btn-sm"> Unpaid </a>
 								<?php }else if( $row->is_process ==2){ ?>
-								<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Paid </a>
+								<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Payment Confirmation </a>
 								<?php }else{?>	
-									<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Accept </a>
+									<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Waiting for Accept </a>
 								<?php }?>
 
 							<?php }?>

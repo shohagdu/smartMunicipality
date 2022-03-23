@@ -26,16 +26,7 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;"> পেমেন্ট করুন </div>
 						<div class="panel-body all-input-form">
-							<?php if( $this->session->flashdata('success') == true) {?>
-							<div class="alert alert-success">
-								<?php echo $this->session->flashdata('flsh_msg'); ?>
-							</div>
-							<?php }?>
-							<?php if( $this->session->flashdata('error') == true) {?>
-							<div class="alert alert-danger">
-								<?php echo $this->session->flashdata('flsh_msg'); ?>
-							</div>
-							<?php }?>
+							
 							<form action="index.php/home/payment_action" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 							
 							<?php if($invoice_data->type == 1) {?>

@@ -141,6 +141,9 @@ class InvoiceGenerate extends CI_Controller {
                 'is_process' => 1,
             ];
 
+			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$fee." টাকা ফি পরিশোধ করুন ।";
+			$sms_send = $this->EndUser->smsSendAction($message, $mobile);
+
             $nagorik_insert = $this->EndUser->enduserNagorikStatusAction($nagorik_data, $id);
             $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
 
@@ -203,12 +206,18 @@ class InvoiceGenerate extends CI_Controller {
                 'created_at'         => $created_at,
             ];
 
+			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$fee." টাকা ফি পরিশোধ করুন ।";
+
 			$nagorik_data = [
                 'is_process' => 1,
             ];
+			$sms_send = $this->EndUser->smsSendAction($message, $mobile);
+
+			//echo "Success";exit;
 
             $nagorik_insert = $this->EndUser->enduserOthersNagorikStatusAction($nagorik_data, $id);
             $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
+			
 
             if($insert==true){
 				$this->session->set_flashdata('success', 'সফলভাবে ইনভয়েস তৈরি  হয়েছে।');
@@ -285,6 +294,9 @@ class InvoiceGenerate extends CI_Controller {
 			$trade_data = [
                 'is_process' => 1,
             ];
+			
+			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$fee." টাকা ফি পরিশোধ করুন ।";
+			$sms_send = $this->EndUser->smsSendAction($message, $mobile);
 
             $trade_insert = $this->EndUser->enduserTradeStatusAction($trade_data, $id);
             $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');

@@ -151,11 +151,11 @@
 							   		    </a>
 									<?php }else if( $row->is_process ==2){ ?>
 										<a href='InvoiceGenerate/otherServiceGenaratePaid?id=<?php echo sha1($row->trackid)?>' class="btn btn-success btn-sm" >
-											Paid
+										   Payment Confirmation
 							   		    </a>
 									<?php }else{?>	
 										<a href='InvoiceGenerate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-success btn-sm" >
-											Accept
+										   Waiting for Accept
 							   			</a>
 									<?php }?>
 								

@@ -70,10 +70,11 @@
 							<form action="index.php/home/signup_action" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 								<div class="row">
 								   <p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
-									<div class="col-sm-12"> 
+								   <div class="col-sm-2"></div>	
+								   <div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="Name-english" class="col-sm-2 control-label">নাম  <span>*</span></label>
-											<div class="col-sm-4">
+											<label for="Name-english" class="col-sm-3 control-label">নাম  <span>*</span></label>
+											<div class="col-sm-6">
 												<input type="text" name="name" id="name" class="form-control" placeholder="নাম"  />
 											</div>
 										</div>
@@ -81,62 +82,72 @@
 								</div>
 								<div class="row">
 								   <p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
-									<div class="col-sm-12"> 
+								   <div class="col-sm-2"></div>		
+								   <div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="Name-bangla" class="col-sm-2 control-label"> মোবাইল   <span>*</span></label>
-											<div class="col-sm-4">
+											<label for="Name-bangla" class="col-sm-3 control-label"> মোবাইল   <span>*</span></label>
+											<div class="col-sm-6">
 												<input type="text" name="mobile" id="mobile" class="form-control" placeholder="মোবাইল"  />
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-6"> 
+								<div class="col-sm-2"></div>	
+									<div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="nid" class="col-sm-4 control-label"> ন্যাশনাল আইডি </label>
-											<div class="col-sm-8">
+											<label for="nid" class="col-sm-3 control-label"> ন্যাশনাল আইডি </label>
+											<div class="col-sm-6">
 												<input type="text" name="nid" id="nid" class="form-control"  placeholder="ন্যাশনাল আইডি"/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-6">
+								<div class="col-sm-2"></div>	
+									<div class="col-sm-10">
 										<div class="form-group">
-											<label for="bith_id" class="col-sm-4 control-label"> জন্ম নিবন্ধন নং </label>
-											<div class="col-sm-8">
+											<label for="bith_id" class="col-sm-3 control-label"> জন্ম নিবন্ধন নং </label>
+											<div class="col-sm-6">
 												<input type="text" name="birth_id" id="birth_id" class="form-control" placeholder="ন্যাশনাল আইডি"/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-6"> 
+								    <div class="col-sm-2"></div>	
+									<div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="5" class="col-sm-4 control-label"> পাসওয়ার্ড </label>
-											<div class="col-sm-8">
+											<label for="5" class="col-sm-3 control-label"> পাসওয়ার্ড </label>
+											<div class="col-sm-6">
 												<input type="password" name="password" id="password" class="form-control"  placeholder="পাসওয়ার্ড"/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-6">
+								    <div class="col-sm-2"></div>	
+									<div class="col-sm-10">
 										<div class="form-group">
-											<label for="Email" class="col-sm-4 control-label"> পুনরায় পাসওয়ার্ড</label>
-											<div class="col-sm-8">
+											<label for="Email" class="col-sm-3 control-label"> পুনরায় পাসওয়ার্ড</label>
+											<div class="col-sm-6">
 												<input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড  "/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-2"></div>
-									<div class="col-sm-6 button-style"> 
-										<input type='submit' value="সাবমিট করুন" name='submit_btn' class="btn btn-info btn-sm"/>
-										
+								    <div class="col-sm-2"></div>	
+									<div class="col-sm-10">
+										<div class="form-group">
+										    <div class="col-sm-3"></div>
+											<div class="col-sm-6">
+											<input type='submit' value="সাবমিট করুন" name='submit_btn' class="btn btn-info btn-sm"/>
+											</div>
+										</div>
 									</div>
 								</div>
+								
 							</form>
 						</div>
 					</div>
