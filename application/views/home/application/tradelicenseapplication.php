@@ -8,6 +8,9 @@
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">ট্রেড লাইসেন্স আবেদন</div>
+						<?php if(empty($this->session->userdata('id'))){  ?>
+							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/tradelicenseapplication_action" method="post" id="defaultForm" enctype="multipart/form-data" class="form-horizontal">
 
@@ -31,9 +34,6 @@
                                                 <div class="col-sm-6">
                                                     <label class="radio-inline"><input type="radio" name="app_type" id="new_app" value="1" checked="checked">নতুন আবেদন</label>
                                                 </div>
-												<?php if(empty($this->session->userdata('id'))){  ?>
-											    <h3 style="color:red;text-align:center;"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন <h3>
-										       <?php }?>
                                             </div>
                                             <div class="col-sm-3" id="img_div">
                                                     <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">

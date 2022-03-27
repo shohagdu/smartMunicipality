@@ -104,8 +104,8 @@
 									<li class="divider"></li>
 									<li><a href="home/oarishapplication">ওয়ারিশ সনদের আবেদন</a></li>
 									<li class="divider"></li>
-									<li><a href="home/otherService">অন্যান্য সনদের আবেদন ফরম  </a></li>
-									<li class="divider"></li>
+									<!-- <li><a href="home/otherService">অন্যান্য সনদের আবেদন ফরম  </a></li>
+									<li class="divider"></li> -->
 								</ul>
 							</li>
 						
@@ -202,24 +202,24 @@
 								<b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a href="home/voterList">ভোটার তালিকা</a></li>
+									<!-- <li><a href="home/voterList">ভোটার তালিকা</a></li>
 									<li class="divider"></li>
 									<li><a href="home/fighters">মুক্তিযোদ্ধা তালিকা</a></li>
 									<li class="divider"></li>
-									<li><a href="home/poorman">দুস্থদের তালিকা </a></li>
-									<li class="divider"></li>
+									<li><a href="home/poorman">দুস্থদের তালিকা </a></li> -->
+									<!-- <li class="divider"></li> -->
 									<li><a href="home/widow">বিধবাদের তালিকা </a></li>
 									<li class="divider"></li>
-									<li><a href="home/foreignMan">প্রবাসীদের তালিকা </a></li>
-									<li class="divider"></li>
+									<!-- <li><a href="home/foreignMan">প্রবাসীদের তালিকা </a></li>
+									<li class="divider"></li> -->
 									<li><a href="home/oldmanStipend">বয়স্কভাতা</a></li>
 									<li class="divider"></li>
 									<li><a href="home/motherVata">মাতৃত্বকালীন ভাতা </a></li>
 									<li class="divider"></li>
 									<li><a href="home/autistic">প্রতিবন্ধী ভাতা</a></li>
 									<li class="divider"></li>
-									<li><a href="home/autisticStudent">প্রতিবন্ধী ছাত্র/ছাত্রী</a></li>
-									<li class="divider"></li>
+									<!-- <li><a href="home/autisticStudent">প্রতিবন্ধী ছাত্র/ছাত্রী</a></li>
+									<li class="divider"></li> -->
 								</ul>
 							</li>
 						    <li> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>

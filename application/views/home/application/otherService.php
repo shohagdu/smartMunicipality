@@ -16,6 +16,9 @@
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;"><?php echo $title;?> এর জন্য আবেদন ফরম</div>
+						<?php if(empty($this->session->userdata('id'))){  ?>
+							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/otherService_action" method="post" enctype="multipart/form-data" id="defaultForm" class="form-horizontal">
                                 <div class="row"  style="margin-top: 10px;">
@@ -58,9 +61,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-											<?php if(empty($this->session->userdata('id'))){  ?>
-											<h3 style="color:red;text-align:right"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন <h3>
-									     	<?php }?>
                                         </div>
                                         <div class="col-sm-3" id="img_div">
                                             <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">

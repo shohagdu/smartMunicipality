@@ -8,13 +8,13 @@
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">ওয়ারিশ সনদের আবেদন </div>
+						<?php if(empty($this->session->userdata('id'))){  ?>
+							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/oarishapplication_action" method="post" enctype="multipart/form-data" id="defaultForm" class="form-horizontal">
 								<div class="row"> 
 									<div class="col-sm-12" style="margin-bottom:10px;margin-top:10px;"> 
-									<?php if(empty($this->session->userdata('id'))){  ?>
-										<h3 style="color:red;text-align:center"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
-									<?php }?>
 										<div class="form-group">
 											<label for="name" class="col-sm-3 control-label">সরবরাহের ধরণ  <span>*</span></label>
 											<div class="col-sm-9">

@@ -14,6 +14,9 @@
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">নাগরিক আবেদন</div>
+						<?php if(empty($this->session->userdata('id'))){  ?>
+							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/nagorikapplication_action"  method="post" id="defaultForm" class="form-horizontal" enctype="multipart/form-data">
                                 <div class="row">
@@ -33,9 +36,6 @@
                                                 <label class="radio-inline"><input type="radio" name="delivery_type" value="3" checked="checked"> সাধারন</label>
                                             </div>
                                         </div>
-										<?php if(empty($this->session->userdata('id'))){  ?>
-											<h3 style="color:red;text-align:right"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন <h3>
-										<?php }?>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
