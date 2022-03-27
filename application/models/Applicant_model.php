@@ -10,13 +10,21 @@
 			
 			// for new applicant 
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				extract($_GET);
+				if(@$opt==11){
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='0' order by date(insert_time) DESC, id DESC")->result();
+				}elseif(@$opt==22){
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
+				}else{
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				}
 			}
 			
 			// for certificate generate applicant 
 			else if(isset($_GET['napply']) && $_GET['napply']=='5'){
 				
 				extract($_GET);
+			
 				$cDate=date("Y-m-d");
 				if(@$opt==2){
 					//echo "last todays";	
@@ -60,7 +68,16 @@
 			
 			// for new applicant
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+
+				extract($_GET);
+				if(@$opt==11){
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='0' AND type='1'  order by date(utime) DESC,id DESC")->result();
+				}elseif(@$opt==22){
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='2'  order by date(utime) DESC,id DESC")->result();
+				}else{
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+				}
+				
 			}
 			// for expire trade license
 			else if(isset($_GET['napply']) && $_GET['napply']=='expire'){
@@ -110,7 +127,15 @@
 			
 			// for new applicant 
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+
+				extract($_GET);
+				if(@$opt==11){
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND type='1' AND is_process='0'   ORDER BY date(ins_time) DESC, id DESC")->result();
+				}elseif(@$opt==22){
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND is_process='2'   ORDER BY date(ins_time) DESC, id DESC")->result();
+				}else{
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+				}
 			}
 			// for certificate generate
 			else if(isset($_GET['napply']) && $_GET['napply']=='5'){
@@ -157,7 +182,15 @@
 			//print_r($_GET);
 			// for new applicant 
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
-				$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+
+				extract($_GET);
+				if(@$opt==11){
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='0' AND type='1' order by date(insert_time) DESC, id DESC")->result();
+				}elseif(@$opt==22){
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
+				}else{
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				}
 			}
 			
 			// for certificate generate applicant 

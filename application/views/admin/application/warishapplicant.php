@@ -44,7 +44,17 @@
 				var dofb = document.getElementById('dofb').value;
 				document.getElementById('view').innerHTML=dofb;
 			}
-			
+		}
+		function filterWarishNewApplication(gid){
+			$("#showdata").empty().append('<p align="center" style="margin-top:20%"><img src="library/ajax-loader.gif" style=""></p>');
+			var url="Applicant/warishapplicantReport?napply=new&opt="+gid;
+			$("#showdata").load(url);
+			if(gid==11){
+				$("#view").html('Accept...');
+			}
+			else if(gid==22){
+				$("#view").html('Payment...');
+			}
 		}
 	</script>
 	<div class="row"> 
@@ -68,6 +78,15 @@
 				<button type="button" value="1000" name="allData" onclick="filterTradelicense(this.value);" class='btn btn-danger btn-sm'>সকল সনদ</button>
 			</div>
 		</div>
+		<?php endif;?>
+		<?php if($_GET['napply']=='new'):?>
+		<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
+			<div class="col-lg-8 col-sm-8 col-xs-8"></div>
+			<div class="col-lg-4 col-sm-4 col-xs-4">
+					<button type="button" value="11" name='acceptWaiting' onclick="filterWarishNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="22" name="paymentConfirm" onclick="filterWarishNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation </button>
+				</div>
+			</div>
 		<?php endif;?>
 	</div>
 	<div style="padding:4px;width:100%;" id="showdata">
@@ -154,7 +173,7 @@
 										Waiting for Accept
 							        </a>
 								  <?php }?>
-							<?php }?>
+							    <?php }?>
 
 						<?php }?>
 					</td>

@@ -38,7 +38,17 @@
 				var dofb = document.getElementById('dofb').value;
 				document.getElementById('view').innerHTML=dofb;
 			}
-			
+		}
+		function filterTradelicenseNewApplication(gid){
+			$("#showdata").empty().append('<p align="center" style="margin-top:20%"><img src="library/ajax-loader.gif" style=""></p>');
+			var url="Applicant/tradelicenseapplicantReport?napply=new&opt="+gid;
+			$("#showdata").load(url);
+			if(gid==11){
+				$("#view").html('Accept...');
+			}
+			else if(gid==22){
+				$("#view").html('Payment...');
+			}
 		}
 	</script>
 	<div class="row">
@@ -63,6 +73,16 @@
 			</div>
 		</div>
 		<?php endif;?>
+		<?php if($_GET['napply']=='new'):?>
+		<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
+			<div class="col-lg-8 col-sm-8 col-xs-8"></div>
+			<div class="col-lg-4 col-sm-4 col-xs-4">
+					<button type="button" value="11" name='acceptWaiting' onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="22" name="paymentConfirm" onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation </button>
+				</div>
+			</div>
+		<?php endif;?>
+	
 	</div>
 	
 	<div style="padding:4px;width:100%;" id="showdata">
@@ -176,16 +196,16 @@
 							<a href='Certificate/tradelicenseBangla?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseBangla'); ?> target='_blank' class="btn btn-primary btn-sm">বাংলা </a>
 							<a href='Certificate/tradelicenseEnglish?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseEnglish'); ?> target='_blank' class="btn btn-info btn-sm">ইংরেজী</a>
 						<?php } else {?>
-							 <?php if( $row->type !=1){ ?>
-							<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-info btn-sm"><?php echo $this->applicant->rePrint($row->trackid)?></a>
-						    <?php }else{?>
-								<?php if( $row->is_process ==1){ ?>
-								<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-danger btn-sm"> Unpaid </a>
-								<?php }else if( $row->is_process ==2){ ?>
-								<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Payment Confirmation </a>
-								<?php }else{?>	
-									<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Waiting for Accept </a>
-								<?php }?>
+							<?php if( $row->type !=1){ ?>
+								<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-info btn-sm"><?php echo $this->applicant->rePrint($row->trackid)?></a>
+								<?php }else{?>
+									<?php if( $row->is_process ==1){ ?>
+									<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-danger btn-sm"> Unpaid </a>
+									<?php }else if( $row->is_process ==2){ ?>
+									<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Payment Confirmation </a>
+									<?php }else{?>	
+										<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Waiting for Accept </a>
+									<?php }?>
 
 							<?php }?>
 						<?php }?>

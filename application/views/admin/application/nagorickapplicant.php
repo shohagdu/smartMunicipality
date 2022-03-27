@@ -38,6 +38,17 @@
 			}
 			
 		}
+		function filterTradelicenseNewApplication(gid){
+			$("#showdata").empty().append('<p align="center" style="margin-top:20%"><img src="library/ajax-loader.gif" style=""></p>');
+			var url="Applicant/nagorickapplicantReport?napply=new&opt="+gid;
+			$("#showdata").load(url);
+			if(gid==11){
+				$("#view").html('Accept...');
+			}
+			else if(gid==22){
+				$("#view").html('Payment...');
+			}
+		}
 	</script>
 	<div class="row"> 
 		<div class="col-lg-12 col-sm-12 col-xs-12">
@@ -61,7 +72,16 @@
 			</div>
 		</div>
 		<?php endif;?>
-	</div>
+		<?php if($_GET['napply']=='new'):?>
+		<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
+			<div class="col-lg-8 col-sm-8 col-xs-8"></div>
+			<div class="col-lg-4 col-sm-4 col-xs-4">
+					<button type="button" value="11" name='acceptWaiting' onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="22" name="paymentConfirm" onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation </button>
+				</div>
+			</div>
+	    </div>
+		<?php endif;?>
 	
 	<div style="padding:4px;width:100%;" id="showdata">
 		<table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">

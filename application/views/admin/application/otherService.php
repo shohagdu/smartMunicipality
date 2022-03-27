@@ -40,6 +40,20 @@
 				document.getElementById('view').innerHTML=dofb;
 			}
 		}
+		function filterServiceNewApplication(gid){
+			var sub_title = gid.split("&");
+			$("#showdata").empty().append('<p align="center" style="margin-top:20%"><img src="library/ajax-loader.gif" style=""></p>');
+			var url="Applicant/otherServiceReport?napply=new&opt="+gid;
+			//alert(url);
+			$("#showdata").load(url);
+			if(sub_title[0]==11){
+				$("#view").html('Accept...');
+			}
+			else if(sub_title[0]==22){
+				$("#view").html('Payment...');
+			}
+		}
+		
 	</script>
 	<?php 
 		extract($_GET);
@@ -66,6 +80,15 @@
 			</div>
 		</div>
 		<?php endif;?>
+		<?php if($_GET['napply']=='new'):?>
+			<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
+				<div class="col-lg-8 col-sm-8 col-xs-8"></div>
+				<div class="col-lg-4 col-sm-4 col-xs-4">
+					<button type="button" value="11&service=<?php echo $service;?>" name='acceptWaiting' onclick="filterServiceNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="22&service=<?php echo $service;?>" name="paymentConfirm" onclick="filterServiceNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation</button>
+				</div>
+			</div>				
+	    <?php endif;?>	
 	</div>
 	
 	<div style="padding:4px;width:100%;" id="showdata">

@@ -117,7 +117,19 @@
 								<a href='Certificate/tradelicenseBangla?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseBangla'); ?> target='_blank' class="btn btn-primary btn-sm">বাংলা </a>
 								<a href='Certificate/tradelicenseEnglish?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseEnglish'); ?> target='_blank' class="btn btn-info btn-sm">ইংরেজী</a>
 							<?php } else {?>
+								<!-- <a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-info btn-sm"><?php echo $this->applicant->rePrint($row->trackid)?></a> -->
+								<?php if( $row->type !=1){ ?>
 								<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-info btn-sm"><?php echo $this->applicant->rePrint($row->trackid)?></a>
+								<?php }else{?>
+									<?php if( $row->is_process ==1){ ?>
+									<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-danger btn-sm"> Unpaid </a>
+									<?php }else if( $row->is_process ==2){ ?>
+									<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Payment Confirmation </a>
+									<?php }else{?>	
+										<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Waiting for Accept </a>
+									<?php }?>
+
+								<?php }?>
 							<?php }?>
 						</td>
 						<?php endif;?>
