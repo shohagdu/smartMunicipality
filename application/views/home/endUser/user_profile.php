@@ -9,7 +9,7 @@ body {font-family: "Lato", sans-serif;}
   border: 1px solid #ccc;
   background-color: #f1f1f1;
   width: 20%;
-  height: 300px;
+  height: 100vh;
 }
 
 /* Style the buttons inside the tab */
@@ -44,7 +44,7 @@ body {font-family: "Lato", sans-serif;}
   border: 1px solid #ccc;
   width: 80%;
   border-left: none;
-  height: 400px;
+  height: 100vh;
   background-color:#fff;
 }
 .profileImg {
@@ -72,6 +72,12 @@ body {font-family: "Lato", sans-serif;}
 		<div class="col-md-9 left_con clearfix" style="z-index: 2;"><!-- left Content Start-->
 			<div class="panel panel-primary"  >
 				<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;">  প্রোফাইল </div>
+				<!-- <?php if($this->session->flashdata('success')){ ?>
+					<div class="alert alert-success text-center">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+						<p><?php echo $this->session->flashdata('success'); ?></p>
+					</div>
+				<?php } ?> -->
 				<div class="tab">
 					<button class="tablinks" onclick="openUserProfile(event, 'myProfile')" id="defaultOpen"> <i class="fa fa-user"></i> আমার প্রোফাইল </button>
 					<button class="tablinks" onclick="openUserProfile(event, 'PaymentStatus')"><i class="fa fa-dollar"></i>  পেমেন্ট স্ট্যাটাস </button>

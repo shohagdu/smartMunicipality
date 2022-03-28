@@ -750,7 +750,7 @@ public function payment_action()
 		$sonod_status_data = [
             'is_process' => 2,
         ];
-	
+	echo "test";exit;
         $sonod_insert = $this->EndUser->enduserSonodStatusAction($sonod_status_data, $record_id, $type);
 
 		$insert = $this->EndUser->enduserPaymentAction($payment_data, $inv_id);
@@ -813,6 +813,16 @@ public function change_password()
  }
 
 // end user area end
+public function searchRegisterUser(){
+	if(isset($_GET['nid'])){
+		$nid=$_GET['nid'];
+		$qu=$this->db->query("select nid from end_users where nid='$nid'");
+		$num_rows=$qu->num_rows();
+		if($num_rows>0){
+			echo "1";exit;
+		}
+	}
+ }
 }
 
 /* End of file welcome.php */

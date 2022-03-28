@@ -302,4 +302,12 @@ class End_user extends CI_Model{
 			//echo $output;
 
 	}
+	public function smsInboxAction($sms_data){
+		$this->db->insert($sms_data);
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 } 

@@ -1,4 +1,5 @@
 <link href="all/custom_js/application_form.css" rel="stylesheet" type="text/css" media="all" />
+<script id = "myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 <script type="text/javascript"> 
 		function validation(){
 			var total_fee = document.getElementById('total_fee').value;
@@ -16,8 +17,9 @@
 				return true;
 			}
 		}
-
 </script>
+
+
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
 		<div class="col-md-9 left_con"><!-- left Content Start-->
@@ -113,7 +115,6 @@
 							    <?php }?>		
 								
 								<div class="row">
-								    <div class="col-sm-3"> </div>
 									<div class="col-sm-2 "> 
 									    <input type="hidden" name="inv_id" id="inv_id" value="<?php echo $invoice_data->id?>" />
 									    <input type="hidden" name="record_id" id="record_id" value="<?php echo $invoice_data->record_id?>" />
@@ -123,10 +124,116 @@
 									</div>
 								</div>
 							</form>
+							<div class="col-sm-3"> <button id="bKash_button">Pay With bKash</button> </div>
 						</div>
 					</div>
 				</div>
 			</div><!-- row end--->
 		</div><!-- left Content End-->
+		<script type="text/javascript">
+ 
+    var accessToken='';
+    $(document).ready(function(){
+        $.ajax({
+            url: "Bkash/token",
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('got data from token  ..');
+				console.log(JSON.stringify(data));
+				
+                accessToken=JSON.stringify(data);
+            },
+			error: function(){
+						console.log('error');
+                        
+            }
+        });
+
+        // var paymentConfig={
+        //     createCheckoutURL:"Bkash/createpayment",
+        //     executeCheckoutURL:"Bkash/executepayment",
+        // };
+
 		
+        // var paymentRequest;
+        // paymentRequest = { amount:'105',intent:'sale'};
+		// console.log(JSON.stringify(paymentRequest));
+
+        // bKash.init({
+        //     paymentMode: 'checkout',
+        //     paymentRequest: paymentRequest,
+        //     createRequest: function(request){
+        //         console.log('=> createRequest (request) :: ');
+        //         console.log(request);
+                
+        //         $.ajax({
+        //             url: paymentConfig.createCheckoutURL+"?amount="+paymentRequest.amount,
+        //             type:'GET',
+        //             contentType: 'application/json',
+        //             success: function(data) {
+        //                 console.log('got data from create  ..');
+        //                 console.log('data ::=>');
+        //                 console.log(JSON.stringify(data));
+                        
+        //                 var obj = JSON.parse(data);
+                        
+        //                 if(data && obj.paymentID != null){
+        //                     paymentID = obj.paymentID;
+        //                     bKash.create().onSuccess(obj);
+        //                 }
+        //                 else {
+		// 					console.log('error');
+        //                     bKash.create().onError();
+        //                 }
+        //             },
+        //             error: function(){
+		// 				console.log('error');
+        //                 bKash.create().onError();
+        //             }
+        //         });
+        //     },
+            
+        //     executeRequestOnAuthorization: function(){
+        //         console.log('=> executeRequestOnAuthorization');
+        //         $.ajax({
+        //             url: paymentConfig.executeCheckoutURL+"?paymentID="+paymentID,
+        //             type: 'GET',
+        //             contentType:'application/json',
+        //             success: function(data){
+        //                 console.log('got data from execute  ..');
+        //                 console.log('data ::=>');
+        //                 console.log(JSON.stringify(data));
+                        
+        //                 data = JSON.parse(data);
+        //                 if(data && data.paymentID != null){
+        //                     alert('[SUCCESS] data : ' + JSON.stringify(data));
+        //                     window.location.href = "success.html";                              
+        //                 }
+        //                 else {
+        //                     bKash.execute().onError();
+        //                 }
+        //             },
+        //             error: function(){
+        //                 bKash.execute().onError();
+        //             }
+        //         });
+        //     }
+        // });
+        
+		console.log("Right after init ");
+    
+        
+    });
+	
+	function callReconfigure(val){
+        bKash.reconfigure(val);
+    }
+
+    function clickPayButton(){
+        $("#bKash_button").trigger('click');
+    }
+
+
+</script>
 		<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>

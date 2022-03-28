@@ -48,6 +48,23 @@
 			}
 		}
 
+		$("document").ready(function(){
+			$("#nid").keyup(function(){
+				var nid=$("#nid").val();
+				$.ajax({
+					url:"Home/searchRegisterUser?id=1",
+					data:{nid:nid},
+					type:"GET",
+					success:function(hr){
+						
+						if(hr==1){
+							document.getElementById('error1').innerHTML=" দু:খিত!!! ন্যাশনাল আইডি পূর্বে ব্যবহৃত হযেছে। ";
+							document.getElementById('nid').value="";
+						}
+					}
+				});
+			});
+		});
 </script>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
@@ -93,12 +110,13 @@
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-sm-2"></div>	
+								    <div class="col-sm-2"></div>	
 									<div class="col-sm-10"> 
 										<div class="form-group">
 											<label for="nid" class="col-sm-3 control-label"> ন্যাশনাল আইডি </label>
 											<div class="col-sm-6">
 												<input type="text" name="nid" id="nid" class="form-control"  placeholder="ন্যাশনাল আইডি"/>
+												<span id="error1" style="color:red;font-size:14px;text-align:right"></span>
 											</div>
 										</div>
 									</div>
