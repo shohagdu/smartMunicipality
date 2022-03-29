@@ -234,6 +234,7 @@
 							<input type="hidden" value="generate" name="gentype"/>
 							<input type="hidden" name='id' value='<?php echo $row->id;?>'/>
 							<input type="hidden" name='user_id' value='<?php echo $row->user_id;?>'/>
+							<input type="hidden" name='type' value='1'/>
 							<input type="hidden" name='trackid' value='<?php echo $row->trackid;?>'/>
 						</div>
 					</div>

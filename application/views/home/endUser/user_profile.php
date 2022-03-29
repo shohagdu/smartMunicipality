@@ -247,7 +247,7 @@ body {font-family: "Lato", sans-serif;}
 												<!-- <a href='Home/viewInvoice?id=<?php echo sha1($item->id)?>'  class="btn btn-success btn-info btn-sm"> View </a> -->
 												<span class="badge ">Done </span>
 											<?php }else{ ?>
-												<a href='index.php/home/invoice_payment?id=<?php echo sha1($item->id)?>'  class="btn btn-success btn-success btn-sm"> Payment </a>
+												<a href='index.php/home/invoice_payment?id=<?php echo sha1($item->id)?>'  class="btn btn-success btn-success btn-sm"> Payment Now </a>
 											<?php }?>
 											</td>
 										</tr>

@@ -8,16 +8,10 @@ class Bkash extends CI_Controller {
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->model('End_user','EndUser');
-        
 	}
 
     public function token(){
-
-       
         $request_token= $this->bkash_Get_Token();
-
-        echo "<pre>";
-        print_r($request_token);exit;
         $idtoken=$request_token['id_token'];
             
         $_SESSION['token']=$idtoken;
@@ -72,9 +66,8 @@ class Bkash extends CI_Controller {
         $proxy = $array["proxy"];
         $createpaybody=array('amount'=>$amount, 'currency'=>'BDT', 'merchantInvoiceNumber'=>$invoice,'intent'=>$intent);   
         $url = curl_init($array["createURL"]);
-
+       
         $createpaybodyx = json_encode($createpaybody);
-
         $header=array(
             'Content-Type:application/json',
             'authorization:'.$array["token"],
@@ -91,6 +84,7 @@ class Bkash extends CI_Controller {
         $resultdata = curl_exec($url);
         curl_close($url);
         echo $resultdata;
+
         }
 
     public function executepayment(){
@@ -100,6 +94,24 @@ class Bkash extends CI_Controller {
         $proxy = $array["proxy"];
 
         $url = curl_init($array["executeURL"].$paymentID);
+
+        $record_id = $_GET['record_id'];
+        $type      = $_GET['type'];
+        $payment_data = [
+            "is_paid"      => 1,
+            "is_active"    => 1,
+            "updated_ip"   => $this->input->ip_address(),
+            "payment_date" => date('Y-m-d'),
+            "updated_at"   => date('Y-m-d H:i:a'),
+         ];
+
+        $sonod_status_data = [
+            'is_process' => 2,
+        ];
+
+        $this->EndUser->enduserSonodStatusAction($sonod_status_data, $record_id, $type);
+        $this->EndUser->enduserPaymentAction($payment_data, $inv_id);
+
 
         $header=array(
             'Content-Type:application/json',

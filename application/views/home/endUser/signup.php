@@ -60,6 +60,8 @@
 						if(hr==1){
 							document.getElementById('error1').innerHTML=" দু:খিত!!! ন্যাশনাল আইডি পূর্বে ব্যবহৃত হযেছে। ";
 							document.getElementById('nid').value="";
+						}else{
+							document.getElementById('error1').innerHTML=" ";
 						}
 					}
 				});

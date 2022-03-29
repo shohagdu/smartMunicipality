@@ -1,22 +1,34 @@
-<link href="all/custom_js/application_form.css" rel="stylesheet" type="text/css" media="all" />
+<style>
+.BkashPaymentBtn{
+	color:#222;
+	font-family: inherit;
+	font-weight:bold;
+	font-size:20px;
+}
+.TotalFeeTxt{
+    font-family: sans-serif;
+    font-size: 26px;
+}
+</style>
+<script src="all/custom_js/jquery-1.8.3.min.js"></script>
 <script id = "myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 <script type="text/javascript"> 
-		function validation(){
-			var total_fee = document.getElementById('total_fee').value;
-			var inv_id    = document.getElementById('inv_id').value;
+		// function validation(){
+		// 	var total_fee = document.getElementById('total_fee').value;
+		// 	var inv_id    = document.getElementById('inv_id').value;
 		
-			if(total_fee=='' ){
-				document.getElementById('error').innerHTML='মোট ফি দিন  ';
-				return false;
-			}
-			else if(inv_id==''){
-				document.getElementById('error').innerHTML='আইডি দিন ';
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
+		// 	if(total_fee=='' ){
+		// 		document.getElementById('error').innerHTML='মোট ফি দিন  ';
+		// 		return false;
+		// 	}
+		// 	else if(inv_id==''){
+		// 		document.getElementById('error').innerHTML='আইডি দিন ';
+		// 		return false;
+		// 	}
+		// 	else {
+		// 		return true;
+		// 	}
+		// }
 </script>
 
 
@@ -29,7 +41,7 @@
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;"> পেমেন্ট করুন </div>
 						<div class="panel-body all-input-form">
 							
-							<form action="index.php/home/payment_action" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
+							<!-- <form action="index.php/home/payment_action" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 							
 							<?php if($invoice_data->type == 1) {?>
 							<div class="row">
@@ -115,6 +127,7 @@
 							    <?php }?>		
 								
 								<div class="row">
+								<div class="col-sm-3 "> </div>
 									<div class="col-sm-2 "> 
 									    <input type="hidden" name="inv_id" id="inv_id" value="<?php echo $invoice_data->id?>" />
 									    <input type="hidden" name="record_id" id="record_id" value="<?php echo $invoice_data->record_id?>" />
@@ -123,15 +136,26 @@
 										
 									</div>
 								</div>
-							</form>
-							<div class="col-sm-3"> <button id="bKash_button">Pay With bKash</button> </div>
+							</form> -->
+							<h2 class="TotalFeeTxt"> মোট ফি :  <?php echo $invoice_data->total_fee?> </h2><br>
+
+							<input type="hidden" name="total_fee" id="total_fee" value="<?php echo $invoice_data->total_fee?>" />
+							<input type="hidden" name="inv_id" id="inv_id" value="<?php echo $invoice_data->id?>" />
+							<input type="hidden" name="record_id" id="record_id" value="<?php echo $invoice_data->record_id?>" />
+							<input type="hidden" name="type" id="type" value="<?php echo $invoice_data->type?>" />
+
+							<button class="BkashPaymentBtn" id="bKash_button"><img style="width:40px; height:50px" src="all/assets/image/BKash-Icon-Logo.wine.svg" alt="Bkash Icon"> Pay With bKash</button> 
 						</div>
 					</div>
 				</div>
 			</div><!-- row end--->
 		</div><!-- left Content End-->
-		<script type="text/javascript">
- 
+<script type="text/javascript">
+   var total_fee = document.getElementById('total_fee').value;
+   var inv_id    = document.getElementById('inv_id').value;
+   var record_id = document.getElementById('record_id').value;
+   var type      = document.getElementById('type').value;
+
     var accessToken='';
     $(document).ready(function(){
         $.ajax({
@@ -150,80 +174,81 @@
             }
         });
 
-        // var paymentConfig={
-        //     createCheckoutURL:"Bkash/createpayment",
-        //     executeCheckoutURL:"Bkash/executepayment",
-        // };
+		console.log(total_fee);
+
+        var paymentConfig={
+            createCheckoutURL:"Bkash/createpayment",
+            executeCheckoutURL:"Bkash/executepayment",
+        };
 
 		
-        // var paymentRequest;
-        // paymentRequest = { amount:'105',intent:'sale'};
-		// console.log(JSON.stringify(paymentRequest));
+        var paymentRequest;
+        paymentRequest = { amount: total_fee,intent:'Sonod Fee', inv_id:inv_id, record_id:record_id, type:type };
+		console.log(JSON.stringify(paymentRequest));
 
-        // bKash.init({
-        //     paymentMode: 'checkout',
-        //     paymentRequest: paymentRequest,
-        //     createRequest: function(request){
-        //         console.log('=> createRequest (request) :: ');
-        //         console.log(request);
+        bKash.init({
+            paymentMode: 'checkout',
+            paymentRequest: paymentRequest,
+            createRequest: function(request){
+                console.log('=> createRequest (request) :: ');
+                console.log(request);
                 
-        //         $.ajax({
-        //             url: paymentConfig.createCheckoutURL+"?amount="+paymentRequest.amount,
-        //             type:'GET',
-        //             contentType: 'application/json',
-        //             success: function(data) {
-        //                 console.log('got data from create  ..');
-        //                 console.log('data ::=>');
-        //                 console.log(JSON.stringify(data));
+                $.ajax({
+                    url: paymentConfig.createCheckoutURL+"?amount="+paymentRequest.amount,
+                    type:'GET',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        console.log('got data from create  ..');
+                        console.log('data ::=>');
+                        console.log(JSON.stringify(data));
                         
-        //                 var obj = JSON.parse(data);
+                        var obj = JSON.parse(data);
                         
-        //                 if(data && obj.paymentID != null){
-        //                     paymentID = obj.paymentID;
-        //                     bKash.create().onSuccess(obj);
-        //                 }
-        //                 else {
-		// 					console.log('error');
-        //                     bKash.create().onError();
-        //                 }
-        //             },
-        //             error: function(){
-		// 				console.log('error');
-        //                 bKash.create().onError();
-        //             }
-        //         });
-        //     },
+                        if(data && obj.paymentID != null){
+                            paymentID = obj.paymentID;
+                            bKash.create().onSuccess(obj);
+                        }
+                        else {
+							console.log('error');
+                            bKash.create().onError();
+                        }
+                    },
+                    error: function(){
+						console.log('error');
+                        bKash.create().onError();
+                    }
+                });
+            },
             
-        //     executeRequestOnAuthorization: function(){
-        //         console.log('=> executeRequestOnAuthorization');
-        //         $.ajax({
-        //             url: paymentConfig.executeCheckoutURL+"?paymentID="+paymentID,
-        //             type: 'GET',
-        //             contentType:'application/json',
-        //             success: function(data){
-        //                 console.log('got data from execute  ..');
-        //                 console.log('data ::=>');
-        //                 console.log(JSON.stringify(data));
+            executeRequestOnAuthorization: function(){
+                console.log('=> executeRequestOnAuthorization');
+                $.ajax({
+                    url: paymentConfig.executeCheckoutURL+"?paymentID="+paymentID,
+                    type: 'GET',
+                    contentType:'application/json',
+                    success: function(data){
+                        console.log('got data from execute  ..');
+                        console.log('data ::=>');
+                        console.log(JSON.stringify(data));
                         
-        //                 data = JSON.parse(data);
-        //                 if(data && data.paymentID != null){
-        //                     alert('[SUCCESS] data : ' + JSON.stringify(data));
-        //                     window.location.href = "success.html";                              
-        //                 }
-        //                 else {
-        //                     bKash.execute().onError();
-        //                 }
-        //             },
-        //             error: function(){
-        //                 bKash.execute().onError();
-        //             }
-        //         });
-        //     }
-        // });
+                        data = JSON.parse(data);
+                        if(data && data.paymentID != null){
+                            alert('[SUCCESS] data : ' + JSON.stringify(data));
+                            window.location.href = "Home/profile";                              
+                        }
+                        else {
+                            bKash.execute().onError();
+                        }
+                    },
+                    error: function(){
+                        bKash.execute().onError();
+                    }
+                });
+            }
+        });
         
 		console.log("Right after init ");
     
-        
     });
 	
 	function callReconfigure(val){
@@ -236,4 +261,4 @@
 
 
 </script>
-		<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>
+<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>

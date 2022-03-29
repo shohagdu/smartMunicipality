@@ -303,8 +303,9 @@ class InvoiceGenerate extends CI_Controller {
 			$trade_data = [
                 'is_process' => 1,
             ];
-			
-            $trade_insert = $this->EndUser->enduserTradeStatusAction($trade_data, $id);
+
+            $trade_insert = $this->EndUser->enduserSonodStatusAction($trade_data, $id, $type);
+		//	echo $thia->db->last_query($trade_insert);exit;
             $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
 
 			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$fee." টাকা ফি পরিশোধ করুন ।";
