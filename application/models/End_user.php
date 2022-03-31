@@ -283,23 +283,24 @@ class End_user extends CI_Model{
 
 	public function smsSendAction($message, $mobile_no)
 	{
-		$url = 'https://www.24bulksmsbd.com/api/smsSendApi';
-			$data = array(
-				'customer_id' => 177,
-				'api_key' => 172808547692947701839707645,
-				'message' =>$message,	
-				'mobile_no' => $mobile_no
-			);
+		$sms_api_data = $this->db->select('*')->from('dcb_sms')->get()->row();
+		$url = $sms_api_data->api_url;
+		$data = array(
+			'customer_id' => 177,
+			'api_key'     => $sms_api_data->api_key,
+			'message'     =>$message,	
+			'mobile_no'   => $mobile_no
+		);
 
-			$curl = curl_init($url);
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);     
-			$output = curl_exec($curl);
-			curl_close($curl);
-			//echo $output;
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);     
+		$output = curl_exec($curl);
+		curl_close($curl);
+		//echo $output;
 
 	}
 	public function smsInboxAction($sms_data){

@@ -245,7 +245,8 @@
 								<a href="setup/sms_config">&nbsp;SMS API Configuration</a></li>
                                 <li>
 								<a href="setup/type_of_messages">&nbsp;Type of Messages</a></li> 
-                                 <li><a href="setup/sms_notification_setting">&nbsp; কখন এস এম এস যাবে</a></li>              		
+                                <li><a href="setup/sms_notification_setting">&nbsp; কখন এস এম এস যাবে</a></li>              		
+                                <li><a href="setup/payment_api_config">&nbsp; পেমেন্ট গেটওয়ে </a></li>              		
                             </ul>
 						
 						</li>

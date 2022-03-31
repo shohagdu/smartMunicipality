@@ -152,6 +152,52 @@ class Setup extends CI_Controller {
 	   endif;
 	   redirect('admin','location');
 	}
+
+
+	//Payment API  configuration
+	public function payment_api_config()
+	{
+		    $data['row']=$this->db->select('*')->from('payment_gateway_api')->get()->row();
+	        $this->load->view('admin/topBar');
+			$this->load->view('admin/leftMenu');
+			$this->load->view('admin/payment_api/payment_api_config',$data);
+			$this->load->view('admin/footer');
+	}
+
+	public function payment_api_config_sub()
+	{
+		$input =$this->input->post(null);
+		
+		if($input['hid'] != ""){
+			unset($input['hid']);
+			    $this->db->trans_start();
+				$this->db->update("payment_gateway_api",$input);
+			    $this->db->trans_complete();
+		
+		}else{
+			unset($input['hid']);
+			    $this->db->trans_start();
+				$this->db->insert("payment_gateway_api",$input);
+			    $this->db->trans_complete();
+		}
+		if($this->db->trans_complete()===TRUE){
+			echo "1";
+
+		$strJsonFileContents = file_get_contents("config.json");
+        $array = json_decode($strJsonFileContents, true);
+
+        $array['username']   = $input['username'];
+        $array['password']   = $input['password'];
+        $array['app_key']    = $input['app_key'];
+        $array['app_secret'] = $input['app_secret'];
+
+        $newJsonString = json_encode($array);
+        file_put_contents('config.json',$newJsonString);
+
+		}else{
+			echo "Opss! something error";
+		}
+	}
 	
 	
 	public function setupSubmit()

@@ -750,7 +750,7 @@ public function payment_action()
 		$sonod_status_data = [
             'is_process' => 2,
         ];
-	//echo "test";exit;
+
         $sonod_insert = $this->EndUser->enduserSonodStatusAction($sonod_status_data, $record_id, $type);
 
 		$insert = $this->EndUser->enduserPaymentAction($payment_data, $inv_id);
