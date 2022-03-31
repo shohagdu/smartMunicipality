@@ -15,8 +15,13 @@ class Admin extends CI_Controller {
 		$this->load->model('Role_chk', 'chk');
 
 		 $logged_status=$this->session->userdata('logged_status');
-
 		// echo $this->sq->check_exist_q();
+		$logged_users =$this->session->userdata('nid');
+		if($logged_status==TRUE ){
+			if(!empty($logged_users) || $logged_users > 0){
+				redirect('show'); 
+			}
+		}
 
 		if($logged_status==FALSE){
 			redirect('mms24','location');

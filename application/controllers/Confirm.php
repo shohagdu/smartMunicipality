@@ -15,6 +15,12 @@ class Confirm extends CI_Controller {
 		$this->web->expire_license();
 		
 		$logged_status=$this->session->userdata('logged_status');
+		$logged_users =$this->session->userdata('nid');
+		if($logged_status==TRUE ){
+			if(!empty($logged_users) || $logged_users > 0){
+				redirect('show'); 
+			}
+		}
 		if ($logged_status==FALSE){
 			redirect('up24', 'location');
 		}

@@ -308,7 +308,7 @@ class InvoiceGenerate extends CI_Controller {
 		//	echo $thia->db->last_query($trade_insert);exit;
             $insert = $this->EndUser->enduserInvoiceAction($invoice_data, 'end_user_invoice');
 
-			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$fee." টাকা ফি পরিশোধ করুন ।";
+			$message = "আপনার আবেদনটি গ্রহণ হয়েছে ,".$total." টাকা ফি পরিশোধ করুন ।";
 			$sms_send = $this->EndUser->smsSendAction($message, $mobile);
 			$sms_data = [
                 'trackid'=> $trackid,

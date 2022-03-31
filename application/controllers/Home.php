@@ -662,7 +662,7 @@ public function login_action()
 	if(isset($_POST['submit_btn'])){
 		 
 		$mobile_nid_birth_id =  $_POST['mobile_nid_birth_id'];
-		$password           = $_POST['password'];
+		$password            = $_POST['password'];
 	
 		if(trim($mobile_nid_birth_id == '')){
 			echo "অনুগ্রহপূর্বক মোবাইল/ন্যাশনাল আইডি অথবা জন্ম নিবন্ধন দিন ।";exit;
@@ -703,7 +703,10 @@ public function login_action()
  }
 public function profile()
 {
-	 $user_id         = $this->session->userdata('id');
+	 $user_id = $this->session->userdata('id');
+	 if(empty($user_id) || $user_id < 0 ){
+		redirect('show'); 
+	 }
 	 $data = array();
 	 $data['title'] = " প্রোফাইল";
 	 $data['all_data']=$this->setup->getdata();

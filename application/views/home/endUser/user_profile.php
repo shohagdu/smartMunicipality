@@ -66,6 +66,45 @@ body {font-family: "Lato", sans-serif;}
 .badgeDanger{
 	background-color:#e91111;
 }
+@media only screen and (max-width: 600px) {
+  .tabcontent h3 {
+    font-size:13px;
+  }
+  .tabcontent p {
+    font-size:11px;
+  }
+  table tr, td{
+	font-size:10px;
+	padding: 2px !important;
+  }
+  .badge{
+	font-size:8px;
+  }
+  .profileImg {
+    width: 20px;
+    height: 20px;
+    float: right;
+    padding-top: 1px;
+}
+.tab button{
+	font-size:10px;
+}
+#PaymentStatus a{
+	font-size:10px;
+	width: 70px;
+	height:20px;
+	padding:1px;
+}
+label{
+	font-size:10px;
+}
+.passwordChangeArearcls{
+	padding:8px;
+}
+.passwordChangeArearcls input{
+	height:30px;
+}
+}
 </style>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
@@ -86,16 +125,16 @@ body {font-family: "Lato", sans-serif;}
 
 					<div id="myProfile" class="tabcontent">
 						<div class="row">
-							<div class="col-sm-10">
+							<div class="col-sm-10 col-xs-9">
 								<h3> নাম :  <?php echo $this->session->userdata('name'); ?>  </h3>
 								<p> মোবাইল : <?php echo $this->session->userdata('mobile'); ?> </p>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-2 col-sm-3">
 								<img src="all/assets/image/avatar.png" class="profileImg" class="img-responsive">
 							</div>
 						</div>
 						<div class="row"><br>
-						<div class="col-sm-12">
+						<div class="col-sm-12 col-xs-12">
 								<table class="table table-bordered table-responsive " > 
 									<thead>
 									<tr>
@@ -203,14 +242,14 @@ body {font-family: "Lato", sans-serif;}
 
 					<div id="PaymentStatus" class="tabcontent">
 						<div class="row">
-							<div class="col-sm-12 col-xs-12  ">
+							<div class="col-sm-12 col-xs-12 ">
 							   <h3>পেমেন্ট স্ট্যাটাস</h3>
 							   <table class="table table-bordered table-responsive">
 									<thead>
 									<tr>
-										<th>  ক্রঃ নং </th>
+										<!-- <th>  ক্রঃ নং </th> -->
 										<th>  সনদের নাম </th>
-										<th>  ফি  </th>
+										<!-- <th>  ফি  </th> -->
 										<th>  মোট ফি  </th>
 										<th>স্ট্যাটাস</th>
 										<th>আকশন </th>
@@ -221,7 +260,7 @@ body {font-family: "Lato", sans-serif;}
 										$i= 1;
 										foreach($invoice_data as $item) {?>
 										<tr>
-											<td><?php echo  $i++; ?></td>
+											<!-- <td><?php echo  $i++; ?></td> -->
 											<td>
 												<?php  if($item->type == 1){ ?>
 													ট্রেড লাইসেন্স
@@ -233,7 +272,7 @@ body {font-family: "Lato", sans-serif;}
 													অন্যান্য
 												<?php }?>
 											</td>
-											<td><?php echo  $item->fee?></td>
+											<!-- <td><?php echo  $item->fee?></td> -->
 											<td><?php echo  $item->total_fee?></td>
 											<td>
 											<?php if($item->is_paid==0){?>
@@ -259,8 +298,8 @@ body {font-family: "Lato", sans-serif;}
 					</div>
 
 					<div id="passwordChange" class="tabcontent">
-						<div class="row">
-							<div class="col-sm-12">
+						<div class="row passwordChangeArearcls">
+							<div class="col-sm-12 col-xs-12">
 								<h3>পাসওয়ার্ড পরিবর্তন </h3>
 								<form action="index.php/home/change_password" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 									<p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>

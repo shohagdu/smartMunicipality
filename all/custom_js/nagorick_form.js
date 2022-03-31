@@ -28,9 +28,9 @@
 					verbose: false,
 					validators: {
 						stringLength: {
-							min: 15,
+							min: 10,
 							max: 17,
-							message: 'National id number must be between 15 and 17 characters'
+							message: 'National id number must be between 10 and 17 characters'
 						},
 						numeric: {
 							message: 'Only allowed numeric number'

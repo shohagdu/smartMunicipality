@@ -20,7 +20,7 @@ class End_user extends CI_Model{
 		if(trim($mobile_nid_birth_id)=='' || trim($password)==''){
 			redirect('home/login','location');
 		}
-		$password = md5($password);
+		$password = md5($password); 
 		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE password='$password' AND mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' ");
 	    
 		$login = $query->num_rows();
