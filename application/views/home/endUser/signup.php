@@ -7,6 +7,9 @@
 			var birth_id  = document.getElementById('birth_id').value;
 			var password  = document.getElementById('password').value;
 			var cpassword = document.getElementById('confirm_password').value;
+
+			var nidLenght      = nid.length;
+			var birth_idLenght = birth_id.length;
 			
 			var pattern = /^[\s()+-]*([0-9][\s()+-]*){6,20}$/;
 
@@ -27,6 +30,15 @@
 
 			else if(nid=='' || birth_id ==''){
 				document.getElementById('error').innerHTML='অনুগ্রহপূর্বক ন্যাশনাল আইডি অথবা জন্ম নিবন্ধন দিন ';
+				return false;
+			}
+			else if(nidLenght < 10 || nidLenght > 17){
+				document.getElementById('error').innerHTML='আপনার ন্যাশনাল আইডি সঠিক না  ';
+				return false;
+			}
+
+			else if(birth_idLenght < 15 || birth_idLenght > 17){
+				document.getElementById('error').innerHTML='আপনার জন্ম নিবন্ধন নং  সঠিক না  ';
 				return false;
 			}
 			else if(password==''){
@@ -67,7 +79,17 @@
 				});
 			});
 		});
-</script>
+
+		function isNumber(evt) {
+			evt = (evt) ? evt : window.event;
+			var charCode = (evt.which) ? evt.which : evt.keyCode;
+			if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+				return false;
+			}
+			return true;
+		}
+		
+	</script>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
 		<div class="col-md-9 left_con"><!-- left Content Start-->
@@ -77,36 +99,34 @@
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;">নিবন্ধন করুন </div>
 						<div class="panel-body all-input-form">
 							<?php if( $this->session->flashdata('success') == true) {?>
-							<div class="alert alert-success">
-								<?php echo $this->session->flashdata('flsh_msg'); ?>
-							</div>
-							<?php }?>
-							<?php if( $this->session->flashdata('error') == true) {?>
-							<div class="alert alert-danger">
-								<?php echo $this->session->flashdata('flsh_msg'); ?>
-							</div>
+								<div class="alert alert-success">
+									<?php echo $this->session->flashdata('flsh_msg'); ?>
+								</div>
+								<?php }?>
+								<?php if( $this->session->flashdata('error') == true) {?>
+								<div class="alert alert-danger">
+									<?php echo $this->session->flashdata('flsh_msg'); ?>
+								</div>
 							<?php }?>
 							<form action="index.php/home/signup_action" method="post" onsubmit="return validation();" id="validall" enctype="multipart/form-data" class="form-horizontal">
 								<div class="row">
-								   <p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
 								   <div class="col-sm-2"></div>	
 								   <div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="Name-english" class="col-sm-3 control-label">নাম  <span>*</span></label>
+											<label for="Name-english" class="col-sm-3 control-label">নাম (বাংলায়)  <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="name" id="name" class="form-control" placeholder="নাম"  />
+												<input type="text" name="name" id="name" class="form-control nopaste" placeholder="নাম বাংলায়" required />
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-								   <p id="error" style="font-size:18px;font-family:comicsans-ms;color:red;text-align:center;"></p>
 								   <div class="col-sm-2"></div>		
 								   <div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="Name-bangla" class="col-sm-3 control-label"> মোবাইল   <span>*</span></label>
+											<label for="Name-bangla" class="col-sm-3 control-label"> মোবাইল (ইংরেজিতে)  <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="mobile" id="mobile" class="form-control" placeholder="মোবাইল"  />
+												<input type="text" name="mobile" id="mobile" class="form-control nopaste" placeholder="মোবাইল ইংরেজিতে" onkeypress="return isNumber(event)"   autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -115,9 +135,9 @@
 								    <div class="col-sm-2"></div>	
 									<div class="col-sm-10"> 
 										<div class="form-group">
-											<label for="nid" class="col-sm-3 control-label"> ন্যাশনাল আইডি </label>
+											<label for="nid" class="col-sm-3 control-label"> ন্যাশনাল আইডি (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="nid" id="nid" class="form-control"  placeholder="ন্যাশনাল আইডি"/>
+												<input type="text" name="nid" id="nid" class="form-control nopaste"  placeholder="ন্যাশনাল আইডি ইংরেজিতে" onkeypress="return isNumber(event)"   autocomplete="off" />
 												<span id="error1" style="color:red;font-size:14px;text-align:right"></span>
 											</div>
 										</div>
@@ -127,9 +147,9 @@
 								<div class="col-sm-2"></div>	
 									<div class="col-sm-10">
 										<div class="form-group">
-											<label for="bith_id" class="col-sm-3 control-label"> জন্ম নিবন্ধন নং </label>
+											<label for="bith_id" class="col-sm-3 control-label"> জন্ম নিবন্ধন নং (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="birth_id" id="birth_id" class="form-control" placeholder="ন্যাশনাল আইডি"/>
+												<input type="text" name="birth_id" id="birth_id" class="form-control nopaste" placeholder="জন্ম নিবন্ধন নং ইংরেজিতে" onkeypress="return isNumber(event)"  autocomplete="off"/>
 											</div>
 										</div>
 									</div>
@@ -140,7 +160,7 @@
 										<div class="form-group">
 											<label for="5" class="col-sm-3 control-label"> পাসওয়ার্ড </label>
 											<div class="col-sm-6">
-												<input type="password" name="password" id="password" class="form-control"  placeholder="পাসওয়ার্ড"/>
+												<input type="password" name="password" id="password" class="form-control nopaste"  placeholder="পাসওয়ার্ড"/>
 											</div>
 										</div>
 									</div>
@@ -151,12 +171,13 @@
 										<div class="form-group">
 											<label for="Email" class="col-sm-3 control-label"> পুনরায় পাসওয়ার্ড</label>
 											<div class="col-sm-6">
-												<input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড  "/>
+												<input type="password" name="confirm_password" id="confirm_password" class="form-control nopaste" placeholder="পুনরায় পাসওয়ার্ড  "/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
+								    <p id="error" style="font-size:14px;font-family:comicsans-ms;color:red;text-align:center;font-weight:bold"></p>
 								    <div class="col-sm-2"></div>	
 									<div class="col-sm-10">
 										<div class="form-group">

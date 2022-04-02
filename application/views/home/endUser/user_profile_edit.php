@@ -1,241 +1,44 @@
-<link href="all/custom_js/application_form.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript"> 
-	/*========== reday function start ===========*/
-	// $(document).reday(function(){
-	// 	onload_hide_fun();
-	// });
-	/*========== reday function  end===========*/
-</script>
-<?php 
-	extract($_GET);
-?>
+<style>
+
+</style>
+
+
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
 		<div class="col-md-9 left_con"><!-- left Content Start-->
 			<div class="row">
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
-						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;"><?php echo $title;?> এর জন্য আবেদন ফরম</div>
-						<?php if(empty($this->session->userdata('id'))){  ?>
-							<h4 style="color:red;text-align:center;font-weight: bold"> আবেদন করার জন্য নিবন্ধন করতে হবে। নিবন্ধন করার পর লগইন করার মাধ্যমে আবেদন প্রক্রিয়া সম্পন্ন করা যাবে। </br> <span  style="font-size:13px;font-weight: bold" > (নিবন্ধন ব্যতিত কোন প্রকার আবেদন করা যাবে না)</span> </h4>
-						<?php }?>
-						<div class="panel-body all-input-form">
-							<form action="index.php/home/otherService_action" method="post" enctype="multipart/form-data" id="defaultForm" class="form-horizontal">
-                                <div class="row"  style="margin-top: 10px;">
-                                    <div class="col-sm-12">
-
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <label for="Picture" class="col-sm-6 control-label">ছবি</label>
-                                                <div class="col-sm-6" style="margin-top:3px;">
-                                                    <input type="file" name="file" class="form-control input-file-sm" accept="image/jpeg, image/jpg, image/png" onchange="LoadFile(event);" />
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="form-group">
-                                                <label for="Service List" class="col-sm-6 control-label"> সেবা সমহু  <span>*</span></label>
-                                                <div class="col-sm-6">
-                                                    <select name="" id="" class="form-control" required disabled >
-                                                        <option value="">চিহ্নিত করুন</option>
-                                                        <?php
-                                                        $qy = $this->db->select("id,listName")->from("otherservicelist")->where("status",1)->order_by("id","asc")->get()->result();
-                                                        foreach($qy as $serviceInfo):
-                                                            ?>
-                                                            <option value="<?php echo $serviceInfo->id;?>" <?php if($serviceInfo->id == $service): echo "selected"; endif;?>><?php echo $serviceInfo->listName;?></option>
-                                                        <?php
-                                                        endforeach;
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="form-group">
-                                                <label for="Delivery-type" class="col-sm-6 control-label"> সরবরাহের ধরণ  <span>*</span></label>
-                                                <div class="col-sm-6">
-                                                    <select name="delivery_type" id="delivery_type" class="form-control" required >
-                                                        <option value="2">অতি জরুরী </option>
-                                                        <option value="1">জরুরী</option>
-                                                        <option value="3" selected>সাধারন</option>
-
-                                                    </select>
-                                                </div>
+						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;"> প্রোফাইল আপডেট </div>
+		        		<div class="panel-body all-input-form">
+							<form action="index.php/home/nagorikapplication_action"  method="post" id="defaultForm" class="form-horizontal" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label for="National-id-english" class="col-sm-6 control-label">ছবি  </label>
+                                            <div class="col-sm-6">
+                                                <input type="file" name="file" accept="image/jpeg, image/jpg, image/png" onchange="LoadFile(event);" class="form-control input-file-sm" />
                                             </div>
                                         </div>
-                                        <div class="col-sm-3" id="img_div">
-                                            <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">
+                                      
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="Birth-no" class="col-sm-6 control-label"></label>
+                                            <div class="col-sm-6" id="img_div">
+                                                <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail" style="height: 100px" id="img_id">
+                                            </div>
                                         </div>
-                                        <div class="clearfix"> </div>
 
                                     </div>
                                 </div>
-								<?php 
-									if($service==13){
-										$possoPart='display: block;';
-										$otherPart='display: none;';
-										$shortPart='display: none;';
-									}else if($service==12){
-										$possoPart='display: none;';
-										$shortPart='display: block;';
-										$otherPart='display: none;';
-									}else{
-										$shortPart='display: none;';
-										$possoPart='display: none;';
-										$otherPart='display: block;';
-									}
-								?>
 								
-								<div id="" style="<?php echo $otherPart;?>">
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Income Measured" class="col-sm-6 control-label">আয়ের পরিমান( ইংরেজিতে ) </label>
-												<div class="col-sm-6">
-													<input type="text" name="incomeAmount" id="incomeAmount" class="form-control"  onkeypress="return checkaccnumber(event);"  placeholder="" />
-													<span class="sub-hints">বি.দ্র. : বার্ষিক আয়ের প্রত্যয়ন পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label for="Publish Name" class="col-sm-6 control-label">প্রকাশে নাম</label>
-												<div class="col-sm-6">
-													<input type="text" name="publishName" id="publishName" class="form-control"  placeholder="" />
-													<span class="sub-hints">বি.দ্র. : একই নামের প্রত্যয়ন পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Work Placed" class="col-sm-6 control-label">কর্ম ক্ষেত্রের নাম</label>
-												<div class="col-sm-6">
-													<input type="text" name="workPlace" id="workPlace" class="form-control"  placeholder="" />
-													<span class="sub-hints">বি.দ্র. : অনুমতি পত্র এর জন্য! যেমন: পুলিশ.</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label for="Death-date" class="col-sm-6 control-label">মৃত্যু তারিখ </label>
-												<div class="col-sm-6 date">
-													<div class="input-group input-append date" id="deathPicker">
-														<input type="date" class="form-control" name="ddfb" />
-														<span class="sub-hints">বি.দ্র. : মৃত্যুর সনদ পত্রের জন্য</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div id="" style="<?php echo $possoPart;?>">
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="mukti name" class="col-sm-6 control-label">মুক্তিযোদ্ধার নাম</label>
-												<div class="col-sm-6">
-													<input type="text" name="mukti_name" id="mukti_name" class="form-control"  placeholder="" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="gejet no" class="col-sm-6 control-label">গেজেট নং</label>
-												<div class="col-sm-6">
-													<input type="text" name="gejet_no" id="gejet_no" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য! </span>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-sm-12"> 
-											<div class="form-group">
-												<label for="mukti sonshod sonod no" class="col-sm-3 control-label">মুক্তিযোদ্ধা সংসদের সনদ নং</label>
-												<div class="col-sm-9">
-													<input type="text" name="m_sonshod_sonod" id="m_sonshod_sonod" class="form-control"  placeholder="" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Sector No" class="col-sm-6 control-label">সেক্টর নং </label>
-												<div class="col-sm-6">
-													<input type="text" name="sector" id="sector" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Mukti sonod" class="col-sm-6 control-label">মুক্তিবার্তা নং </label>
-												<div class="col-sm-6">
-													<input type="text" name="mukti_sonod" id="mukti_sonod" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য! </span>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="relation" class="col-sm-6 control-label">মুক্তিযোদ্ধার সাথে সম্পর্ক</label>
-												<div class="col-sm-6">
-													<input type="text" name="relation" id="relation" class="form-control"  placeholder="যেমন: কন্যার পুত্র(নাতিন)" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Short Relation" class="col-sm-6 control-label">সংক্ষেপে</label>
-												<div class="col-sm-6">
-													<input type="text" name="short_rel" id="short_rel" class="form-control"  placeholder="যেমন: দাদা/ নানা/" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য! </span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div id="" style="<?php echo $shortPart;?>">
-									<div class="row">
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Sector No" class="col-sm-6 control-label">সেক্টর নং </label>
-												<div class="col-sm-6">
-													<input type="text" name="sector2" id="sector2" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য!</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6"> 
-											<div class="form-group">
-												<label for="Mukti sonod" class="col-sm-6 control-label">মুক্তিবার্তা নং </label>
-												<div class="col-sm-6">
-													<input type="text" name="mukti_sonod2" id="mukti_sonod2" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" />
-													<span class="sub-hints">বি.দ্র. : মুক্তিযোদ্ধা সনদ পত্র এর জন্য! </span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-sm-6"> 
 										<div class="form-group">
 											<label for="National-id-english" class="col-sm-6 control-label">ন্যাশনাল আইডি (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="nationid" id="nid" class="form-control" maxlength='17' onkeypress="return checkaccnumber(event);" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('nid'); }?>" placeholder="" />
+												<input type="text" name="nationid" id="nid" class="form-control" maxlength='17' onkeypress="return checkaccnumber(event);"  placeholder="" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('nid'); }?>" />
 											</div>
 										</div>
 									</div>
@@ -243,7 +46,7 @@
 										<div class="form-group">
 											<label for="Birth-no" class="col-sm-6 control-label">জন্ম নিবন্ধন নং ( ইংরেজিতে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="bcno" id="bcno" class="form-control" maxlength="17" onkeypress="return checkaccnumber(event);"  value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('birthcertificate_no'); }?> " placeholder="" />
+												<input type="text" name="bcno" id="bcno" class="form-control" maxlength="17" onkeypress="return checkaccnumber(event);"  placeholder="" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('birthcertificate_no'); }?>"  />
 											</div>
 										</div>
 									</div>
@@ -280,7 +83,7 @@
 											</div>
 											<label for="Name-bangla" class="col-sm-3 control-label">নাম ( বাংলায় )  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bname" id="bname" class="form-control" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('name'); }?> " placeholder="" required  />
+												<input type="text" name="bname" id="bname" class="form-control" placeholder="" required value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('name'); }?>"  />
 											</div>
 										</div>
 									</div>
@@ -408,6 +211,17 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="Resident" class="col-sm-6 control-label">হোল্ডিং নম্বর </label>
+											<div class="col-sm-6">
+												<input type="text" name="holding_no" id="holding_no" class="form-control" maxlength='10'   placeholder="" />
+											</div>
+										</div>	
+									</div>	
+								</div>
+								
+								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label for="Resident" class="col-sm-6 control-label">বাসিন্দা    <span>*</span></label>
@@ -736,21 +550,12 @@
 									</div>
 								</div>
 								
-								
-								<div class="row">
-									<div class="col-sm-12" style="text-align:center;"> 
-										<div class="app-heading"> 
-											যোগাযোগের ঠিকানা
-										</div>
-									</div>
-								</div>
-								
 								<div class="row">
 									<div class="col-sm-6"> 
 										<div class="form-group">
 											<label for="Mobile" class="col-sm-6 control-label">মোবাইল    <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress="" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('mobile'); }?>" required />
+												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress=""  required value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('mobile'); }?>"  />
 											</div>
 										</div>
 									</div>
@@ -763,41 +568,19 @@
 										</div>
 									</div>
 								</div>
-								
-								<div class="row">
-									<div class="col-sm-12"> 
-										<div class="form-group">
-											<label for="Designation" class="col-sm-3 control-label">সংযুক্তি (যদি থাকে)</label>
-											<div class="col-sm-9">
-												<textarea name="attachment" class="form-control" rows="5" id="attachment" placeholder="উদাহরন: মুক্তিযোদ্ধা সন্তান, বিধবা, উপজাতি .....ইত্যাদি"></textarea>
-											</div>
-										</div>
-									</div>
-								</div>
-	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
-									  <?php if(!empty($this->session->userdata('id'))){ ?>
-										<button type="submit" name="save" id="submit_button"  class="btn btn-primary">দাখিল করুন</button>
-										<input type="hidden" name="serviceList" value="<?php echo $service;?>" />
-										<?php } ?>  
+										<?php if(!empty($this->session->userdata('id'))){ ?>
+											<button type="submit" name="save" id="submit_button"  class="btn btn-primary">আপডেট করুন</button>
+									    <?php } ?>
 									</div>
 								</div>
 							</form>
 						</div>
-					</div>
+					
 				</div>
+			 </div>
 			</div><!-- row end--->
 		</div><!-- left Content End-->
-		
-		<script src="all/custom_js/otherService_form.js?v=1" type="text/javascript"></script>
-<style type="text/css"> 
-.sub-hints{
-	font-size: 12px;
-	margin-top: 5px;
-	font-style: italic;
-	opacity: 0.8;
-	text-align: center;
-	color: red;
-}
-</style>
+
+<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>

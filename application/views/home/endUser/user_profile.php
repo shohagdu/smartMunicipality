@@ -110,7 +110,7 @@ label{
 	<div class="row"><!--- row start--->
 		<div class="col-md-9 left_con clearfix" style="z-index: 2;"><!-- left Content Start-->
 			<div class="panel panel-primary"  >
-				<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;">  প্রোফাইল </div>
+				<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:right;">  প্রোফাইল  &nbsp;&nbsp;&nbsp; <a href="index.php/home/user_profile_edit" class="btn btn-info btn-xs text-right"> <i class="fa fa-pencil"></i> আপডেট </a> </div>
 				<!-- <?php if($this->session->flashdata('success')){ ?>
 					<div class="alert alert-success text-center">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -126,7 +126,7 @@ label{
 					<div id="myProfile" class="tabcontent">
 						<div class="row">
 							<div class="col-sm-10 col-xs-9">
-								<h3> নাম :  <?php echo $this->session->userdata('name'); ?>  </h3>
+								<h3> নাম :  <?php echo $this->session->userdata('name'); ?> </h3>
 								<p> মোবাইল : <?php echo $this->session->userdata('mobile'); ?> </p>
 							</div>
 							<div class="col-sm-2 col-sm-3">
@@ -233,7 +233,11 @@ label{
 										</td>
 									</tr>
 									<?php } ?>
-									
+									<?php if(empty($trade_data) && empty($nagorik_data) && empty($others_nagorik_data) && empty($warish_data)){ ?>
+										<tr>
+											<td colspan="4" style="text-align:center; ">  কোন তথ্য পাওয়া যাইনি ।  </td>
+									    </tr>
+									<?php } ?>
 									</tbody>
 								</table>
 							</div>
@@ -291,6 +295,12 @@ label{
 											</td>
 										</tr>
 										<?php }?>
+
+										<?php if(empty($invoice_data)){ ?>
+										<tr>
+											<td colspan="4" style="text-align:center; ">  কোন তথ্য পাওয়া যাইনি ।  </td>
+									    </tr>
+									   <?php } ?>
 									</tbody>
 								</table>
 							</div>

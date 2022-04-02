@@ -721,6 +721,18 @@ public function profile()
 	 $this->load->view('home/endUser/user_profile');
 	 $this->load->view('home/right_content');
 }
+
+public function user_profile_edit(){
+	$id  = $this->session->userdata('id');
+	$data = array();
+	$data['title'] = " প্রোফাইল";
+	$data['all_data']=$this->setup->getdata();
+	$data['invoice_data']=$this->EndUser->getUserInvoice($id);
+	$this->load->view('home/header',$data);
+	$this->load->view('home/endUser/user_profile_edit');
+	$this->load->view('home/right_content');
+}
+
 public function invoice_payment(){
 	 $id = $_GET['id']; 
 	 $user_id         = $this->session->userdata('id');

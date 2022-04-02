@@ -15,7 +15,7 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">নাগরিক আবেদন</div>
 						<?php if(empty($this->session->userdata('id'))){  ?>
-							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+							<h4 style="color:red;text-align:center;font-weight: bold"> আবেদন করার জন্য নিবন্ধন করতে হবে। নিবন্ধন করার পর লগইন করার মাধ্যমে আবেদন প্রক্রিয়া সম্পন্ন করা যাবে। </br> <span  style="font-size:13px;font-weight: bold" > (নিবন্ধন ব্যতিত কোন প্রকার আবেদন করা যাবে না)</span> </h4>
 						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/nagorikapplication_action"  method="post" id="defaultForm" class="form-horizontal" enctype="multipart/form-data">
@@ -606,7 +606,9 @@
 	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
-										<button type="submit" name="save" id="submit_button" <?php if(empty($this->session->userdata('id'))){ echo "disabled";}else{ '';} ?>  class="btn btn-primary">দাখিল করুন</button>
+										<?php if(!empty($this->session->userdata('id'))){ ?>
+											<button type="submit" name="save" id="submit_button"  class="btn btn-primary">দাখিল করুন</button>
+									    <?php } ?>
 									</div>
 								</div>
 							</form>
