@@ -21,7 +21,7 @@ class End_user extends CI_Model{
 			redirect('home/login','location');
 		}
 		$password = md5($password); 
-		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE password='$password' AND mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id' ");
+		$query = $this->db->query("SELECT id,name,nid,birthcertificate_no,mobile FROM end_users WHERE (mobile='$mobile_nid_birth_id' || nid='$mobile_nid_birth_id' || birthcertificate_no='$mobile_nid_birth_id') AND  password='$password' ");
 	    
 		$login = $query->num_rows();
 
