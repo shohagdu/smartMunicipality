@@ -81,11 +81,11 @@
 											<div class="form-group">
 												<label for="Owner-name-english" class="col-sm-3 control-label">মালিকের নাম ( ইংরেজিতে )   <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="ewname[]" id="ewname" class="form-control" placeholder=""  />
+													<input type="text" name="ewname[]" id="ewname" class="form-control" placeholder="" value="<?php echo $profile_info->ename; ?>"  />
 												</div>
 												<label for="Owner-name-bangla" class="col-sm-3 control-label">মালিকের নাম ( বাংলায় )  <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="bwname[]" id="bwname" class="form-control" placeholder=""  />
+													<input type="text" name="bwname[]" id="bwname" class="form-control" placeholder="" value="<?php echo $profile_info->name; ?>"  />
 												</div>
 											</div>
 										</div>
@@ -98,9 +98,9 @@
 												<div class="col-sm-3">
 													<select name="gender[]" id="gender" class="form-control" required onchange="bybahik_obosthan_show1(this.value);" >
 														<option value="">চিহ্নিত করুন</option>
-														<option value="male">পুরুষ</option>
-														<option value="female">মহিলা</option>
-														<option value="others">অন্যান্য</option>
+														<option value="male" <?php if($profile_info->gender == "male"){ echo "selected";} ?>>পুরুষ</option>
+													    <option value="female" <?php if($profile_info->gender == "female"){ echo "selected";} ?>>মহিলা</option>
+													    <option value="others" <?php if($profile_info->gender == "others"){ echo "selected";} ?>>অন্যান্য</option>
 													</select>
 												</div>
 												<label for="Marital-status" class="col-sm-3 control-label">বৈবাহিক সম্পর্ক  <span>*</span></label>
@@ -123,11 +123,11 @@
 											<div class="form-group">
 												<label for="Father-name-english" class="col-sm-3 control-label">পিতার নাম (ইংরেজিতে)  <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="efname[]" id="efname" class="form-control" placeholder=""/>
+													<input type="text" name="efname[]" id="efname" class="form-control"  value="<?php echo $profile_info->efname; ?>" placeholder=""/>
 												</div>
 												<label for="Father-name-bangla" class="col-sm-3 control-label">পিতার নাম (বাংলায়)  <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="bfname[]" id="bfname" class="form-control" placeholder="" />
+													<input type="text" name="bfname[]" id="bfname" class="form-control"  value="<?php echo $profile_info->bfname; ?>" placeholder="" />
 												</div>
 											</div>
 										</div>
@@ -138,11 +138,11 @@
 											<div class="form-group">
 												<label for="Husband-name-english" class="col-sm-3 control-label">স্বামীর নাম (ইংরেজিতে)</label>
 												<div class="col-sm-3">
-													<input type="text" name="esname[]" id="esname" class="form-control" placeholder=""/>
+													<input type="text" name="esname[]" id="esname" class="form-control" value="<?php echo $profile_info->ehname; ?>" placeholder=""/>
 												</div>
 												<label for="Husband-name-bangla" class="col-sm-3 control-label"> স্বামীর নাম (বাংলায়)</label>
 												<div class="col-sm-3">
-													<input type="text" name="bsname[]" id="bsname" class="form-control" placeholder="" />
+													<input type="text" name="bsname[]" id="bsname" class="form-control" value="<?php echo $profile_info->bhname; ?>" placeholder="" />
 												</div>
 											</div>
 										</div>
@@ -153,11 +153,11 @@
 											<div class="form-group">
 												<label for="Mother-name-english" class="col-sm-3 control-label">মাতার নাম (ইংরেজিতে)  <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="emname[]" id="emname" class="form-control" placeholder=""/>
+													<input type="text" name="emname[]" id="emname" class="form-control" value="<?php echo $profile_info->emname; ?>" placeholder=""/>
 												</div>
 												<label for="Mother-name-bangla" class="col-sm-3 control-label">মাতার নাম (বাংলায়)  <span>*</span></label>
 												<div class="col-sm-3">
-													<input type="text" name="bmname[]" id="bmname" class="form-control" placeholder="" />
+													<input type="text" name="bmname[]" id="bmname" class="form-control" value="<?php echo $profile_info->mname; ?>" placeholder="" />
 												</div>
 											</div>
 										</div>
@@ -405,7 +405,7 @@
 										<div class="form-group">
 											<label for="Mobile" class="col-sm-6 control-label">মোবাইল    <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="mob" id="mob" class="form-control" placeholder="ইংরেজিতে প্রদান করুন" required />
+												<input type="text" name="mob" id="mob" class="form-control" value="<?php echo $profile_info->mobile; ?>" placeholder="ইংরেজিতে প্রদান করুন" required />
 											</div>
 										</div>
 									</div>
@@ -413,7 +413,7 @@
 										<div class="form-group">
 											<label for="Phone" class="col-sm-6 control-label">ফোন (যদি থাকে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="phone" id="phone" class="form-control" onkeypress="return checkaccnumber(event);"  placeholder=""/>
+												<input type="text" name="phone" id="phone" class="form-control"  onkeypress="return checkaccnumber(event);"  placeholder=""/>
 											</div>
 										</div>
 									</div>
@@ -424,7 +424,7 @@
 										<div class="form-group">
 											<label for="Email" class="col-sm-3 control-label">ইমেল</label>
 											<div class="col-sm-3">
-												<input type="text" name="email" id="email" class="form-control" placeholder=""/>
+												<input type="text" name="email" id="email" class="form-control" value="<?php echo $profile_info->email; ?>" placeholder=""/>
 											</div>
 											<div class="clearfix"></div>
 										</div>

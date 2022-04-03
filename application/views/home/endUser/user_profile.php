@@ -126,11 +126,15 @@ label{
 					<div id="myProfile" class="tabcontent">
 						<div class="row">
 							<div class="col-sm-10 col-xs-9">
-								<h3> নাম :  <?php echo $this->session->userdata('name'); ?> </h3>
-								<p> মোবাইল : <?php echo $this->session->userdata('mobile'); ?> </p>
+								<h3> নাম :  <?php echo $profile_info->name; ?> </h3>
+								<p> মোবাইল : <?php echo $profile_info->mobile; ?> </p>
 							</div>
 							<div class="col-sm-2 col-sm-3">
+								<?php if(!empty($profile_info->profile)) { ?>
+								<img src="<?php echo base_url().'all/assets/user_img/'.$profile_info->profile; ?>" class="profileImg" class="img-responsive">
+								<?php }else{ ?>
 								<img src="all/assets/image/avatar.png" class="profileImg" class="img-responsive">
+								<?php }?>
 							</div>
 						</div>
 						<div class="row"><br>

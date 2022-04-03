@@ -77,7 +77,7 @@
 		<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
 			<div class="col-lg-8 col-sm-8 col-xs-8"></div>
 			<div class="col-lg-4 col-sm-4 col-xs-4">
-					<button type="button" value="11" name='acceptWaiting' onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="11" name='acceptWaiting' onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-warning btn-sm'>Waiting for Accept</button>
 					<button type="button" value="22" name="paymentConfirm" onclick="filterTradelicenseNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation </button>
 				</div>
 			</div>

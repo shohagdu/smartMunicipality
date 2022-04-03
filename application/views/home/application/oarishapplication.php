@@ -31,7 +31,7 @@
 										<div class="form-group">
 											<label for="national_id" class="col-sm-6 control-label">ন্যাশনাল আইডি (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="nationid" id="nid" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);"  value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('nid'); }?>" placeholder="" />
+												<input type="text" name="nationid" id="nid" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php echo $profile_info->nid; ?>" placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -39,7 +39,7 @@
 										<div class="form-group">
 											<label for="bairth_no" class="col-sm-6 control-label">জন্ম নিবন্ধন নং ( ইংরেজিতে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="bcno" id="bcno" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('birthcertificate_no'); }?>" placeholder="" />
+												<input type="text" name="bcno" id="bcno" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php echo $profile_info->birthcertificate_no; ?>" placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 										<div class="form-group">
 											<label for="passport_no" class="col-sm-6 control-label">পাসপোর্ট নং ( ইংরেজিতে )  </label>
 											<div class="col-sm-6">
-												<input type="text" name="pno" id="pno" maxlength='17' class="form-control" placeholder=""/>
+												<input type="text" name="pno" id="pno" maxlength='17' class="form-control" value="<?php echo $profile_info->pno; ?>"  placeholder=""/>
 											</div>
 										</div>
 									</div>
@@ -59,7 +59,7 @@
 											<label for="Birth-date" class="col-sm-6 control-label">জম্ম তারিখ  <span>*</span></label>
 											<div class="col-sm-6 date">
 												<div class="input-group input-append date" id="datePicker">
-													<input type="text" class="form-control" name="dofb" />
+													<input type="text" class="form-control" name="dofb"  />
 													<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 												</div>
 											</div>
@@ -76,7 +76,7 @@
 											</div>
 											<label for="death_name" class="col-sm-3 control-label">মৃত ব্যাক্তির নাম ( বাংলায় )  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bname" id="bname" class="form-control" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('name'); }?>" required />
+												<input type="text" name="bname" id="bname" class="form-control" required />
 											</div>
 										</div>
 									</div>

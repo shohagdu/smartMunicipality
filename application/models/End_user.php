@@ -280,7 +280,10 @@ class End_user extends CI_Model{
 	 $query=$this->db->select('*')->from('tbl_warishesinfo')->where('sha1(trackid)',$id)->get();
 	 return $query->row();
 	}
-
+	public function getUserProfileInfo($id){
+		$query = $this->db->select('*')->from('end_users')->where('id',$id)->get();
+		return $query->row();
+	}
 	public function smsSendAction($message, $mobile_no)
 	{
 		$sms_api_data = $this->db->select('*')->from('dcb_sms')->get()->row();

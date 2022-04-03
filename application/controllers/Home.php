@@ -29,9 +29,11 @@ class Home extends CI_Controller {
 	
    public function nagorikapplication()
    {
+	    $user_id = $this->session->userdata('id');
 		$data = array();
 		$data['title'] = "নাগরিক আবেদন";
 		$data['all_data']=$this->setup->getdata();
+		$data['profile_info']=$this->EndUser->getUserProfileInfo($user_id);
 		$this->load->view('home/header',$data);
 		$this->load->view('home/slide');
 		$this->load->view('home/application/nagorikapplication');
@@ -47,9 +49,11 @@ class Home extends CI_Controller {
 	
 	public function tradelicenseapplication()
 	{
+		$user_id = $this->session->userdata('id');
 		$data = array();
 		$data['title']= "ট্রেড লাইসেন্স আবেদন";
 		$data['all_data']=$this->setup->getdata();
+		$data['profile_info']=$this->EndUser->getUserProfileInfo($user_id);
 		$this->load->view('home/header',$data);
 		$this->load->view('home/slide');
 		$this->load->view('home/application/tradelicenseapplication');
@@ -118,9 +122,11 @@ class Home extends CI_Controller {
 	}
 	public function oarishapplication()
 	{
+		$user_id = $this->session->userdata('id');
 		$data = array();
 		$data['title']= 'ওয়ারিশ আবেদন';
 		$data['all_data']=$this->setup->getdata();	
+		$data['profile_info']=$this->EndUser->getUserProfileInfo($user_id);
 		$this->load->view('home/header',$data);
 		$this->load->view('home/slide');
 		$this->load->view('home/application/oarishapplication');
@@ -148,10 +154,12 @@ class Home extends CI_Controller {
 			$qy = $this->db->select("id,listName")->from("otherservicelist")->where($where)->get()->row();
 			$title = $qy->listName;
 		}
-
+		
+		$user_id = $this->session->userdata('id');
 		$data = array();
 		$data['title'] = $title;
 		$data['all_data']=$this->setup->getdata();
+		$data['profile_info']=$this->EndUser->getUserProfileInfo($user_id);
 		$this->load->view('home/header',$data);
 		$this->load->view('home/slide');
 		$this->load->view('home/application/otherService');
@@ -710,6 +718,7 @@ public function profile()
 	 $data = array();
 	 $data['title'] = " প্রোফাইল";
 	 $data['all_data']=$this->setup->getdata();
+	 $data['profile_info']=$this->EndUser->getUserProfileInfo($user_id);
 	 $data['trade_data']=$this->EndUser->getUserApplicationTrade($user_id);
 	//  echo $this->db->last_query($data['trade_data']);exit;
 	 $data['nagorik_data']=$this->EndUser->getUserApplicationNagorik($user_id);
@@ -725,12 +734,133 @@ public function profile()
 public function user_profile_edit(){
 	$id  = $this->session->userdata('id');
 	$data = array();
-	$data['title'] = " প্রোফাইল";
+	$data['title'] = "প্রোফাইল";
 	$data['all_data']=$this->setup->getdata();
-	$data['invoice_data']=$this->EndUser->getUserInvoice($id);
+	$data['profile_info']=$this->EndUser->getUserProfileInfo($id);
 	$this->load->view('home/header',$data);
 	$this->load->view('home/endUser/user_profile_edit');
 	$this->load->view('home/right_content');
+}
+public function  user_profile_update(){
+	extract($_POST);	
+	$id  = $this->session->userdata('id');
+	
+	$config['upload_path'] = 'all/assets/user_img';
+	$config['allowed_types'] = 'gif|jpg|png';
+	// $config['max_size'] = '100';
+	// $config['max_width']  = '1024';
+	// $config['max_height']  = '768';
+	$config['overwrite'] = TRUE;
+	$config['encrypt_name'] = FALSE;
+	$config['remove_spaces'] = TRUE;
+	if ( ! is_dir($config['upload_path']) ) die("THE UPLOAD DIRECTORY DOES NOT EXIST");
+		$this->load->library('upload', $config);
+	if ( ! $this->upload->do_upload('userfile')) {
+		echo 'error';
+	} else {
+		$Imgdata = $this->upload->data();
+	}
+	if (!file_exists($_FILES['userfile']['tmp_name'])) 
+	{
+		$picture = $pre_userpicture;
+	}else{
+		$picture = $Imgdata['file_name'];
+	}
+	
+		
+	if(($gender=='female' || $gender=='male') && ($mstatus==2)){
+		$eHname = "";
+		$bHname = "";
+		$eWname = "";
+		$bWname = "";
+	}
+	
+	if(isset($_POST['bashinda']) && $_POST['bashinda']==2){
+		$per_thana	=	$p_thana;
+		$per_dis	=	$p_dis;
+		$per_rbs	=	$p_rbs;
+		$per_wordno	=	$p_wordno;
+		$per_gram	=	$p_gram;
+		$per_postof	=	$p_postof;
+		$perb_thana	=	$pb_thana;
+		$perb_dis	=	$pb_dis;
+		$perb_rbs	=	$pb_rbs;
+		$perb_wordno=	$pb_wordno;
+		$perb_gram	=	$pb_gram;
+		$perb_postof=	$pb_postof;
+	}
+	
+	$profile_info= 'profile.png';
+
+	$dofb = date('Y-m-d',strtotime($dofb)); 						// change date formate..
+	$cDate=date("Y-m-d"); 											// current date .....
+	
+	$data=array(
+		'nid'		    => $nationid,
+		'birthcertificate_no'=> $bcno,
+		'pno'			=> $pno,
+		'dofb'			=> $dofb,
+		'ename'			=> $ename,
+		'name'			=> $bname,
+		'gender'		=> $gender,
+		'mstatus'		=> $mstatus,
+		'holding_no'	=> $holding_no,
+		'ewname'		=> $eWname,
+		'bwname'		=> $bWname,
+		'ehname'		=> $eHname,
+		'bhname'		=> $bHname,
+		'efname'		=> $efname,
+		'bfname'		=> $bfname,
+		'emname'		=> $emname,
+		'mname'			=> $bmane,
+		'ocupt'			=> $ocupt,
+		'edustatus'		=> $qualification,
+		'religion'		=> $religion,
+		'bashinda'		=> $bashinda,
+		'p_gram'		=> $p_gram,
+		'pb_gram'		=> $pb_gram,
+		'p_rbs'			=> $p_rbs,
+		'pb_rbs'		=> $pb_rbs,
+		'p_wordno'		=> $p_wordno,
+		'pb_wordno'		=> $pb_wordno,
+		'p_dis'			=> $p_dis,
+		'pb_dis'		=> $pb_dis,
+		'p_thana'		=> $p_thana,
+		'pb_thana'		=> $pb_thana,
+		'p_postof'		=> $p_postof,
+		'pb_postof'		=> $pb_postof,
+		'per_gram'		=> $per_gram,
+		'perb_gram'		=> $perb_gram,
+		'per_rbs'		=> $per_rbs,
+		'perb_rbs'		=> $perb_rbs,
+		'per_wordno'	=> $per_wordno,
+		'perb_wordno'	=> $perb_wordno,
+		'per_dis'		=> $per_dis,
+		'perb_dis'		=> $perb_dis,
+		'per_thana'		=> $per_thana,
+		'perb_thana'	=> $perb_thana,
+		'per_postof'	=> $per_postof,
+		'perb_postof'	=> $perb_postof,
+		'mobile'		=> $mob,
+		'email'			=> $email,
+		'profile'		=> $picture,
+		'updated_at'	=> $cDate
+	);
+
+	// echo "<pre>";
+	// print_r($data);exit;
+
+    $save =  $this->db->where('id',$id)->update('end_users',$data);
+
+	if($save==true){
+		$this->session->set_flashdata('success', 'প্রোফাইল আপডেট হয়েছে।');
+		redirect('home/profile'); 
+	
+	 }else{
+		$this->session->set_flashdata('error', 'কোন সমস্যা হয়েছে , আবার চেষ্টা করুন।');
+		redirect('home/profile'); 
+	 }
+		
 }
 
 public function invoice_payment(){
