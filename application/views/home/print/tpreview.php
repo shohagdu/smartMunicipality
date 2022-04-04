@@ -64,7 +64,7 @@ $row=$query->row();
 						?>
 					</div>
 					<div id="top_right">
-						<img src="<?php echo $row->profile?>" alt="image" width='140' height='120' style="padding-top:10px"/>
+						<img src="<?php echo base_url().'all/assets/user_img/'.$row->profile; ?>" alt="image" width='140' height='120' style="padding-top:10px"/>
 					</div>
 				</div>
 			</div>

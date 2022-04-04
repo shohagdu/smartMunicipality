@@ -204,7 +204,12 @@
 									<?php }else if( $row->is_process ==2){ ?>
 									<a href='InvoiceGenerate/tradelicenseGenaratePaid?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-success btn-sm"> Payment Confirmation </a>
 									<?php }else{?>	
-										<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-sm"> Waiting for Accept </a>
+										<?php  if( $row->payment_method ==1){ ?>
+											<a href='InvoiceGenerate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-warning btn-sm"> Waiting for Accept </a> (Bkash)
+										<?php }else{?>
+											<a href='Genarate/tradelicenseGenarate?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('tradelicenseGenarate'); ?> class="btn btn-success btn-info btn-sm"> Genarate </a> (Cash)
+										<?php }?>
+
 									<?php }?>
 
 							<?php }?>

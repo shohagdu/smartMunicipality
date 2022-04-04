@@ -30,6 +30,7 @@
                                                 <div class="col-sm-6" style="margin-top:3px;">
                                                     <input type="file" name="file" class="form-control input-file-sm" accept="image/jpeg, image/jpg, image/png" onchange="LoadFile(event);" />
                                                     <div class="clearfix"></div>
+													<input type="hidden" name="pre_picture" value="<?php echo $profile_info->profile; ?>"/>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
@@ -63,8 +64,12 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3" id="img_div">
-                                            <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">
-                                        </div>
+										   <?php if(empty($profile_info->profile)) { ?>
+                                                <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail"  style="height: 100px" id="img_id">
+											<?php }else{?>	
+												<img src="<?php echo base_url().'all/assets/user_img/'.$profile_info->profile; ?>" class="img-thumbnail"  style="height: 100px" id="img_id">
+											<?php }?>	
+										</div>
                                         <div class="clearfix"> </div>
 
                                     </div>
@@ -769,6 +774,20 @@
 											<label for="Designation" class="col-sm-3 control-label">সংযুক্তি (যদি থাকে)</label>
 											<div class="col-sm-9">
 												<textarea name="attachment" class="form-control" rows="5" id="attachment" placeholder="উদাহরন: মুক্তিযোদ্ধা সন্তান, বিধবা, উপজাতি .....ইত্যাদি"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12"> 
+										<div class="form-group">
+											<label for="payment_method" class="col-sm-3 control-label"> পেমেন্ট মেথড </label>
+											<div class="col-sm-3">
+												<select name="payment_method" id='payment_method' class="form-control" required >
+													<option value=''>চিহ্নিত করুন</option>
+													<option value='1'>বিকাশ </option>
+													<option value='2'>ক্যাশ </option>
+												</select>
 											</div>
 										</div>
 									</div>

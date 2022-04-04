@@ -23,7 +23,7 @@ class Home extends CI_Controller {
 	public function index(){
 		show_404();
 	}
-/* home page load function start */
+    /* home page load function start */
 
 	// application section 
 	
@@ -141,7 +141,7 @@ class Home extends CI_Controller {
 	}
 	//****** other service start ********//
 	public function otherService()
-   {
+    {
 		extract($_GET);
 		if($service==""){
 			$title = "অন্যান্য সেবা";
@@ -154,7 +154,7 @@ class Home extends CI_Controller {
 			$qy = $this->db->select("id,listName")->from("otherservicelist")->where($where)->get()->row();
 			$title = $qy->listName;
 		}
-		
+
 		$user_id = $this->session->userdata('id');
 		$data = array();
 		$data['title'] = $title;

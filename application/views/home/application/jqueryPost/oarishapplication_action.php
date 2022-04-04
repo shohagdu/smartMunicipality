@@ -157,6 +157,7 @@
 		'note'							=>  (empty(trim($appNote)) ? NULL : $appNote),
 		'status'						=>	'0',
 		'type'		                    =>  '1',
+		'payment_method'                => $payment_method,
 		'ins_time'						=> 	$CuDate
 	);
 	// for tracking table.....

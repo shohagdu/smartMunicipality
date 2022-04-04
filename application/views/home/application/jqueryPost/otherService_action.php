@@ -175,6 +175,7 @@
 		'profile'		=> $profile_info,
 		'status'		=> '0',
 		'type'		    => '1',
+		'payment_method'=> $payment_method,
 		'insert_time'	=> $cDate
 	);
 	// for tracking id....

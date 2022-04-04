@@ -666,6 +666,20 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-sm-12"> 
+										<div class="form-group">
+											<label for="payment_method" class="col-sm-2 control-label"> পেমেন্ট মেথড </label>
+											<div class="col-sm-3">
+												<select name="payment_method" id='payment_method' class="form-control" required >
+													<option value=''>চিহ্নিত করুন</option>
+													<option value='1'>বিকাশ </option>
+													<option value='2'>ক্যাশ </option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
 	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 

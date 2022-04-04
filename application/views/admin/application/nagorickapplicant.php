@@ -150,23 +150,31 @@
 							<a href='Certificate/nagorickEnglish?id=<?php echo sha1($row->trackid)?>' <?php $this->chk->acl('nagorickEnglish'); ?> target='_blank'  class="btn btn-info btn-sm">ইংরেজী</a>
 						<?php } else {?>
 							<?php if( $row->type !=1){ ?>
-							<a href='Genarate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-info btn-sm" >
-								<?php echo $this->applicant->exPrintPori($row->trackid)?>
-							</a>
+								<a href='Genarate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-info btn-sm" >
+									<?php echo $this->applicant->exPrintPori($row->trackid)?>
+								</a>
 							<?php }else{?>
+								
 								<?php if( $row->is_process ==1){ ?>
 									<a href='Genarate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-danger btn-sm" >
-										Unpaid
-									</a>
+										Unpaid 
+									</a> 
 								<?php }else if( $row->is_process ==2){ ?>
 									<a href='InvoiceGenerate/nagorickGenaratePaid?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
 										Payment Confirmation
 									</a>
 								     <?php }else{?>	
-										<a href='InvoiceGenerate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
-										   Waiting for Accept
-										</a>
+										    <?php  if( $row->payment_method ==1){ ?>
+										      <a href='InvoiceGenerate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-warning btn-sm" >
+										       Waiting for Accept
+										      </a> (Bkash)
+											<?php }else{?>
+												<a href='Genarate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-info btn-sm" >
+										         Generate
+										      </a> (Cash)
+											 <?php }?>
 								<?php }?>
+								
 							<?php }?>	
 
 						<?php }?>

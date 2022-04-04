@@ -22,6 +22,7 @@
                                         <div class="form-group">
                                             <label for="Birth-no" class="col-sm-6 control-label"></label>
                                             <div class="col-sm-6" id="img_div">
+												
                                                 <img src="<?php echo base_url().'all/assets/user_img/'.$profile_info->profile; ?>" class="img-thumbnail" style="height: 100px" id="img_id">
                                             </div>
                                         </div>

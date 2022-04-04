@@ -89,9 +89,15 @@
 												Payment Confirmation
 											</a>
 											<?php }else{?>	
-												<a href='InvoiceGenerate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
-												Waiting for Accept
-												</a>
+												     <?php  if( $row->payment_method ==1){ ?>
+														<a href='InvoiceGenerate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-success btn-sm" >
+														Waiting for Accept 
+														</a>(Bkash)
+													<?php }else{?>
+														<a href='Genarate/nagorickGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('nagorickGenarate'); ?> class="btn btn-info btn-sm" >
+										        		 Generate
+										      			</a> (Cash)
+													<?php }?>
 										<?php }?>
 									<?php }?>	
 								
