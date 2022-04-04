@@ -12,11 +12,11 @@
 			if(isset($_GET['napply']) && $_GET['napply']=='new'){
 				extract($_GET);
 				if(@$opt==11){
-					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='0' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,payment_method,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='0' order by date(insert_time) DESC, id DESC")->result();
 				}elseif(@$opt==22){
-					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,payment_method,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
 				}else{
-					$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, name, trackid,type,is_process,payment_method,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 				}
 			}
 			
@@ -56,7 +56,7 @@
 			
 			// for defalut new applicant
 			else {
-				$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type, mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT id, name, trackid,type,is_process,delivery_type,payment_method,mobile, insert_time, profile, status FROM personalinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 				
 			}
 			//echo $this->db->last_query();
@@ -71,11 +71,11 @@
 
 				extract($_GET);
 				if(@$opt==11){
-					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='0' AND type='1'  order by date(utime) DESC,id DESC")->result();
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,payment_method,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='0' AND type='1'  order by date(utime) DESC,id DESC")->result();
 				}elseif(@$opt==22){
-					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='2'  order by date(utime) DESC,id DESC")->result();
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,payment_method,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1' AND is_process='2'  order by date(utime) DESC,id DESC")->result();
 				}else{
-					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+					$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,payment_method,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
 				}
 				
 			}
@@ -117,7 +117,7 @@
 			}
 			// for new applicant defalut query
 			else {
-				$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
+				$query=$this->db->query("select tradelicense.id id,trackid,type,is_process,payment_method,delivery_type,mobile,sno,bwname,bcomname,utime,profile,status from tradelicense where sno is null AND status='1'  order by date(utime) DESC,id DESC")->result();
 			}
 			return $query;
 		}
@@ -130,11 +130,11 @@
 
 				extract($_GET);
 				if(@$opt==11){
-					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND type='1' AND is_process='0'   ORDER BY date(ins_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process,payment_method,mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND type='1' AND is_process='0'   ORDER BY date(ins_time) DESC, id DESC")->result();
 				}elseif(@$opt==22){
-					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND is_process='2'   ORDER BY date(ins_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process,payment_method, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' AND is_process='2'   ORDER BY date(ins_time) DESC, id DESC")->result();
 				}else{
-					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, bname, trackid, delivery_type,type,is_process,payment_method, mobile, ins_time as insert_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
 				}
 			}
 			// for certificate generate
@@ -171,7 +171,7 @@
 			}
 			// for new applicant defalut query 
 			else {
-				$query=$this->db->query("SELECT i.id, bname, trackid, delivery_type, type,is_process, mobile, ins_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT i.id, bname, trackid, delivery_type, type,is_process,payment_method, mobile, ins_time FROM tbl_warishesinfo WHERE sonodno is null AND status='0' ORDER BY date(ins_time) DESC, id DESC")->result();
 			}
 			return $query;
 		}
@@ -185,11 +185,11 @@
 
 				extract($_GET);
 				if(@$opt==11){
-					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='0' AND type='1' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process,payment_method, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='0' AND type='1' order by date(insert_time) DESC, id DESC")->result();
 				}elseif(@$opt==22){
-					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process,payment_method, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' AND is_process='2' order by date(insert_time) DESC, id DESC")->result();
 				}else{
-					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+					$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process,payment_method, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 				}
 			}
 			
@@ -229,7 +229,7 @@
 			
 			// for defalut new applicant
 			else {
-				$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
+				$query=$this->db->query("SELECT id, serviceId, name, trackid, delivery_type,type,is_process,payment_method, mobile, insert_time, profile, status FROM otherserviceinfo where sonodno is null AND status='0' order by date(insert_time) DESC, id DESC")->result();
 				
 			}
 			//echo $this->db->last_query();

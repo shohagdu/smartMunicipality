@@ -1,54 +1,30 @@
-<link href="all/custom_js/application_form.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript"> 
-	/*========== reday function start ===========*/
-	// $(document).reday(function(){
-	// 	onload_hide_fun();
-	// });
-	/*========== reday function  end===========*/
 
-</script>
 <div class="main_con"><!--Content Start-->
 	<div class="row"><!--- row start--->
 		<div class="col-md-9 left_con"><!-- left Content Start-->
 			<div class="row">
 				<div class="col-md-12"> 
 					<div class="panel panel-primary">
-						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">নাগরিক আবেদন</div>
-						<?php if(empty($this->session->userdata('id'))){  ?>
-							<h4 style="color:red;text-align:center;font-weight: bold"> আবেদন করার জন্য নিবন্ধন করতে হবে। নিবন্ধন করার পর লগইন করার মাধ্যমে আবেদন প্রক্রিয়া সম্পন্ন করা যাবে। </br> <span  style="font-size:13px;font-weight: bold" > (নিবন্ধন ব্যতিত কোন প্রকার আবেদন করা যাবে না)</span> </h4>
-						<?php }?>
-						<div class="panel-body all-input-form">
-							<form action="index.php/home/nagorikapplication_action"  method="post" id="defaultForm" class="form-horizontal" enctype="multipart/form-data">
+						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#642a5d;text-align:center;"> প্রোফাইল আপডেট </div>
+		        		<div class="panel-body all-input-form">
+							<form action="index.php/home/user_profile_update"  method="post"  class="form-horizontal" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <div class="form-group">
                                             <label for="National-id-english" class="col-sm-6 control-label">ছবি  </label>
                                             <div class="col-sm-6">
-                                                <input type="file" name="file" accept="image/jpeg, image/jpg, image/png" onchange="LoadFile(event);" class="form-control input-file-sm" />
-												<input type="hidden" name="pre_picture" value="<?php echo $profile_info->profile; ?>"/>
-											</div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="form-group">
-                                            <label for="Delivery-type" class="col-sm-6 control-label">সরবরাহের ধরণ  <span>*</span></label>
-                                            <div class="col-sm-6">
-                                                <label class="radio-inline"><input type="radio" name="delivery_type" value="1" >জরুরী</label>
-                                                <label class="radio-inline"><input type="radio" name="delivery_type" value="2">অতি জরুরী  </label>
-                                                <label class="radio-inline"><input type="radio" name="delivery_type" value="3" checked="checked"> সাধারন</label>
+                                                <input type="file" name="userfile"   class="form-control input-file-sm" />
                                             </div>
                                         </div>
+                                      
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="Birth-no" class="col-sm-6 control-label"></label>
                                             <div class="col-sm-6" id="img_div">
-
-												<?php if(empty($profile_info->profile)) { ?>
-                                                <img src="<?php echo base_url('library/profile/default.jpg') ?>" class="img-thumbnail" style="height: 100px" id="img_id">
-											    <?php }else{?>		
-													<img src="<?php echo base_url().'all/assets/user_img/'.$profile_info->profile; ?>"  id="img_id" class="img-thumbnail" style="height: 100px">
-												<?php }?>
-											</div>
+												
+                                                <img src="<?php echo base_url().'all/assets/user_img/'.$profile_info->profile; ?>" class="img-thumbnail" style="height: 100px" id="img_id">
+                                            </div>
                                         </div>
 
                                     </div>
@@ -78,7 +54,7 @@
 										<div class="form-group">
 											<label for="Passport-no" class="col-sm-6 control-label">পাসপোর্ট নং ( ইংরেজিতে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="pno" id="pno" class="form-control" value="<?php echo $profile_info->pno; ?>" maxlength='17' placeholder=""/>
+												<input type="text" name="pno" id="pno" class="form-control" maxlength='17' placeholder="" value="<?php echo $profile_info->pno; ?>" />
 											</div>
 										</div>
 									</div>
@@ -100,7 +76,7 @@
 										<div class="form-group">
 											<label for="Name-english" class="col-sm-3 control-label">নাম ( ইংরেজিতে )   <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="ename" id="name" class="form-control" placeholder="" value="<?php echo $profile_info->ename; ?>" required />
+												<input type="text" name="ename" id="name" class="form-control" placeholder="" required value="<?php echo $profile_info->ename; ?>" />
 											</div>
 											<label for="Name-bangla" class="col-sm-3 control-label">নাম ( বাংলায় )  <span>*</span></label>
 											<div class="col-sm-3">
@@ -142,11 +118,11 @@
 										<div class="form-group">
 											<label for="Wife-name-english" class="col-sm-3 control-label">স্ত্রীর  নাম (ইংরেজিতে)  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="eWname" id="eWname" class="form-control" value="<?php echo $profile_info->ewname; ?>" placeholder="" />
+												<input type="text" name="eWname" id="eWname" class="form-control" placeholder="" value="<?php echo $profile_info->ewname; ?>" />
 											</div>
 											<label for="Wife-name-bangla" class="col-sm-3 control-label">স্ত্রীর নাম (বাংলায়) <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bWname" id="bWname" class="form-control" value="<?php echo $profile_info->bwname; ?>" placeholder="" />
+												<input type="text" name="bWname" id="bWname" class="form-control" placeholder="" value="<?php echo $profile_info->bwname; ?>" />
 											</div>
 										</div>
 									</div>
@@ -157,11 +133,11 @@
 										<div class="form-group">
 											<label for="Husband-name-english" class="col-sm-3 control-label">স্বামীর নাম (ইংরেজিতে) <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="eHname" id="eHname" class="form-control" value="<?php echo $profile_info->ehname; ?>" placeholder="" />
+												<input type="text" name="eHname" id="eHname" class="form-control" placeholder="" value="<?php echo $profile_info->ehname; ?>" />
 											</div>
 											<label for="Husband-name-bangla" class="col-sm-3 control-label"> স্বামী নাম (বাংলায়) <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bHname" id="bHname"  class="form-control" value="<?php echo $profile_info->bhname; ?>" placeholder="" />
+												<input type="text" name="bHname" id="bHname" class="form-control" placeholder="" value="<?php echo $profile_info->bhname; ?>" />
 											</div>
 										</div>
 									</div>
@@ -172,11 +148,11 @@
 										<div class="form-group">
 											<label for="Father-name-english" class="col-sm-3 control-label">পিতার নাম (ইংরেজিতে)  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="efname" id="efname" class="form-control" value="<?php echo $profile_info->efname; ?>" placeholder="" required />
+												<input type="text" name="efname" id="efname" class="form-control" placeholder="" required  value="<?php echo $profile_info->efname; ?>" />
 											</div>
 											<label for="Father-name-bangla" class="col-sm-3 control-label">পিতার নাম (বাংলায়)  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bfname" id="bfname" class="form-control" value="<?php echo $profile_info->bfname; ?>"  placeholder="" required />
+												<input type="text" name="bfname" id="bfname" class="form-control" placeholder="" value="<?php echo $profile_info->bfname; ?>" required />
 											</div>
 										</div>
 									</div>
@@ -187,11 +163,11 @@
 										<div class="form-group">
 											<label for="Mother-name-english" class="col-sm-3 control-label">মাতার নাম (ইংরেজিতে)  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="emname" id="mname" class="form-control" value="<?php echo $profile_info->emname; ?>" placeholder="" required />
+												<input type="text" name="emname" id="mname" class="form-control" placeholder="" value="<?php echo $profile_info->emname; ?>" required />
 											</div>
 											<label for="Mother-name-bangla" class="col-sm-3 control-label">মাতার নাম (বাংলায়)  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bmane" id="emane" class="form-control" value="<?php echo $profile_info->mname; ?>" placeholder="" required />
+												<input type="text" name="bmane" id="emane" class="form-control" placeholder="" value="<?php echo $profile_info->mname; ?>" required />
 											</div>
 										</div>
 									</div>
@@ -202,7 +178,7 @@
 										<div class="form-group">
 											<label for="profession" class="col-sm-6 control-label">পেশা</label>
 											<div class="col-sm-6">
-												<input type="text" name="ocupt" id="occupation" class="form-control"  value="<?php echo $profile_info->ocupt; ?>"  placeholder="" maxlength="500" />
+												<input type="text" name="ocupt" id="occupation" class="form-control" placeholder="" maxlength="500"  value="<?php echo $profile_info->ocupt; ?>" />
 											</div>
 										</div>
 									</div>
@@ -236,7 +212,7 @@
 										<div class="form-group">
 											<label for="Resident" class="col-sm-6 control-label">হোল্ডিং নম্বর </label>
 											<div class="col-sm-6">
-												<input type="text" name="holding_no" id="holding_no" class="form-control" maxlength='10'   placeholder="" value="<?php echo $profile_info->holding_no; ?>"  />
+												<input type="text" name="holding_no" id="holding_no" class="form-control" maxlength='10' value="<?php echo $profile_info->holding_no; ?>"   placeholder="" />
 											</div>
 										</div>	
 									</div>	
@@ -571,21 +547,12 @@
 									</div>
 								</div>
 								
-								
-								<div class="row">
-									<div class="col-sm-12" style="text-align:center;"> 
-										<div class="app-heading"> 
-											যোগাযোগের ঠিকানা
-										</div>
-									</div>
-								</div>
-								
 								<div class="row">
 									<div class="col-sm-6"> 
 										<div class="form-group">
 											<label for="Mobile" class="col-sm-6 control-label">মোবাইল    <span>*</span></label>
 											<div class="col-sm-6">
-												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress=""  required value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('mobile'); }?>"  />
+												<input type="text" name="mob" id="mob" class="form-control"  placeholder="ইংরেজিতে প্রদান করুন" onkeypress=""  value="<?php echo $profile_info->mobile; ?>"  />
 											</div>
 										</div>
 									</div>
@@ -593,49 +560,25 @@
 										<div class="form-group">
 											<label for="Email" class="col-sm-6 control-label">ইমেল </label>
 											<div class="col-sm-6">
-												<input type="text" name="email" id="email" class="form-control" value="<?php echo $profile_info->email; ?>" placeholder=""/>
+												<input type="text" name="email" id="email" class="form-control"  value="<?php echo $profile_info->email; ?>"  placeholder=""/>
 											</div>
 										</div>
 									</div>
 								</div>
 								
 								<div class="row">
-									<div class="col-sm-12"> 
-										<div class="form-group">
-											<label for="Designation" class="col-sm-3 control-label">সংযুক্তি (যদি থাকে)</label>
-											<div class="col-sm-9">
-												<textarea name="attachment" class="form-control" rows="5" id="attachment" placeholder="উদাহরন: মুক্তিযোদ্ধা সন্তান, বিধবা, উপজাতি .....ইত্যাদি"></textarea>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-12"> 
-										<div class="form-group">
-											<label for="payment_method" class="col-sm-3 control-label"> পেমেন্ট মেথড </label>
-											<div class="col-sm-3">
-												<select name="payment_method" id='payment_method' class="form-control" required >
-													<option value=''>চিহ্নিত করুন</option>
-													<option value='1'>বিকাশ </option>
-													<option value='2'>ক্যাশ </option>
-												</select>
-											</div>
-										</div>
-									</div>
-								</div>
-	
-								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
+									<input type="hidden" name="pre_userpicture" value="<?php echo $profile_info->profile; ?>"  />
 										<?php if(!empty($this->session->userdata('id'))){ ?>
-											<button type="submit" name="save" id="submit_button"  class="btn btn-primary">দাখিল করুন</button>
+											<button type="submit" name="save" id="submit_button"  class="btn btn-primary">আপডেট করুন</button>
 									    <?php } ?>
 									</div>
 								</div>
 							</form>
 						</div>
-					</div>
 				</div>
+			 </div>
 			</div><!-- row end--->
 		</div><!-- left Content End-->
-		
-		<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>
+
+<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>

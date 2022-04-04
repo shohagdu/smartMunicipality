@@ -145,9 +145,10 @@
 		'mobile'		=> $mob,
 		'email'			=> $email,
 		'attachment'	=> $attachment,
-		'profile'		=> $profile_info,
+		'profile'		=> !empty($pre_picture) ? $pre_picture : $profile_info,
 		'status'		=> '0',
 		'type'		    => '1',
+		'payment_method'=> $payment_method,
 		'insert_time'	=> $cDate
 	);
 	// for tracking id....

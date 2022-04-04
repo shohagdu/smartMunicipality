@@ -93,9 +93,15 @@
 												Payment Confirmation
 												</a>
 											<?php }else{?>	
-												<a href='InvoiceGenerate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-success btn-sm" >
-												Waiting for Accept
-												</a>
+												<?php  if( $row->payment_method ==1){ ?>
+													<a href='InvoiceGenerate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-warning btn-sm" >
+													Waiting for Accept
+													</a> (Bkash)
+												<?php }else{?>
+														<a href='Genarate/otherServiceGenarate?id=<?php echo sha1($row->id)?>' class="btn btn-info btn-sm" >
+														Genarate
+													</a>  (Cash)
+												<?php }?>
 											<?php }?>
 										
 									<?php }?>

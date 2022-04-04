@@ -177,9 +177,10 @@
 		'mobile'		=> $mob,
 		'phone'			=> $phone,
 		'email'			=> $email,
-		'profile'		=> $profile_info,
+		'profile'		=> !empty($pre_picture) ? $pre_picture : $profile_info,
 		'status'		=> 1,
 		'type'		    => 1,
+		'payment_method'=> $payment_method,
 		'insert_time'	=> $insert_time,
 		'syn_status'	=> 1
 	);

@@ -56,7 +56,7 @@ $row=$query->row();
 						
 					</div>
 					<div id="top_right">
-						<img src="<?php echo $row->profile?>" alt="image" />
+						<img src="<?php echo base_url().'all/assets/user_img/'.$row->profile; ?>" alt="image" />
 					</div>
 				</div>
 			</div>

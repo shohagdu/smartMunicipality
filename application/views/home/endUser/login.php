@@ -44,7 +44,7 @@
 										<div class="form-group">
 											<label for="Name-english" class="col-sm-3 control-label"> মোবাইল/ন্যাশনাল আইডি/জন্ম নিবন্ধন নং  <span>*</span></label>
 											<div class="col-sm-5">
-												<input type="text" name="mobile_nid_birth_id" id="mobile_nid_birth_id" class="form-control" placeholder="মোবাইল/ন্যাশনাল আইডি/জন্ম নিবন্ধন নং"  />
+												<input type="number" name="mobile_nid_birth_id" id="mobile_nid_birth_id" class="form-control" placeholder="মোবাইল/ন্যাশনাল আইডি/জন্ম নিবন্ধন নং" required  />
 											</div>
 											
 										</div>
@@ -53,7 +53,7 @@
 										<div class="form-group">
 											<label for="Name-bangla" class="col-sm-3 control-label"> পাসওয়ার্ড   <span>*</span></label>
 											<div class="col-sm-5">
-												<input type="password" name="password" id="password" class="form-control" placeholder="পাসওয়ার্ড"  />
+												<input type="password" name="password" id="password" class="form-control" placeholder="পাসওয়ার্ড"  required />
 											</div>
 										</div>
 									</div>

@@ -9,7 +9,7 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading" style="font-weight: bold; font-size: 15px;background:#004884;text-align:center;">ওয়ারিশ সনদের আবেদন </div>
 						<?php if(empty($this->session->userdata('id'))){  ?>
-							<h3 style="color:red;text-align:center;font-weight: bold"> আগে নিবন্ধন করুন, তারপর লগইন করে আবেদন করুন </h3>
+							<h4 style="color:red;text-align:center;font-weight: bold"> আবেদন করার জন্য নিবন্ধন করতে হবে। নিবন্ধন করার পর লগইন করার মাধ্যমে আবেদন প্রক্রিয়া সম্পন্ন করা যাবে। </br> <span  style="font-size:13px;font-weight: bold" > (নিবন্ধন ব্যতিত কোন প্রকার আবেদন করা যাবে না)</span> </h4>
 						<?php }?>
 						<div class="panel-body all-input-form">
 							<form action="index.php/home/oarishapplication_action" method="post" enctype="multipart/form-data" id="defaultForm" class="form-horizontal">
@@ -31,7 +31,7 @@
 										<div class="form-group">
 											<label for="national_id" class="col-sm-6 control-label">ন্যাশনাল আইডি (ইংরেজিতে)  </label>
 											<div class="col-sm-6">
-												<input type="text" name="nationid" id="nid" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);"  value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('nid'); }?>" placeholder="" />
+												<input type="text" name="nationid" id="nid" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php echo $profile_info->nid; ?>" placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -39,7 +39,7 @@
 										<div class="form-group">
 											<label for="bairth_no" class="col-sm-6 control-label">জন্ম নিবন্ধন নং ( ইংরেজিতে ) </label>
 											<div class="col-sm-6">
-												<input type="text" name="bcno" id="bcno" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('birthcertificate_no'); }?>" placeholder="" />
+												<input type="text" name="bcno" id="bcno" maxlength='17' class="form-control" onkeypress="return checkaccnumber(event);" value="<?php echo $profile_info->birthcertificate_no; ?>" placeholder="" />
 											</div>
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 										<div class="form-group">
 											<label for="passport_no" class="col-sm-6 control-label">পাসপোর্ট নং ( ইংরেজিতে )  </label>
 											<div class="col-sm-6">
-												<input type="text" name="pno" id="pno" maxlength='17' class="form-control" placeholder=""/>
+												<input type="text" name="pno" id="pno" maxlength='17' class="form-control" value="<?php echo $profile_info->pno; ?>"  placeholder=""/>
 											</div>
 										</div>
 									</div>
@@ -59,7 +59,7 @@
 											<label for="Birth-date" class="col-sm-6 control-label">জম্ম তারিখ  <span>*</span></label>
 											<div class="col-sm-6 date">
 												<div class="input-group input-append date" id="datePicker">
-													<input type="text" class="form-control" name="dofb" />
+													<input type="text" class="form-control" name="dofb"  />
 													<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 												</div>
 											</div>
@@ -76,7 +76,7 @@
 											</div>
 											<label for="death_name" class="col-sm-3 control-label">মৃত ব্যাক্তির নাম ( বাংলায় )  <span>*</span></label>
 											<div class="col-sm-3">
-												<input type="text" name="bname" id="bname" class="form-control" value="<?php if(!empty($this->session->userdata('id'))){ echo $this->session->userdata('name'); }?>" required />
+												<input type="text" name="bname" id="bname" class="form-control" required />
 											</div>
 										</div>
 									</div>
@@ -666,10 +666,26 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-sm-12"> 
+										<div class="form-group">
+											<label for="payment_method" class="col-sm-2 control-label"> পেমেন্ট মেথড </label>
+											<div class="col-sm-3">
+												<select name="payment_method" id='payment_method' class="form-control" required >
+													<option value=''>চিহ্নিত করুন</option>
+													<option value='1'>বিকাশ </option>
+													<option value='2'>ক্যাশ </option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
 	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
-										<button type="submit" name='save' id="submit_button" <?php if(empty($this->session->userdata('id'))){ echo "disabled";}else{ '';} ?> class="btn btn-primary">দাখিল করুন</button>
+									<?php if(!empty($this->session->userdata('id'))){ ?>
+										<button type="submit" name='save' id="submit_button" class="btn btn-primary">দাখিল করুন</button>
+									<?php } ?>  
 									</div>
 								</div>
 							</form>

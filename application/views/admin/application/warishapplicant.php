@@ -83,7 +83,7 @@
 		<div class="col-lg-12 col-sm-12 col-xs-12" style="margin:10px 0px;">
 			<div class="col-lg-8 col-sm-8 col-xs-8"></div>
 			<div class="col-lg-4 col-sm-4 col-xs-4">
-					<button type="button" value="11" name='acceptWaiting' onclick="filterWarishNewApplication(this.value);" class='btn btn-success btn-sm'>Waiting for Accept</button>
+					<button type="button" value="11" name='acceptWaiting' onclick="filterWarishNewApplication(this.value);" class='btn btn-warning btn-sm'>Waiting for Accept</button>
 					<button type="button" value="22" name="paymentConfirm" onclick="filterWarishNewApplication(this.value);" class='btn btn-success btn-sm'>Payment Confirmation </button>
 				</div>
 			</div>
@@ -169,9 +169,15 @@
 									   Payment Confirmation
 							        </a>
 								  <?php }else{?>
-									<a href='InvoiceGenerate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-success btn-sm">
-										Waiting for Accept
-							        </a>
+									       <?php  if( $row->payment_method ==1){ ?>
+												<a href='InvoiceGenerate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-warning btn-sm">
+													Waiting for Accept
+												</a>  (Bkash)
+											<?php }else{?>
+												<a href='Genarate/warishGenarate?id=<?php echo sha1($row->id)?>' <?php $this->chk->acl('warishGenarate'); ?> class="btn btn-info btn-sm">
+												Generate
+												</a> (Cash)
+											<?php }?>
 								  <?php }?>
 							    <?php }?>
 
