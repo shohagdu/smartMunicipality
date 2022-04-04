@@ -51,20 +51,24 @@ class Certificate extends CI_Controller {
 		$data = [
 			'all_data' => $this->setup->getdata()
 		];
-		$result = $this->common->check_is_clear_holding_tax([
-			'sha_trackid' => $id,
-			'target_table' => "personalinfo"
-		]);
-		if($result['status'] === 'error'){
-			$data['title'] = 'নাগরিক সনদপত্র';
-			$data['message'] = "আপনার বর্তমান অর্থ বছরের হোল্ডিং ট্যাক্স পরিষদ করা হয় নাই। প্রথমে হোল্ডিং ট্যাক্স পরিষদ করতে হবে, তারপর সার্টিফিকেট প্রিন্ট করতেন পারবেন।";
-			$this->load->view("admin/certificate/certificate_error_page", $data);
-		}else{
-			$data['row'] = $this->certificate->nagorickInfo($id);
-			$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
+		// $result = $this->common->check_is_clear_holding_tax([
+		// 	'sha_trackid' => $id,
+		// 	'target_table' => "personalinfo"
+		// ]);
+		// if($result['status'] === 'error'){
+		// 	$data['title'] = 'নাগরিক সনদপত্র';
+		// 	$data['message'] = "আপনার বর্তমান অর্থ বছরের হোল্ডিং ট্যাক্স পরিষদ করা হয় নাই। প্রথমে হোল্ডিং ট্যাক্স পরিষদ করতে হবে, তারপর সার্টিফিকেট প্রিন্ট করতেন পারবেন।";
+		// 	$this->load->view("admin/certificate/certificate_error_page", $data);
+		// }else{
+		// 	$data['row'] = $this->certificate->nagorickInfo($id);
+		// 	$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
 			
-			$this->load->view("admin/certificate/nagorickBangla",$data);
-		}
+		// 	$this->load->view("admin/certificate/nagorickBangla",$data);
+		// }
+		$data['row'] = $this->certificate->nagorickInfo($id);
+		$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
+			
+		$this->load->view("admin/certificate/nagorickBangla",$data);
 	}
 	// for nagorick english certificate........
 	public function nagorickEnglish()
@@ -73,20 +77,24 @@ class Certificate extends CI_Controller {
 		$data = [
 			'all_data' => $this->setup->getdata()
 		];
-		$result = $this->common->check_is_clear_holding_tax([
-			'sha_trackid' => $id,
-			'target_table' => "personalinfo"
-		]);
-		if($result['status'] === 'error'){
-			$data['title'] = 'Citizenship Certificate';
-			$data['message'] = $result['message'];
-			$this->load->view("admin/certificate/certificate_error_page", $data);
-		}else{
-			$data['row'] = $this->certificate->nagorickInfo($id);
-			$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
+		// $result = $this->common->check_is_clear_holding_tax([
+		// 	'sha_trackid' => $id,
+		// 	'target_table' => "personalinfo"
+		// ]);
+		// if($result['status'] === 'error'){
+		// 	$data['title'] = 'Citizenship Certificate';
+		// 	$data['message'] = $result['message'];
+		// 	$this->load->view("admin/certificate/certificate_error_page", $data);
+		// }else{
+		// 	$data['row'] = $this->certificate->nagorickInfo($id);
+		// 	$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
 			
-			$this->load->view("admin/certificate/nagorickEnglish",$data);
-		}
+		// 	$this->load->view("admin/certificate/nagorickEnglish",$data);
+		// }
+		$data['row'] = $this->certificate->nagorickInfo($id);
+		$data['row_Seril_Date'] = $this->certificate->nagorick_serial_date($id);
+			
+		$this->load->view("admin/certificate/nagorickEnglish",$data);
 	}
 	// for other service  Bangla certificate........
 	public function otherServiceBangla()
