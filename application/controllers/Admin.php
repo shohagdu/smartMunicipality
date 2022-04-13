@@ -193,15 +193,58 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/taxPage/taxCollection', $data);
 		$this->load->view('admin/footer');
 	}
-	public function taxRegistrationPage(){
+	public function taxHoldingRegistration(){
 		$data = [
 			'member_info' => $this->setup->get_all_member_info(),
 			'rate_sheet'  => $this->setup->get_current_active_rate_sheet()
 		];
-		$this->load->view('admin/taxPage/taxRegistrationPage', $data);
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegister', $data);
+		$this->load->view('admin/footer');
+	}
+	public function holdingRegisterEdit(){
+		$id = (string) $_GET['id'];
+		$data = [
+			'holding_tax_person' => $this->manageAdmin->get_holding_tax_person($id),
+			'rate_sheet'  => $this->setup->get_current_active_rate_sheet(),
+			'member_info' => $this->setup->get_all_member_info()
+		];
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegisterEdit', $data);
+		$this->load->view('admin/footer');
+	}
+
+	public function taxHoldingRegistersInfo(){
+		$data['get_holding_info']  = $this->manageAdmin->get_holding_list();
+		$data['rate_sheet']        = $this->setup->get_current_active_rate_sheet();
+		// echo "<pre>";
+		// print_r($data['get_holding_info']);exit;
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegisterList', $data);
+		$this->load->view('admin/footer');
+	}
+	
+	public function holdingTaxGenerate(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+	
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxGenerate', $data);
+		$this->load->view('admin/footer');
 	}
 	public function taxCollectionPage(){
 		$this->load->view('admin/taxPage/taxCollectionPage');
+	}
+	public function taxGeneratePage(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+	
+		$this->load->view('admin/taxPage/taxGeneratePage', $data);
 	}
 	public function tradlicencePesajibiKorCollectionPage(){
 		$this->load->view('admin/taxPage/tradlicencePesajibiKorCollectionPage');
@@ -253,6 +296,21 @@ class Admin extends CI_Controller {
 			// echo json_encode(['status' => 'error', 'message' => 'Oops!!! birthCertificate Id Already exist']); exit;
 		// }
 		$response = $this->manageAdmin->tax_registration_operation($receive);
+		echo json_encode($response);exit;
+	}
+	public function UpdatenewBosotbitaTaxCollection()
+	{	$receive = $this->input->post();
+		// check required value
+		$check_required_field = $this->_check_holding_tax_registration_form_required_field($receive);
+		if($check_required_field['status'] !== 'success'){
+			echo json_encode($check_required_field);exit;
+		}
+		// check duplicate dagno
+		$is_duplicate = $this->setup->is_insert_duplicate('holdingclientinfo', 'dag_no', $receive['dagNo']);
+		if($is_duplicate){
+			echo json_encode(['status' => 'error', 'message' => 'Oops!!! Dag number Already exist']); exit;
+		}
+		$response = $this->manageAdmin->tax_registration_operation_update($receive);
 		echo json_encode($response);exit;
 	}
 	// old bosodbit tax collection .........
@@ -468,6 +526,45 @@ class Admin extends CI_Controller {
 			echo $bcomname.",".$oType.",".$gram.",".$wordno.",".$mobileno;
 		}
 	}
+
+
+
+	// Tax Generate
+	public function searchHoldingTaxGenerate()
+	{
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (string) trim($receive['fiscal_year']);
+		$rateSheet   = (string) trim($receive['rateSheet']);
+
+		$response = $this->manageAdmin->get_rateSheet_wise_tax_person($rateSheet);
+
+		// echo "<pre>"; 
+		// print_r($response);exit;
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	      => $response,
+				'fiscal_year' => $fiscal_year,
+				'rateSheet'   => $rateSheet,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/taxPage/history/bosodBitaInformationList.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		 
+		}
+
+		public function holdingTaxGenerateAction(){
+			echo "hello";exit;
+		}
+
 	/*============ bosodbita kor end=======================*/
 	
 	/*============ daily submit section start =============*/

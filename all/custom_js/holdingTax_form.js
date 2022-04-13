@@ -26,7 +26,7 @@
 					verbose: false,
 					validators: {
 						stringLength: {
-							min: 15,
+							min: 10,
 							max: 17,
 							message: 'National id number more than 15 and less then 17 characters'
 						},
@@ -34,9 +34,9 @@
 							message: 'Only allowed numeric number'
 						},
 						remote: {
-							//message: 'Oops!!! Already  exist',
-							//url: 'index.php/validation/check_unique_nid?tbl='+"holdingclientinfo",
-							//type: 'POST'
+							message: 'Oops!!! Already  exist',
+							url: 'index.php/validation/check_unique_nid?tbl='+"holdingclientinfo",
+							type: 'POST'
 						}
 					}
 				},
@@ -56,9 +56,9 @@
 							message: 'The field cannot be the same as national id'
 						},
 						remote: {
-							//message: 'Oops!!! Already  exist',
-							//url: 'index.php/validation/check_unique_birth_certificate_id?tbl='+"holdingclientinfo",
-							//type: 'POST'
+							message: 'Oops!!! Already  exist',
+							url: 'index.php/validation/check_unique_birth_certificate_id?tbl='+"holdingclientinfo",
+							type: 'POST'
 						}
 					}
 				},
