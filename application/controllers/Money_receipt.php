@@ -202,6 +202,23 @@ class Money_receipt extends CI_Controller {
 			$this->load->view('admin/moneyReceipt/bosodbitakorMoneyReceipt',$data);
 		}
 	}
+	public function bosodbitaTaxInvoice()
+	{
+		if(isset($_GET['id']) && !empty($_GET['id'])){
+			//extract($_GET);
+			$receive = $this->input->get();
+
+			$data=array(
+				'all_data'=>	$this->setup->getdata(),
+				//'nrow'		=>	$this->money_receipt->holding_client_info($receive['dno'], $receive['vno']),
+				'row'	  =>	$this->setup->holding_tax_invoice_info(sha1($receive['id']))
+			);
+			
+
+			$this->load->view('admin/moneyReceipt/bosodbitaTaxInvoice',$data);
+		}
+
+	}
 	/*========== bosodbita kor money receipt end ========*/
 	
 	/*=========== pesha money receipt  start=========*/

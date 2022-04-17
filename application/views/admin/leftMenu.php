@@ -134,8 +134,8 @@
                                 <li><a href="Admin/taxHoldingRegistration" >বসতভিটার রেজিস্ট্রেশন</a></li>
                                 <li><a href="Admin/taxHoldingRegistersInfo"> বসতভিটার তথ্য সমূহ </a></li>
                                 <li><a href="Admin/holdingTaxGenerate"> বসতভিটার  বিল জেনারেট   </a></li>
-                                <li><a  href="DailyReports/vgdApplicantReport" >বসতভিটার  বিল জেনারেট তালিকা  </a></li>
-                                <li><a  href="DailyReports/vgdApplicantReport" >বসতভিটার  বিল ক্যালেকশন   </a></li>
+                                <li><a  href="Admin/holdingTaxGenerateInvoiceList" >বসতভিটার  বিল জেনারেট তালিকা  </a></li>
+                                <li><a  href="#" >বসতভিটার  বিল ক্যালেকশন   </a></li>
                             </ul>
                         </li>
 						

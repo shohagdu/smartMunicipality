@@ -52,12 +52,13 @@
 						<span id="error" style="font-size:24px; color:red;"></span>
 					</div>
 				</div>
+				</form>
 				<div class="row"> 
 					<div class="col-lg-12 col-sm-12"> 
 						<div id="informationShow"></div>
 					</div>
 				</div>
-                </form>
+               
                 </div>
             </div><!--  panel primary----->
         </div>

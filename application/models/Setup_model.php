@@ -232,6 +232,60 @@ class Setup_model extends CI_Model{
 			return false;
 		}
 	}
+	// duplicate invoice generate
+	public function check_duplicate_fiscal_year_rate_sheet($fiscal_year, $rate_sheet_id){
+		$query = $this->db->select('id')->get_where('payment_log_bosotbita', [
+			'fisyal_year_id' => $fiscal_year,
+			'rate_sheet_id'  => $rate_sheet_id,
+		]);
+		
+		if($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function holding_tax_invoice_list_data($receive, $search_content){
+
+		$query = $this->db->select('*')->from('payment_log_bosotbita')->where('is_paid', 0)->get();
+
+		return $query->result();
+
+		// echo "<pre>";
+		// print_r($query);exit;
+	}
+	public function holding_tax_invoice_list(){
+
+		$query = $this->db->select('holdinfo.* , plb.id as paymentID,plb.invoice,plb.total, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->where(['plb.is_active' => 1, 'plb.is_paid'=> 0])
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->result();
+
+	}
+	public function holding_tax_invoice_info($id){
+		
+		$query = $this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id')
+				->where('sha1(plb.id)', $id)
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->row();
+
+	}
 	// check duplicate  for update
 	public function is_update_duplicate($table, $column, $where){
 		$query = $this->db->select("$column")
