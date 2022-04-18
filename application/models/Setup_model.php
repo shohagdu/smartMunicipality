@@ -893,6 +893,33 @@ class Setup_model extends CI_Model{
             return ['status'=>'error','message'=>'No Data found','data'=>''];
         }
     }
+    function get_receive_holding_tax_info($where=NULL)
+    {
+        $this->db->select('receive.*,info.name,info.fathername,info.holding_no,info.mobile_number, info.village,info.wordno,year.full_year, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label');
+        $this->db->from('payment_log_bosotbita as receive');
+        $this->db->join('holdingclientinfo as info','info.holding_no=receive.holding_no',"left");
+        $this->db->join('tbl_fiscal_year as year','year.id=receive.fisyal_year_id',"left");
+		$this->db->join('holding_rate_sheet as hrs','hrs.id=receive.rate_sheet_id',"left");
+		$this->db->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id',"left");
+		$this->db->join('snf_global_form as occupation','occupation.id=hrs.occupation_id',"left");
+		$this->db->join('snf_global_form as classification', 'classification.id=hrs.classification_id',"left");
+
+        if(!empty($where)){
+            $this->db->where($where);
+        }else {
+            $this->db->where('receive.is_active !=', 0);
+        }
+        $this->db->order_by('receive.holding_no','ASC');
+        $query= $this->db->get();
+
+        if($query->num_rows()>0){
+            return ['status'=>'success','message'=>'Successfully Data found','data'=>$query->result()];
+        }else{
+            return ['status'=>'error','message'=>'No Data found','data'=>''];
+        }
+    }
+
+
 
     function getPorichoyApiInfo($data,$apiURL,$apiKey){
         $url = $apiURL;

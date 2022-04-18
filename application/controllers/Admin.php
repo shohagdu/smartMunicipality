@@ -231,7 +231,6 @@ class Admin extends CI_Controller {
 	public function holdingTaxGenerate(){
 		$data['fiscal_year'] = $this->setup->get_fiscal_year();
 		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
-	
 		$this->load->view('admin/topBar');
 		$this->load->view('admin/leftMenu');
 		$this->load->view('admin/holdingTax/holdingTaxGenerate', $data);

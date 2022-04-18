@@ -238,5 +238,22 @@ class DailyReports extends CI_Controller {
         $data['AllCircleInfo']=$this->setup->get('food_vgd_circle_setup',['is_active'=>1],'id,title,issue_dt,distributes_dt,implement_authority,responsibile_officer,responsibile_uno',['filed'=>'id','order'=>'DESC']);
         $this->load->view("admin/dailyReports/vgdDistributesReport",$data);
     }
+	public function paidHoldingTaxCollectionReport(){
+        $data=array();
+        $data['all_data'] = $this->setup->getdata();
+        $data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+		
+		$this->load->view("admin/dailyReports/paidHoldingTaxCollectionReport",$data);
+    }
+
+	public function dueHoldingTaxCollectionReport(){
+        $data=array();
+        $data['all_data']    = $this->setup->getdata();
+        $data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+		
+		$this->load->view("admin/dailyReports/dueHoldingTaxCollectionReport",$data);
+    }
 
 }
