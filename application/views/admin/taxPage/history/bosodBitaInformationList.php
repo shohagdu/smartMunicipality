@@ -52,7 +52,10 @@ if((string)$info['status'] === 'success'):?>
 					    
 						<td> <?php echo $i++; ?></td>
 						<td> <?php echo $item->holding_no; ?> <input type="hidden" name="holding_no[]" id="holding_no_<?php echo $item->id;?>"  value="<?php echo $item->holding_no; ?>" /></td>
-						<td> <?php echo $item->name; ?> <input type="hidden" name="id[]" id="id_<?php echo $item->id;?>"  value="<?php echo $item->id; ?>" /></td>
+						<td> <?php echo $item->name; ?> 
+							<input type="hidden" name="id[]" id="id_<?php echo $item->id;?>"  value="<?php echo $item->id; ?>" />
+							<input type="hidden" name="user_id[]" id="user_id_<?php echo $item->id;?>"  value="<?php echo $item->userId; ?>" />
+					    </td>
 						<td> <?php echo $item->fathername; ?></td>
 						<td> <input type="text" name="amount[]" id="amouunt_<?php echo $item->id;?>" onkeyup="HoldingTaxCaculation(<?php echo $item->id;?>)"  class="amount" value="<?php echo $item->amount; ?>" /></td>
 						<td> <input type="text" name="due_amount[]" id="due_amount_<?php echo $item->id;?>" onkeyup="HoldingTaxCaculation(<?php echo $item->id;?>)" class="due_amount" value="<?php echo $item->due; ?>" /></td>

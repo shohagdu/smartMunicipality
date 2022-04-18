@@ -474,11 +474,12 @@ class Manage_admin extends CI_Model{
 	}
 	// holding info get
 	public function get_rateSheet_wise_tax_person($rate_sheet){
-		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.due, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, rate.amount', false)
+		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.due, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, rate.amount, user.id as userId', false)
 				->join('holding_rate_sheet as rate', 'rate.id = info.rate_sheet_id')
 				->join('holding_rate_sheet_label as label', 'label.id = rate.label_id')
 				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
 				->join('snf_global_form as classification', 'classification.id=rate.classification_id')
+				->join('end_users as user', 'user.holding_no=info.holding_no')
 				->where(['info.is_active' => 1, 'info.rate_sheet_id' => $rate_sheet])
 				->get('holdingclientinfo as info');
 				

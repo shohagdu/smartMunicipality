@@ -231,6 +231,7 @@ class Admin extends CI_Controller {
 	public function holdingTaxGenerate(){
 		$data['fiscal_year'] = $this->setup->get_fiscal_year();
 		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
 		$this->load->view('admin/topBar');
 		$this->load->view('admin/leftMenu');
 		$this->load->view('admin/holdingTax/holdingTaxGenerate', $data);
@@ -745,6 +746,7 @@ class Admin extends CI_Controller {
 			$fiscal_year     = $this->input->post('fiscal_year');
 			$rate_sheet_id   = $this->input->post('rateSheet');
 			$id              = $this->input->post('id');
+			$user_id         = $this->input->post('user_id');
 			$holding_no      = $this->input->post('holding_no');
 			$amount          = $this->input->post('amount');
 			$due_amount      = $this->input->post('due_amount');
@@ -785,8 +787,27 @@ class Admin extends CI_Controller {
 					'created_date'   => date("Y-m-d H:i:s"),
 					'created_ip'     => $this->input->ip_address(),
 				];
-
+				
 				$this->db->insert('payment_log_bosotbita', $data);
+				$insert_id = $this->db->insert_id();
+				$invoice_data = [
+					'user_id'      => $user_id[$key],
+					'trackid'      => NULL,
+					'record_id'    => $insert_id,
+					'fee'          => $amount[$key],
+					'total_fee'    => $total_amount[$key],
+					'account_no'   => NULL,
+					'invoice_date' => date("Y-m-d"),
+					'type'         => 25,
+					'is_paid'      => 0,
+					'is_active'    => 1,
+					'created_by'   => $this->session->userdata('id'),
+					'created_ip'   => $this->input->ip_address(),
+					'created_at'   => date("Y-m-d H:i:s"),
+				];
+
+				$this->db->insert('end_user_invoice', $invoice_data);
+
 			}
 			$this->db->trans_complete();
 			
