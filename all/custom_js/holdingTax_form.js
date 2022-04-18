@@ -77,9 +77,20 @@
 					}
 				},
 				holdingNumber: {
+					verbose: false,
 					validators: {
 						notEmpty: {
 							message: 'The field is required cannot be empty.'
+						},
+						stringLength: {
+							min: 2,
+							max: 10,
+							message: 'Holding number more than 2 and less then 10 characters'
+						},
+						remote: {
+							message: 'Oops!!! Already  exist',
+							url: 'index.php/validation/check_unique_holding_no?tbl='+"holdingclientinfo",
+							type: 'POST'
 						}
 					}
 				},
@@ -181,13 +192,13 @@
 						$('#successMessageModal').fadeIn('slow').delay(1000).fadeOut('slow');
 						$('#successTextModal').text(obj.message);
 						setTimeout(function(){					
-							window.location="Admin/taxCollection";
+							window.location="Admin/taxHoldingRegistersInfo";
 						},1000)
 					}else if(obj.status == 'warning'){
 						$('#warningMessageModal').fadeIn('slow').delay(1000).fadeOut('slow');
 						$('#warningTextModal').text(obj.message);
 						setTimeout(function(){					
-							window.location="Admin/taxCollection";
+							window.location="Admin/taxHoldingRegistration";
 						},1000)
 					}else{
 						alert(result);

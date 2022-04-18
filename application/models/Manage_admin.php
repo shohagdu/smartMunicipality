@@ -433,6 +433,7 @@ class Manage_admin extends CI_Model{
 				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
 				->join('snf_global_form as classification', 'classification.id=rate.classification_id')
 				->where(['info.is_active' => 1])
+				->order_by('info.id', 'DESC')
 				->get('holdingclientinfo as info');
 		if($query->num_rows() > 0){
 			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
