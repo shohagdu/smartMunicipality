@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <div class="col-sm-8"><div class="row">বসতভিটার  বিল জেনারেট </div></div>
                     <div class="col-sm-4">
-                        <a href="VgdController" class="btn-success btn-xs pull-right"><i class="glyphicon glyphicon-list-alt"></i> বসতভিটার  বিল জেনারেট    তালিকা
+                        <a href="Admin/holdingTaxGenerateInvoiceList" class="btn-success btn-xs pull-right"><i class="glyphicon glyphicon-list-alt"></i> বসতভিটার  বিল জেনারেট    তালিকা
                         </a>
 
                     </div>

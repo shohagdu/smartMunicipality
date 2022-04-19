@@ -257,7 +257,7 @@ class Setup_model extends CI_Model{
 	}
 	public function holding_tax_invoice_list(){
 
-		$query = $this->db->select('holdinfo.* , plb.id as paymentID,plb.invoice,plb.total, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label' )
+		$query = $this->db->select('holdinfo.* , plb.id as paymentID,plb.invoice,plb.total, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label,plb.type as paymentType ' )
 		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
 				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
 				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
@@ -286,6 +286,37 @@ class Setup_model extends CI_Model{
 		return $query->row();
 
 	}
+	public function holding_tax_bill_collection_info_row($receive){
+
+		$invoice    = $receive['invoice'];
+		$holding_no = $receive['holding_no'];
+		
+		$this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' );
+		$this->db->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no');
+		$this->db->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id');
+		$this->db->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id');
+		$this->db->join('snf_global_form as occupation','occupation.id=hrs.occupation_id');
+		$this->db->join('snf_global_form as classification', 'classification.id=hrs.classification_id');
+		$this->db->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id');
+		$this->db->where('plb.is_active', 1);
+
+		if(!empty($invoice)){
+			$this->db->where('plb.invoice', $invoice);
+		}
+		if(!empty($holding_no)){
+			$this->db->where('plb.holding_no', $holding_no);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita as plb');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->row()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+
+	}
+	
 	// check duplicate  for update
 	public function is_update_duplicate($table, $column, $where){
 		$query = $this->db->select("$column")

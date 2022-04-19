@@ -147,6 +147,12 @@ class End_user extends CI_Model{
 			$this->db->where('id',$id)->update('otherserviceinfo',$sonod_status_data);
 		}else if($type == 20){
 			$this->db->where('id',$id)->update('tbl_warishesinfo',$sonod_status_data);
+		}else if($type == 25){
+			$payment_status_data = [
+				'type'  => 2,
+				'status'=> 2,
+			];
+			$this->db->where('id',$id)->update('payment_log_bosotbita',$payment_status_data);
 		}else{
 			return false;
 		}

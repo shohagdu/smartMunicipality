@@ -55,6 +55,7 @@ if((string)$info['status'] === 'success'):?>
 						<td> <?php echo $item->name; ?> 
 							<input type="hidden" name="id[]" id="id_<?php echo $item->id;?>"  value="<?php echo $item->id; ?>" />
 							<input type="hidden" name="user_id[]" id="user_id_<?php echo $item->id;?>"  value="<?php echo $item->userId; ?>" />
+							<input type="hidden" name="user_mobile[]" id="user_mobile_<?php echo $item->id;?>"  value="<?php echo $item->userMobile; ?>" />
 					    </td>
 						<td> <?php echo $item->fathername; ?></td>
 						<td> <input type="text" name="amount[]" id="amouunt_<?php echo $item->id;?>" onkeyup="HoldingTaxCaculation(<?php echo $item->id;?>)"  class="amount" value="<?php echo $item->amount; ?>" /></td>

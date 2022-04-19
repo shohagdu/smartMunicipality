@@ -7,6 +7,7 @@ class Show extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('Role_chk', 'chk');
+		$this->load->model('numbertobangla', 'bnc');
 	}
 	public function _remap($method, $params=array()){
 		$funcs = get_class_methods($this);
@@ -55,6 +56,20 @@ class Show extends CI_Controller {
 	public function searchOarishInformation()
 	{
 		$this->load->view('home/filterApplication/searchOarishInformation');
+	}
+
+	// holding tax
+	public function holdingTaxBill()
+	{
+		if(isset($_GET['id']) && !empty($_GET['id'])){
+			$receive = $this->input->get();
+			$data=array(
+				'all_data'=> $this->setup->getdata(),
+				'row'	  => $this->setup->holding_tax_invoice_info(sha1($receive['id']))
+			);
+			
+			$this->load->view('admin/moneyReceipt/bosodbitaTaxInvoice',$data);
+		}
 	}
 	
 	/*===========oarish application serach end ===========*/

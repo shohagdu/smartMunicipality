@@ -1,24 +1,18 @@
 	$(document).ready(function() {
-		$('#holdingNoInfoFormId')
+		$('#holdingNoInfoFormBillId')
 		.formValidation({
-			message: 'আমরা এই অর্থ বছর দিয়ে কোন খুজে পাই নাই  ',
+			message: 'আমরা এই  হোল্ডিং নং দিয়ে কোন ব্যক্তিকে খুজে পাই নাই  ',
 			icon: {
 				valid: 'glyphicon glyphicon-ok',
 				invalid: 'glyphicon glyphicon-remove',
 				validating: 'glyphicon glyphicon-refresh'
 			},
 			fields: {
-				fiscal_year: {
-					verbose: false,
-					message: 'আমরা অর্থ বছর এই  দিয়ে কোন  খুজে পাই নাই',
+				holding_no: {
+					message: 'আমরা এই হোল্ডিং নং দিয়ে কোন ব্যক্তিকে খুজে পাই নাই',
 					validators: {
 						notEmpty: {
-							message: 'দয়া করে অর্থ বছর লিখুন'
-						},
-						remote: {
-							message: 'Oops!!! Already  exist',
-							url: 'index.php/validation/check_exists_fiscal_year?tbl='+"payment_log_bosotbita",
-							type: 'POST'
+							message: 'দয়া করে হোল্ডিং নং , ইনভয়েস নং লিখুন'
 						}
 					}
 				}
@@ -63,29 +57,5 @@
 		
 	});
 	/*============ number test function start ===============*/
-	function numtest(){
-		return event.charCode >= 48 && event.charCode <= 57;
-	}
-	function checkaccnumber(evt){
-		evt = (evt) ? evt : window.event;
-		var charCode = (evt.which) ? evt.which : evt.keyCode;
-		if (charCode > 31 && (charCode < 48 || charCode > 57)){
-			return false;
-		}
-		return true;
-	}
-	function refreshPage() {
-		location.reload();
-	}
-
-	function HoldingTaxCaculation(row_id){
-		var amount     = isNaN($('#amouunt_'+row_id).val()) ? 0 : parseFloat($('#amouunt_'+row_id).val());
-		var due_amount = isNaN($('#due_amount_'+row_id).val()) ? 0 : parseFloat($('#due_amount_'+row_id).val());
-	    var discount   = isNaN($('#discount_amount_'+row_id).val()) ? 0 : parseFloat($('#discount_amount_'+row_id).val());
-
- 		var NetTotal = parseFloat(amount-discount)+due_amount;
- 		parseFloat($('#total_amount_'+row_id).val(isNaN(NetTotal) ? 0:  NetTotal));
-	}
-
 
 	/*============ number test function end===============*/

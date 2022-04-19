@@ -10,6 +10,7 @@ class Admin extends CI_Controller {
 		$this->load->model('Transition_model','transition');
 		$this->load->model('Generate_model','mgenerate');
 		$this->load->model('Manage_admin','manageAdmin');
+		$this->load->model('End_user','EndUser');
 		$this->load->model('dashboard');
 		$this->load->model('Security_set', 'sq');
 		$this->load->model('Role_chk', 'chk');
@@ -418,6 +419,16 @@ class Admin extends CI_Controller {
 		}
 		
 	}
+	// holding tax bill collection
+	public function holdingTaxBillCollection(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxBillCollection', $data);
+		$this->load->view('admin/footer');
+	}
 	public function taxCollectionPage(){
 		$this->load->view('admin/taxPage/taxCollectionPage');
 	}
@@ -747,6 +758,7 @@ class Admin extends CI_Controller {
 			$rate_sheet_id   = $this->input->post('rateSheet');
 			$id              = $this->input->post('id');
 			$user_id         = $this->input->post('user_id');
+			$mobile          = $this->input->post('user_mobile');
 			$holding_no      = $this->input->post('holding_no');
 			$amount          = $this->input->post('amount');
 			$due_amount      = $this->input->post('due_amount');
@@ -808,6 +820,15 @@ class Admin extends CI_Controller {
 
 				$this->db->insert('end_user_invoice', $invoice_data);
 
+				$message = "আপনার হোল্ডিং ট্যাক্স ,".$total_amount[$key]." টাকা,অনুগ্রপূর্বক ট্যাক্স পরিশোধ করুন ।";
+				$sms_send = $this->EndUser->smsSendAction($message, $mobile[$key]);
+				$sms_data = [
+					'trackid'=> $insert_id,
+					'mobile' => $mobile[$key],
+					'msg'    => $message,
+				];
+				$inbox = $this->EndUser->smsInboxAction($sms_data);
+
 			}
 			$this->db->trans_complete();
 			
@@ -823,6 +844,39 @@ class Admin extends CI_Controller {
 			// exit; 
 		}
 
+
+	// bill collection
+	public function searchHoldingTaxBillColleaction()
+	{
+		$receive     = (array)$this->input->post();
+		$invoice     =  trim($receive['invoice']);
+		$holding_no  =  trim($receive['holding_no']);
+
+		$response = $this->setup->holding_tax_bill_collection_info_row($receive);
+
+		// echo "<pre>"; 
+		// //echo $this->db->last_query();
+		// print_r($response);exit;
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	     => $response,
+				'invoice'    => $invoice,
+				'holding_no' => $holding_no,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/holdingTax/bosodBitaInformationRow.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		 
+		}	
 
 	/*============ bosodbita kor end=======================*/
 	

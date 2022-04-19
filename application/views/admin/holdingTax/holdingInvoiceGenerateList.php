@@ -67,13 +67,16 @@
                                         <td><?php echo $row->fathername ?></td>
                                         <td><?php echo $row->village ?></td>
                                         <td><?php echo $row->rate_sheet_label ?></td>
-                                        <td><?php echo $row->amount ?></td>
+                                        <td><?php echo $row->total ?></td>
                                         <td><?php echo $row->mobile_number ?></td>
                                        
                                         <td>
                                         <a href="Money_receipt/bosodbitaTaxInvoice?id=<?php echo $row->paymentID?>&holdingno=<?php echo $row->holding_no?>" name="Inv" target="_blank" class="btn btn-info btn-xs" title="Invoice"><i class="glyphicon glyphicon-book "></i> Invoice </button>
-                                        <a href="Admin/holdingTaxPayment?id=<?php echo sha1($row->paymentID)?>" name="Pay" style="margin-left:10px" class="btn btn-success btn-xs" title="Payment"><i class="glyphicon glyphicon-usd "></i> Payment </button>
-                                           
+                                       <?php if($row->paymentType == 2) {?>
+                                            <a href="Admin/holdingTaxPayment?id=<?php echo sha1($row->paymentID)?>" name="Pay" style="margin-left:10px" class="btn btn-warning btn-xs" title="Payment"><i class="glyphicon glyphicon-usd "></i> Accept </button>
+                                        <?php }else{?>
+                                            <a href="Admin/holdingTaxPayment?id=<?php echo sha1($row->paymentID)?>" name="Pay" style="margin-left:10px" class="btn btn-success btn-xs" title="Payment"><i class="glyphicon glyphicon-usd "></i> Payment </button>
+                                        <?php }?>
                                             
                                         </td>
                                     </tr>

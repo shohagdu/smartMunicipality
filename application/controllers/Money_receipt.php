@@ -210,7 +210,6 @@ class Money_receipt extends CI_Controller {
 
 			$data=array(
 				'all_data'=>	$this->setup->getdata(),
-				//'nrow'		=>	$this->money_receipt->holding_client_info($receive['dno'], $receive['vno']),
 				'row'	  =>	$this->setup->holding_tax_invoice_info(sha1($receive['id']))
 			);
 			

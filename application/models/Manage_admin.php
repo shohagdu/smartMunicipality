@@ -474,7 +474,7 @@ class Manage_admin extends CI_Model{
 	}
 	// holding info get
 	public function get_rateSheet_wise_tax_person($rate_sheet){
-		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.due, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, rate.amount, user.id as userId', false)
+		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.due, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, rate.amount, user.id as userId, user.mobile as userMobile', false)
 				->join('holding_rate_sheet as rate', 'rate.id = info.rate_sheet_id')
 				->join('holding_rate_sheet_label as label', 'label.id = rate.label_id')
 				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
