@@ -286,6 +286,22 @@ class Setup_model extends CI_Model{
 		return $query->row();
 
 	}
+	public function holding_tax_invoice_info_user($holding_no){
+		
+		$query = $this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id')
+				->where('plb.holding_no', $holding_no)
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->row();
+
+	}
 	public function holding_tax_bill_collection_info_row($receive){
 
 		$invoice    = $receive['invoice'];
@@ -311,6 +327,55 @@ class Setup_model extends CI_Model{
 
 		if($query !=""){
 			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->row()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+	}
+
+	public function get_holding_tax_person_count($receive){
+
+		$fisyal_year_id = $receive['fiscal_year'];
+		$rate_sheet_id  = $receive['rateSheet'];
+		
+		$this->db->select('count(id) as totalHoldingPerson' );
+	
+		$this->db->where('is_paid', 0);
+
+		if(!empty($fisyal_year_id)){
+			$this->db->where('fisyal_year_id', $fisyal_year_id);
+		}
+		if(!empty($rate_sheet_id)){
+			$this->db->where('rate_sheet_id', $rate_sheet_id);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+	}
+	public function get_holding_tax_person_data($receive){
+
+		$fisyal_year_id = $receive['fiscal_year'];
+		$rate_sheet_id  = $receive['rateSheet'];
+		
+		$this->db->select('holdinfo.name, holdinfo.holding_no, holdinfo.mobile_number,plb.id as taxId, plb.total as totalAmount');
+		$this->db->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no');
+		$this->db->where('plb.is_paid', 0);
+
+		if(!empty($fisyal_year_id)){
+			$this->db->where('plb.fisyal_year_id', $fisyal_year_id);
+		}
+		if(!empty($rate_sheet_id)){
+			$this->db->where('plb.rate_sheet_id', $rate_sheet_id);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita as plb');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
 		}else{
 			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
 		}

@@ -54,9 +54,7 @@
                             <tbody>
                             <?php
                             $i=1;
-                            // echo "<pre>";
-                            // print_r($invoice_list);exit;
-
+                           
                             if($invoice_list !=''){
                                 foreach ($invoice_list as $row){
                                     ?>

@@ -71,6 +71,19 @@ class Show extends CI_Controller {
 			$this->load->view('admin/moneyReceipt/bosodbitaTaxInvoice',$data);
 		}
 	}
+	// holding tax
+	public function holdingTaxBillInvoice()
+	{
+		if(isset($_GET['holding_no']) && !empty($_GET['holding_no'])){
+			$receive = $this->input->get();
+			$data=array(
+				'all_data'=> $this->setup->getdata(),
+				'row'	  => $this->setup->holding_tax_invoice_info_user($receive['holding_no'])
+			);
+			
+			$this->load->view('admin/moneyReceipt/bosodbitaTaxInvoice',$data);
+		}
+	}
 	
 	/*===========oarish application serach end ===========*/
 }

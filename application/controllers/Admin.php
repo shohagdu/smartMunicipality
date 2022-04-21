@@ -429,6 +429,16 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/holdingTax/holdingTaxBillCollection', $data);
 		$this->load->view('admin/footer');
 	}
+	public function taxHoldingTaxSend(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/taxHoldingTaxSend', $data);
+		$this->load->view('admin/footer');
+	}
+
 	public function taxCollectionPage(){
 		$this->load->view('admin/taxPage/taxCollectionPage');
 	}
@@ -877,6 +887,69 @@ class Admin extends CI_Controller {
 		}
 		 
 		}	
+
+	// holding tax sms send
+	public function searchHoldingTaxSmsSend()
+	{
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (string) trim($receive['fiscal_year']);
+		$rateSheet   = (string) trim($receive['rateSheet']);
+
+		$response = $this->setup->get_holding_tax_person_count($receive);
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	      => $response,
+				'fiscal_year' => $fiscal_year,
+				'rateSheet'   => $rateSheet,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/holdingTax/bosodBitaInformationSms.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		}
+	public function holdingTaxSmsSendAction(){
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (int) trim($receive['fiscal_year']);
+		$rateSheet   = (int) trim($receive['rateSheet']);
+		$messageTxt  = trim($receive['message']);
+
+		$response    = $this->setup->get_holding_tax_person_data($receive);
+		$this->db->trans_begin();
+		$sms_data =[];
+		foreach($response['data'] as $item){
+			$message = "নাম ".$item->name." টাকা ".$item->totalAmount." ।  ".$messageTxt;
+				$sms_data = [
+					'trackid'=> $item->taxId,
+					'mobile' => $item->mobile_number,
+					'msg'    => $message,
+				];
+				$sms_send = $this->EndUser->smsSendAction($message, $item->mobile_number);
+				$inbox    = $this->EndUser->smsInboxAction($sms_data);
+
+		}
+		if($inbox == FALSE){
+			$error_message = $this->db->error()['message'];
+			$this->db->trans_rollback();
+			return ['status' => 'error', 'message' => $error_message];
+		}
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			return ['status' => 'error', 'message' => 'Sms Send  failed'];
+		}else{
+			$this->db->trans_commit();
+			return ['status' => 'success', 'message' => 'SMS Send Successfully'];
+		}
+		// echo "<pre>"; 
+		// print_r($sms_data);exit;
+	}	
 
 	/*============ bosodbita kor end=======================*/
 	
