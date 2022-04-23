@@ -426,6 +426,19 @@
 										</div>	
 									</div>	
 								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="Resident" class="col-sm-6 control-label">হোল্ডিং নম্বর </label>
+											<div class="col-sm-6">
+												<input type="text" name="holding_no" id="holding_no" class="form-control" maxlength='10'   placeholder="" value="<?php echo $profile_info->holding_no; ?>" required />
+											    <span id="error11" style="color:red;font-size:14px;"> </span>
+											    <div id="InvoiceLink" style="color:red;font-size:14px;"> </div>
+										        <span id="error22" style="color:green;font-size:14px;"></span>
+											</div>
+										</div>	
+									</div>
+								</div>
 								
 								<div class="row">
 									<div class="col-sm-12"> 

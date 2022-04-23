@@ -660,6 +660,38 @@
 	}
 	/*=========onload function end=============*/
 	
+	$("document").ready(function(){
+		document.getElementById('error11').innerHTML="";
+		document.getElementById('error22').innerHTML="";
+		$("#holding_no").keyup(function(){
+			   var holding_no = $("#holding_no").val()
+				$.ajax({
+					url:"Home/searchHoldingDueCheck",
+					data:{holding_no:holding_no},
+					type:"GET",
+					success:function(respnse){
+						//console.log(respnse);
+						if(respnse === "error"){
+							document.getElementById('error11').innerHTML="আপনার হোল্ডিং নম্বরটি আমাদের কাছে নাই! দয়া করে সর্বপ্রথম হোল্ডিং নম্বরটি নিবন্ধন করুন, এই জন্য আপনাকে আমাদের ইউনিয়ন পরিষদ আসতে হবে!";
+						    document.getElementById('error22').innerHTML="";
+						    document.getElementById('InvoiceLink').innerHTML="";
+						}else{
+							if(respnse > 0 ){
+								document.getElementById('error11').innerHTML=" দু:খিত!!! পূর্বে হোল্ডিং ট্যাক্স "+respnse+" টাকা বকেয়া রয়েছে  ";
+					         	document.getElementById('error22').innerHTML="";
+					         	document.getElementById('InvoiceLink').innerHTML="";
+								document.getElementById('InvoiceLink').innerHTML = '<a class="btn btn-info btn-xs" href="Show/holdingTaxBillInvoice?holding_no=207" target="_blank"> ট্যাক্স বিল </a>';
+							}else{
+								document.getElementById('error22').innerHTML="ধন্যবাদ, আপনার হোল্ডিং ট্যাক্স বকেয়া নাই ।";
+							    document.getElementById('error11').innerHTML="";
+							    document.getElementById('InvoiceLink').innerHTML="";
+							}
+						}
+						
+					}
+				});
+		});
+	});
 	/*============ number test function start ===============*/
 	function numtest(){
 		return event.charCode >= 48 && event.charCode <= 57;

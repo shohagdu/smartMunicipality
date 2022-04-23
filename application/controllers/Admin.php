@@ -228,6 +228,12 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/holdingTax/holdingRegisterList', $data);
 		$this->load->view('admin/footer');
 	}
+	public function get_holding_person_list_data(){
+		$postData = $this->input->post();
+        $fetch_data = $this->setup->getAlHoldingInfo($postData);
+        echo json_encode($fetch_data); exit;
+	}
+	
 	
 	public function holdingTaxGenerate(){
 		$data['fiscal_year'] = $this->setup->get_fiscal_year();
@@ -935,20 +941,24 @@ class Admin extends CI_Controller {
 				$inbox    = $this->EndUser->smsInboxAction($sms_data);
 
 		}
+
+		$this->db->trans_commit();
+
 		if($inbox == FALSE){
 			$error_message = $this->db->error()['message'];
 			$this->db->trans_rollback();
-			return ['status' => 'error', 'message' => $error_message];
+			//return ['status' => 'error', 'message' => $error_message];
+			echo "<script>window.history.back();alert('SMS Send Failed');</script>";
 		}
 		if ($this->db->trans_status() === FALSE){
 			$this->db->trans_rollback();
-			return ['status' => 'error', 'message' => 'Sms Send  failed'];
+			// return ['status' => 'error', 'message' => 'Sms Send  failed'];
+			echo "<script>window.history.back();alert('SMS Send Failed');</script>";
 		}else{
-			$this->db->trans_commit();
-			return ['status' => 'success', 'message' => 'SMS Send Successfully'];
+			// return ['status' => 'success', 'message' => 'SMS Send Successfully'];
+			echo "<script>window.history.back();alert('SMS Send Successfully');</script>";
 		}
-		// echo "<pre>"; 
-		// print_r($sms_data);exit;
+
 	}	
 
 	/*============ bosodbita kor end=======================*/

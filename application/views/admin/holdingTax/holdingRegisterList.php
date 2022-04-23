@@ -2,7 +2,9 @@
     <div>
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <div class="col-sm-8"><div class="row"> <?php echo (!empty($title)?$title:''); ?></div></div>
+                <div class="col-sm-8"><div class="row"> 
+                    <!-- <?php echo (!empty($title)?$title:''); ?> -->
+            </div></div>
                 <div class="col-sm-4">
                     <!-- <button type="button"  data-toggle="modal" onclick="addFoodReceiveInfo()" data-target="#exampleModal" class="btn btn-success btn-xs pull-right"><i class="glyphicon glyphicon-plus"></i> নতুন যোগ করুন </button> -->
 
@@ -16,7 +18,7 @@
                         <div class="form-group">
                         <label class="col-sm-3" for="" style="font-size: 14px; font-weight: bolder;text-align:right"> বসতভিটার ধরন - করের শ্রেনী </label>
                             <div class="col-sm-4">
-                            <select name="rateSheet" id="rateSheet" class="form-control" >
+                            <select name="rate_sheet_id" id="rate_sheet_id" class="form-control" >
                                 <option value="">চিহ্নিত করুন</option>
                                 <?php 
                                     if($rate_sheet['status'] === 'success'):
@@ -31,13 +33,13 @@
                             </div>
                             <div class="col-sm-4">
                                <!-- <button class="btn btn-primary btn-md" onclick="searchingReceivedFood()" type="button" ><i class="glyphicon glyphicon-search"></i> Search</button> -->
-                               <button class="btn btn-primary btn-md" type="button" ><i class="glyphicon glyphicon-search"></i> Search</button>
+                               
                             </div>
 
                         </div>
                     </form>
-                    <div id="show_result">
-                        <table id="exampleNew" class="table table-bordered table-striped">
+                    <div id="show_resulthhh">
+                        <!-- <table id="holding_registration_list_data" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th width="3%">ক্রঃ নং</th>
@@ -51,34 +53,23 @@
                                 <th width="15%">#</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <?php
-                            $i=1;
                             
-                            if($get_holding_info['status']=='success'){
-                                foreach ($get_holding_info['data'] as $row){
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $i++; ?></td>
-                                        <td><?php echo $row->holding_no ?></td>
-                                        <td><?php echo $row->name ?></td>
-                                        <td><?php echo $row->fathername ?></td>
-                                        <td><?php echo $row->village ?></td>
-                                        <td><?php echo $row->rate_sheet_label ?></td>
-                                        <td><?php echo $row->amount ?></td>
-                                        <td><?php echo $row->mobile_number ?></td>
-                                       
-                                        <td>
-                                            <a href="Admin/holdingRegisterEdit?id=<?php echo $row->id?>" name="update" class="btn btn-info btn-xs" title="Edit"><i class="glyphicon glyphicon-pencil"></i> Edit </button>
-                                            <!-- <button type="button" name="delete" title="Delete" onclick="DeleteFoodCollectionInfo('<?php echo $row->id  ?>')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Delete</button> -->
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </tbody>
-                        </table>
+                        </table> -->
+                        <table id="holding_registration_list_data" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th width="3%">ক্রঃ নং</th>
+                            <th width="10%">হোল্ডিং নং</th>
+                            <th width="10%">নাম</th>
+                            <th width="10%">পিতার নাম</th>
+                            <th width="15%">গ্রাম</th>
+                            <th width="10%"> করের শ্রেনী</th>
+                            <th width="10%">পরিমান</th>
+                            <th width="10%">মোবাইল</th>
+                            <th width="3%">Action</th>
+                        </tr>
+                        </thead>
+                    </table>
                     </div>
                 </div>
             </div>
@@ -86,7 +77,7 @@
     </div>
 </div><!--/#content.col-md-0-->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,9 +130,10 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 <style>
     .ui-autocomplete { z-index:2147483647; }
 </style>
+
 
 
