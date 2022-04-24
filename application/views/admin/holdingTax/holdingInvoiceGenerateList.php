@@ -2,7 +2,7 @@
     <div>
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <div class="col-sm-8"><div class="row"> <?php echo (!empty($title)?$title:''); ?></div></div>
+                <div class="col-sm-8"><div class="row"> বসতভিটার  বিল জেনারেট তালিকা</div></div>
                 <div class="col-sm-4">
                     <!-- <button type="button"  data-toggle="modal" onclick="addFoodReceiveInfo()" data-target="#exampleModal" class="btn btn-success btn-xs pull-right"><i class="glyphicon glyphicon-plus"></i> নতুন যোগ করুন </button> -->
 
@@ -16,7 +16,7 @@
                         <div class="form-group">
                         <label class="col-sm-3" for="" style="font-size: 14px; font-weight: bolder;text-align:right"> বসতভিটার ধরন - করের শ্রেনী </label>
                             <div class="col-sm-4">
-                            <select name="rateSheet" id="rateSheet" class="form-control" >
+                            <select name="rate_sheet_id" id="rate_sheet_id" class="form-control" >
                                 <option value="">চিহ্নিত করুন</option>
                                 <?php 
                                     if($rate_sheet['status'] === 'success'):
@@ -30,14 +30,13 @@
                             </select>	
                             </div>
                             <div class="col-sm-4">
-                               <!-- <button class="btn btn-primary btn-md" onclick="searchingReceivedFood()" type="button" ><i class="glyphicon glyphicon-search"></i> Search</button> -->
-                               <button class="btn btn-primary btn-md" type="button" ><i class="glyphicon glyphicon-search"></i> Search</button>
+                               <!-- <button class="btn btn-primary btn-md" type="button" ><i class="glyphicon glyphicon-search"></i> Search</button> -->
                             </div>
 
                         </div>
                     </form>
                     <div id="show_result">
-                        <table id="exampleNew" class="table table-bordered table-striped">
+                        <table id="holding_invoice_list_data" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th width="3%">ক্রঃ নং</th>
@@ -51,38 +50,7 @@
                                 <th width="16%">#</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <?php
-                            $i=1;
-                           
-                            if($invoice_list !=''){
-                                foreach ($invoice_list as $row){
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $i++; ?></td>
-                                        <td><?php echo $row->holding_no ?></td>
-                                        <td><?php echo $row->name ?></td>
-                                        <td><?php echo $row->fathername ?></td>
-                                        <td><?php echo $row->village ?></td>
-                                        <td><?php echo $row->rate_sheet_label ?></td>
-                                        <td><?php echo $row->total ?></td>
-                                        <td><?php echo $row->mobile_number ?></td>
-                                       
-                                        <td>
-                                        <a href="Money_receipt/bosodbitaTaxInvoice?id=<?php echo $row->paymentID?>&holdingno=<?php echo $row->holding_no?>" name="Inv" target="_blank" class="btn btn-info btn-xs" title="Invoice"><i class="glyphicon glyphicon-book "></i> Invoice </button>
-                                       <?php if($row->paymentType == 2) {?>
-                                            <a href="Admin/holdingTaxPayment?id=<?php echo sha1($row->paymentID)?>" name="Pay" style="margin-left:10px" class="btn btn-warning btn-xs" title="Payment"><i class="glyphicon glyphicon-usd "></i> Accept </button>
-                                        <?php }else{?>
-                                            <a href="Admin/holdingTaxPayment?id=<?php echo sha1($row->paymentID)?>" name="Pay" style="margin-left:10px" class="btn btn-success btn-xs" title="Payment"><i class="glyphicon glyphicon-usd "></i> Payment </button>
-                                        <?php }?>
-                                            
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </tbody>
+                            
                         </table>
                     </div>
                 </div>

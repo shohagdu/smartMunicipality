@@ -3,7 +3,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="col-sm-8"><div class="row"> 
-                    <!-- <?php echo (!empty($title)?$title:''); ?> -->
+                বসতভিটার  তালিকা
             </div></div>
                 <div class="col-sm-4">
                     <!-- <button type="button"  data-toggle="modal" onclick="addFoodReceiveInfo()" data-target="#exampleModal" class="btn btn-success btn-xs pull-right"><i class="glyphicon glyphicon-plus"></i> নতুন যোগ করুন </button> -->
@@ -39,36 +39,20 @@
                         </div>
                     </form>
                     <div id="show_resulthhh">
-                        <!-- <table id="holding_registration_list_data" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th width="3%">ক্রঃ নং</th>
-                                <th>হোল্ডিং নং </th>
-                                <th nowrap="">নাম </th>
-                                <th >পিতার নাম </th>
-                                <th > গ্রাম </th>
-                                <th > করের শ্রেনী </th>
-                                <th >পরিমান </th>
-                                <th >মোবাইল </th>
-                                <th width="15%">#</th>
-                            </tr>
-                            </thead>
-                            
-                        </table> -->
                         <table id="holding_registration_list_data" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th width="3%">ক্রঃ নং</th>
-                            <th width="10%">হোল্ডিং নং</th>
-                            <th width="10%">নাম</th>
-                            <th width="10%">পিতার নাম</th>
-                            <th width="15%">গ্রাম</th>
-                            <th width="10%"> করের শ্রেনী</th>
-                            <th width="10%">পরিমান</th>
-                            <th width="10%">মোবাইল</th>
-                            <th width="3%">Action</th>
-                        </tr>
-                        </thead>
+                            <thead>
+                                <tr>
+                                    <th width="3%">ক্রঃ নং</th>
+                                    <th width="10%">হোল্ডিং নং</th>
+                                    <th width="10%">নাম</th>
+                                    <th width="10%">পিতার নাম</th>
+                                    <th width="15%">গ্রাম</th>
+                                    <th width="10%"> করের শ্রেনী</th>
+                                    <th width="10%">পরিমান</th>
+                                    <th width="10%">মোবাইল</th>
+                                    <th width="3%">Action</th>
+                                </tr>
+                            </thead>
                     </table>
                     </div>
                 </div>

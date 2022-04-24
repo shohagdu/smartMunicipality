@@ -34,7 +34,7 @@ if((string)$info['status'] === 'success'):?>
 						<td><?php echo $info['data']->fathername ?></td>
 						<td><?php echo $info['data']->village ?></td>
 						<td><?php echo $info['data']->rate_sheet_label ?></td>
-						<td><?php echo $info['data']->total ?></td>
+						<td><?php echo ( $info['data']->total +  $info['data']->due_amount) - $info['data']->discount?></td>
 						<td><?php echo $info['data']->mobile_number ?></td>
 						<td>
 						<a href="Money_receipt/bosodbitaTaxInvoice?id=<?php echo $info['data']->paymentID?>&holdingno=<?php echo $info['data']->holding_no?>" name="Inv" target="_blank" class="btn btn-info btn-xs" title="Invoice"><i class="glyphicon glyphicon-book "></i> Invoice </button>

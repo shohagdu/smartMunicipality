@@ -810,7 +810,7 @@
 								document.getElementById('error11').innerHTML=" দু:খিত!!! পূর্বে হোল্ডিং ট্যাক্স "+respnse+" টাকা বকেয়া রয়েছে  ";
 								document.getElementById('error22').innerHTML="";
 								document.getElementById('InvoiceLink').innerHTML="";
-								document.getElementById('InvoiceLink').innerHTML = '<a class="btn btn-info btn-xs" href="Show/holdingTaxBillInvoice?holding_no=207" target="_blank"> ট্যাক্স বিল </a>';
+								document.getElementById('InvoiceLink').innerHTML = '<a class="btn btn-info btn-xs" href="Show/holdingTaxBillInvoice?holding_no='+holding_no+'" target="_blank"> ট্যাক্স বিল </a>';
 							}else{
 								document.getElementById('error22').innerHTML="ধন্যবাদ, আপনার হোল্ডিং ট্যাক্স বকেয়া নাই ।";
 								document.getElementById('error11').innerHTML="";

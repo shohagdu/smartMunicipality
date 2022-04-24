@@ -234,7 +234,6 @@ class Admin extends CI_Controller {
         echo json_encode($fetch_data); exit;
 	}
 	
-	
 	public function holdingTaxGenerate(){
 		$data['fiscal_year'] = $this->setup->get_fiscal_year();
 		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
@@ -246,7 +245,7 @@ class Admin extends CI_Controller {
 	}
 	// holding tax invoice
 	public function holdingTaxGenerateInvoiceList(){
-		$data['invoice_list']   = $this->setup->holding_tax_invoice_list();
+	//	$data['invoice_list']   = $this->setup->holding_tax_invoice_list();
 		$data['rate_sheet']     = $this->setup->get_current_active_rate_sheet();
 
 		// echo "<pre>";
@@ -257,36 +256,12 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/holdingTax/holdingInvoiceGenerateList', $data);
 		$this->load->view('admin/footer');
 	}
-	public function get_tax_invoice_list_data()
-    {
-        header("Content-Type: application/json");
-        $rate_sheet_id = $_POST['rate_sheet_id'];
-        $holding_no    = $_POST['holding_no'];
-		
-        $start =  $_POST['start'];
-        $limit =  $_POST['length'];
-        $search_content = ($_POST['search']['value'] != '') ? $_POST['search']['value'] : false;
 
-        $request_data = [
-            'start'        => $start,
-            'limit'        => $limit,
-            'rate_sheet_id'=> $rate_sheet_id,
-            'holding_no'   => $holding_no,
-        ];
-
-        // echo "<pre>";
-        // print_r($request_data);exit;
-
-        $response = $this->setup->holding_tax_invoice_list_data($request_data, $search_content);
-
-        $count = ("SELECT FOUND_ROWS() as `row_count`")[0]->row_count;
-		// echo $this->db->last_query($count);exit;
-        $response['recordsTotal']    = $count;
-        $response['recordsFiltered'] = $count;
-        $response['draw']            = $_POST['draw'];
-
-        echo json_encode($response);
-    }
+	public function get_holding_tax_invoice_list_data(){
+		$postData = $this->input->post();
+        $fetch_data = $this->setup->getAlHoldingInvoiceInfo($postData);
+        echo json_encode($fetch_data); exit;
+	}
 
 	// tax bill collection
 	public function holdingTaxPayment(){

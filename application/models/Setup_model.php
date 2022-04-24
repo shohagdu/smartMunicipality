@@ -332,6 +332,96 @@ class Setup_model extends CI_Model{
 
         return $response;
     }
+	function getAlHoldingInvoiceInfo($postData=null){
+
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $searchValue = !empty($postData['search']['value'])?$postData['search']['value']:''; // Search value
+        // Custom search filter
+        $rate_sheet_id = !empty($postData['rate_sheet_id'])?$postData['rate_sheet_id']:'';
+        ## Search
+        $search_arr = array();
+        $searchQuery = "";
+        if($searchValue != ''){
+            $search_arr[] = " (holdingclientinfo.name like '%".$searchValue."%' or 
+			holdingclientinfo.national_id like '%".$searchValue."%' or 
+			holdingclientinfo.mobile_number like '%".$searchValue."%' or 
+			holdingclientinfo.birth_certificate_id like'%".$searchValue."%' ) ";
+        }
+        if($rate_sheet_id != ''){
+            $search_arr[] = "payment_log_bosotbita.rate_sheet_id='".$rate_sheet_id."' ";
+        }
+
+        if(count($search_arr) > 0){
+            $searchQuery = implode(" and ",$search_arr);
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('payment_log_bosotbita')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get('payment_log_bosotbita')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select("payment_log_bosotbita.id as paymentId, payment_log_bosotbita.total as totalAmount, payment_log_bosotbita.type as paymentType, payment_log_bosotbita.due_amount, payment_log_bosotbita.discount, holdingclientinfo.id, holdingclientinfo.name ,holdingclientinfo.holding_no, holdingclientinfo.fathername,holdingclientinfo.village, holdingclientinfo.mobile_number,  CONCAT(label.rate_sheet_label,'-',occupation.title,'-', classification.title) as rate_sheet_label, rate.amount");
+        if($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+        
+		$this->db->join('holdingclientinfo', 'holdingclientinfo.holding_no = payment_log_bosotbita.holding_no', 'left'); 
+		$this->db->join('holding_rate_sheet as rate', 'rate.id = payment_log_bosotbita.rate_sheet_id', 'left'); 
+		$this->db->join('holding_rate_sheet_label as label', 'label.id = rate.label_id');
+		$this->db->join('snf_global_form as occupation','occupation.id=rate.occupation_id');
+		$this->db->join('snf_global_form as classification', 'classification.id=rate.classification_id');
+        $this->db->order_by('payment_log_bosotbita.id', 'DESC');
+        $this->db->limit($rowperpage, $start);
+        $record = $this->db->get('payment_log_bosotbita');
+        if(!empty($record->num_rows()>0)) {
+            $records = $record->result();
+            $data = array();
+            $i = $start + 1;
+            foreach ($records as $slKey => $record) {
+                $action = '';
+                $action .= '<a href="' . base_url('Money_receipt/bosodbitaTaxInvoice?id=' . $record->paymentId) . '"  id="' . $record->paymentId . '" class="btn btn-info btn-xs" target="_blank" title="INV"><i class="glyphicon glyphicon-book"></i> Invoice </a>';
+                if($record->paymentType == 2){
+					$action .= '<a href="' . base_url('Admin/holdingTaxPayment?id=' . sha1($record->paymentId)) . '"  id="' . $record->paymentId . '" class="btn btn-warning btn-xs"  style="margin-left:10px" title="Pay"><i class="glyphicon glyphicon-usd"></i> Accept </a>';
+				}else{
+					$action .= '<a href="' . base_url('Admin/holdingTaxPayment?id=' . sha1($record->paymentId)) . '"  id="' . $record->paymentId . '" class="btn btn-success btn-xs" style="margin-left:10px" title="Pay"><i class="glyphicon glyphicon-usd"></i> Payment </a>';
+				}
+                $data[] = array(
+                    "holding_no" => $record->holding_no,
+                    "name" => $record->name,
+                    "fathername" => $record->fathername,
+                    "village" => $record->village,
+                    "rate_sheet_label" => $record->rate_sheet_label,
+                    "amount" => ($record->totalAmount + $record->due_amount)-$record->discount,
+                    "mobile_number" => $record->mobile_number,
+                    "action" => $action,
+                    "slNo" => $i++,
+                );
+            }
+        }
+
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+        );
+
+        return $response;
+    }
 
 	public function holding_tax_invoice_list_data($receive, $search_content){
 
