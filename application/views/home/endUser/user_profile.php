@@ -161,10 +161,12 @@ label{
 										<td>
 											<?php if($trade_data->is_process==0){?>
 												<span class="badge badgePrimary">Pending</span>
+												<a href='index.php/home/application_tpreview?scode=<?php echo $trade_data->trackid?>'>View </a>
 											<?php }else if($trade_data->is_process==3){?>
 												<span class="badge badgeSuccess"> Complte</span>
 											<?php }else{ ?>
 												<span class="badge badgeWarning"> Processing</span>
+												<a href='index.php/home/application_tpreview?scode=<?php echo $trade_data->trackid?>'>View </a>
 											<?php }?>
 										
 										</td>
@@ -182,11 +184,11 @@ label{
 										</td>
 										<td>
 											<?php if($nagorik_data->is_process==0){?>
-												<span class="badge badgePrimary">Pending</span>
+												<span class="badge badgePrimary">Pending <a href='index.php/home/application_ppreview?scode=<?php echo $nagorik_data->trackid?>'>View </a></span>
 											<?php }else if($nagorik_data->is_process==3){?>
 												<span class="badge badgeSuccess">  Complte</span>
 											<?php }else{ ?>
-												<span class="badge badgeWarning">Processing </span>
+												<span class="badge badgeWarning">Processing </span> <a href='index.php/home/application_ppreview?scode=<?php echo $nagorik_data->trackid?>'>View </a>
 											<?php }?>
 										
 										</td>
@@ -205,10 +207,12 @@ label{
 										<td>
 											<?php if($item->is_process==0){?>
 												<span class="badge badgePrimary">Pending</span>
+												<a href='index.php/home/application_opreview?scode=<?php echo $item->trackid?>'>View </a>
 											<?php }else if($item->is_process==3){?>
 												<span class="badge badgeSuccess"> Complte</span>
 											<?php }else{ ?>
 												<span class="badge badgeWarning"> Processing  </span>
+												<a href='index.php/home/application_opreview?scode=<?php echo $item->trackid?>'>View </a>
 											<?php }?>
 										
 										</td>
@@ -228,10 +232,12 @@ label{
 										<td>
 											<?php if($warish_data->is_process==0){?>
 												<span class="badge badgePrimary">Pending</span>
+												<a href='index.php/home/application_wpreview?scode=<?php echo $warish_data->trackid?>'>View </a>
 											<?php }else if($warish_data->is_process==3){?>
 												<span class="badge badgeSuccess"> Complte</span>
 											<?php }else{ ?>
 												<span class="badge badgeWarning"> Processing  </span>
+												<a href='index.php/home/application_wpreview?scode=<?php echo $warish_data->trackid?>'>View </a>
 											<?php }?>
 										
 										</td>
@@ -375,5 +381,4 @@ label{
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
 </script>
-   
-		<!-- <script src="all/custom_js/nagorick_form.js" type="text/javascript"></script> -->
+<!-- <script src="all/custom_js/nagorick_form.js" type="text/javascript"></script> -->

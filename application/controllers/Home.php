@@ -551,6 +551,31 @@ class Home extends CI_Controller {
 		$data['all_data'] = $this->setup->getdata();   
 		$this->load->view('home/print/wpreview',$data);
    }
+   public function application_ppreview()
+   {
+		$data=array();
+		$data['all_data'] = $this->setup->getdata();   
+		$this->load->view('home/application_print/ppreview',$data);
+   }
+   public function application_opreview()
+   {
+		$data=array();
+		$data['all_data'] = $this->setup->getdata();   
+		$this->load->view('home/application_print/opreview',$data);
+   }
+	public function application_tpreview()
+	{
+		$data=array();
+		$data['all_data'] = $this->setup->getdata();
+		$this->load->view('home/application_print/tpreview',$data);
+	}
+
+    public function application_wpreview()
+   {
+		$data=array();
+		$data['all_data'] = $this->setup->getdata();   
+		$this->load->view('home/application_print/wpreview',$data);
+   }
 /*====  application print copy page function end ======*/
    
    
@@ -972,14 +997,14 @@ public function searchRegisterUser(){
 	if(isset($_GET['holding_no'])){
 		$holding_no = $_GET['holding_no'];
 		$holdingRegCheck = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get()->row();
-		$query = $this->db->select('sum(total) as TotalDueAmount')->from("payment_log_bosotbita")->where('holding_no',$holding_no)->where('is_paid', 0)->get();
+		$query = $this->db->select('sum(total) as TotalDueAmount, sum(due_amount) as total_due, sum(discount) as total_discount')->from("payment_log_bosotbita")->where('holding_no',$holding_no)->where('is_paid', 0)->get();
 		$data = $query->result();
 		
 		
 		if(!empty($holdingRegCheck)){
 
 			if(!empty($data)){
-				echo $data[0]->TotalDueAmount;
+				echo ($data[0]->TotalDueAmount + $data[0]->total_due)- $data[0]->total_discount ;
 			}else{
 				echo "0";
 			}
