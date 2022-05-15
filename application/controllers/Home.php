@@ -968,6 +968,28 @@ public function searchRegisterUser(){
 		}
 	}
  }
+ public function searchHoldingDueCheck(){
+	if(isset($_GET['holding_no'])){
+		$holding_no = $_GET['holding_no'];
+		$holdingRegCheck = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get()->row();
+		$query = $this->db->select('sum(total) as TotalDueAmount')->from("payment_log_bosotbita")->where('holding_no',$holding_no)->where('is_paid', 0)->get();
+		$data = $query->result();
+		
+		
+		if(!empty($holdingRegCheck)){
+
+			if(!empty($data)){
+				echo $data[0]->TotalDueAmount;
+			}else{
+				echo "0";
+			}
+
+		}else{
+			echo "error";
+		}
+
+	}
+}
 }
 
 /* End of file welcome.php */

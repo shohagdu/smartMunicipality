@@ -20,7 +20,8 @@
 		<div class="container"> 
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="active"><a data-toggle="tab" href="#menu" onclick="loadContent('index.php/Admin/taxRegistrationPage', 'menu')" style="font-size:14px;">বসতভিটার রেজিস্ট্রেশন ফরম</a></li>
-				<li><a data-toggle="tab" href="#menu1" onclick="loadContent('index.php/Admin/taxCollectionPage', 'menu1')" style="font-size:14px;">বসতভিটার কর আদায়</a></li>
+				<!-- <li><a data-toggle="tab" href="#menu1" onclick="loadContent('index.php/Admin/taxCollectionPage', 'menu1')" style="font-size:14px;">বসতভিটার কর আদায়</a></li> -->
+				<li><a data-toggle="tab" href="#menu1" onclick="loadContent('index.php/Admin/taxGeneratePage', 'menu1')" style="font-size:14px;">বসতভিটার কর আদায়</a></li>
 				<li><a data-toggle="tab" href="#menu2" onclick="loadContent('index.php/Admin/tradlicencePesajibiKorCollectionPage', 'menu2')" style="font-size:14px;">ট্রেড লাইসেন্সধারির পেশাজীবি কর</a></li>
 				<li><a data-toggle="tab" href="#menu3" onclick="loadContent('index.php/Admin/tradlicenceHoldingTaxCollectionPage', 'menu3')" style="font-size:14px;">ট্রেড লাইসেন্সধারির বসত ভিটা কর</a></li>
 			</ul>
@@ -78,12 +79,12 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2 col-xs-4 " style="text-align:right">জাতীয় পরিচয় পত্র নং <span class="red-color"></span></label>
 							<div class="col-sm-4 col-xs-8">
-								<input type="text" name="nationalId"  id="nid" class="form-control" placeholder="ইংরেজীতে প্রদান করুন" />
+								<input type="text" name="nationalId"  id="nationalId" class="form-control" placeholder="ইংরেজীতে প্রদান করুন" />
 							</div>
 							<div class="visible-xs clearfix"></div>
 							<label class="control-label col-sm-2 col-xs-4 " style="text-align:right">জন্ম নিবন্ধন নং <span class="red-color"></span></label>
 							<div class="col-sm-4 col-xs-8">
-								<input type="text" name="birthCertificateId" id="bid" class="form-control" placeholder="ইংরেজীতে প্রদান করুন" />
+								<input type="text" name="birthCertificateId" id="birthCertificateId" class="form-control" placeholder="ইংরেজীতে প্রদান করুন" />
 							</div>
 							<div class="clearfix"></div>
 						</div>

@@ -147,6 +147,12 @@ class End_user extends CI_Model{
 			$this->db->where('id',$id)->update('otherserviceinfo',$sonod_status_data);
 		}else if($type == 20){
 			$this->db->where('id',$id)->update('tbl_warishesinfo',$sonod_status_data);
+		}else if($type == 25){
+			$payment_status_data = [
+				'type'  => 2,
+				'status'=> 2,
+			];
+			$this->db->where('id',$id)->update('payment_log_bosotbita',$payment_status_data);
 		}else{
 			return false;
 		}
@@ -297,7 +303,7 @@ class End_user extends CI_Model{
 
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data); 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);     
@@ -307,7 +313,7 @@ class End_user extends CI_Model{
 
 	}
 	public function smsInboxAction($sms_data){
-		$this->db->insert($sms_data);
+		$this->db->insert('inbox', $sms_data);
 		if($this->db->affected_rows()>0){
 			return true;
 		}else{

@@ -128,6 +128,19 @@
 								<li style="font-size: 12px;"><a href="DailyReports/holding_tax_list"  target='_blank' <?php $this->chk->acl('dailyCollection'); ?>>হোল্ডিং টেক্সধারীদের তালিকা</a></li>
                             </ul>
                         </li>
+						<li class="accordion">
+                            <a href="javascript:void(0);"><i class="glyphicon glyphicon-list-alt"></i><span> &nbsp; বসতভিটার কর </span> &nbsp;<i class="glyphicon glyphicon-chevron-down"></i></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="Admin/taxHoldingRegistration" >বসতভিটার রেজিস্ট্রেশন</a></li>
+                                <li><a href="Admin/taxHoldingRegistersInfo"> বসতভিটার তথ্য সমূহ </a></li>
+                                <li><a href="Admin/holdingTaxGenerate"> বসতভিটার  বিল জেনারেট   </a></li>
+                                <li><a  href="Admin/holdingTaxGenerateInvoiceList" >বসতভিটার  বিল জেনারেট তালিকা  </a></li>
+                                <li><a  href="Admin/holdingTaxBillCollection" >বসতভিটার  বিল ক্যালেকশন   </a></li>
+                                <li><a  href="DailyReports/paidHoldingTaxCollectionReport" target='_blank'> ট্যাক্স প্রদানকারী তালিকা </a></li>
+                                <li><a   href="DailyReports/dueHoldingTaxCollectionReport" href="#" target='_blank'>ট্যাক্স  বকেয়া ধারীদের  তালিকা </a></li>
+								<li><a href="Admin/taxHoldingTaxSend"> বসতভিটা ট্যাক্সের এস এম এস পাঠান </a></li>
+                            </ul>
+                        </li>
 						
 						<li class="nav-header hidden-md">Transfer Section</li>
 						

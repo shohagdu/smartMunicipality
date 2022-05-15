@@ -10,6 +10,7 @@ class Admin extends CI_Controller {
 		$this->load->model('Transition_model','transition');
 		$this->load->model('Generate_model','mgenerate');
 		$this->load->model('Manage_admin','manageAdmin');
+		$this->load->model('End_user','EndUser');
 		$this->load->model('dashboard');
 		$this->load->model('Security_set', 'sq');
 		$this->load->model('Role_chk', 'chk');
@@ -193,15 +194,240 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/taxPage/taxCollection', $data);
 		$this->load->view('admin/footer');
 	}
-	public function taxRegistrationPage(){
+	public function taxHoldingRegistration(){
 		$data = [
 			'member_info' => $this->setup->get_all_member_info(),
 			'rate_sheet'  => $this->setup->get_current_active_rate_sheet()
 		];
-		$this->load->view('admin/taxPage/taxRegistrationPage', $data);
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegister', $data);
+		$this->load->view('admin/footer');
 	}
+	public function holdingRegisterEdit(){
+		$id = (string) $_GET['id'];
+		$data = [
+			'holding_tax_person' => $this->manageAdmin->get_holding_tax_person($id),
+			'rate_sheet'  => $this->setup->get_current_active_rate_sheet(),
+			'member_info' => $this->setup->get_all_member_info()
+		];
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegisterEdit', $data);
+		$this->load->view('admin/footer');
+	}
+
+	public function taxHoldingRegistersInfo(){
+		$data['get_holding_info']  = $this->manageAdmin->get_holding_list();
+		$data['rate_sheet']        = $this->setup->get_current_active_rate_sheet();
+		// echo "<pre>";
+		// print_r($data['get_holding_info']);exit;
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingRegisterList', $data);
+		$this->load->view('admin/footer');
+	}
+	public function get_holding_person_list_data(){
+		$postData = $this->input->post();
+        $fetch_data = $this->setup->getAlHoldingInfo($postData);
+        echo json_encode($fetch_data); exit;
+	}
+	
+	public function holdingTaxGenerate(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxGenerate', $data);
+		$this->load->view('admin/footer');
+	}
+	// holding tax invoice
+	public function holdingTaxGenerateInvoiceList(){
+	//	$data['invoice_list']   = $this->setup->holding_tax_invoice_list();
+		$data['rate_sheet']     = $this->setup->get_current_active_rate_sheet();
+
+		// echo "<pre>";
+        // print_r($data['invoice_list']);exit;
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingInvoiceGenerateList', $data);
+		$this->load->view('admin/footer');
+	}
+
+	public function get_holding_tax_invoice_list_data(){
+		$postData = $this->input->post();
+        $fetch_data = $this->setup->getAlHoldingInvoiceInfo($postData);
+        echo json_encode($fetch_data); exit;
+	}
+
+	// tax bill collection
+	public function holdingTaxPayment(){
+		$id =  $_GET['id'];
+		$data['invoice_info']   = $this->setup->holding_tax_invoice_info($id);
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxPayment', $data);
+		$this->load->view('admin/footer');
+	}
+	public function BosotbitaTaxPaymentAction(){
+		$paymentId =  $_POST['id'];
+		
+		$payment_date = date('Y-m-d',strtotime($_POST['payment_date']));
+		
+		//updated logs
+		$Qyy=$this->db->query("select acno from acinfo where acname='CASH ACCOUNT' LIMIT 1")->row();
+		$acno=$Qyy->acno;
+		
+		//find last transaction no and store....
+		$transno=$this->transition->get_transaction();
+		$transaction_info=array('tid'=>$transno);
+		
+		//find last credet voucher no and store....	
+		$voucherno=$this->transition->get_credit_voucher();
+		$voucher_info=array('vno'=>$voucherno);
+		
+		//find trade license
+		$key="হোল্ডিং ট্যাক্স ধারীর বসতভিটার উপর কর";
+		$fRow = $this->mgenerate->get_subctg_info($key); 		// get sub category name,fund id,main category Name
+		$fundId =  $this->mgenerate->get_fundId($fRow->mc_id);	// for fund id
+
+		//previous balance
+		$Rrow=$this->transition->get_account_last_balance($acno);
+		$nBalance=($Rrow->balance+$_POST['totalAmount']);
+		
+		$ledg=array(
+			'tid'			=> $transno,
+			'voucherno'		=> $voucherno,
+			'vtype'			=> 'C',
+			'catid'			=> $fRow->mc_id,
+			'subid'			=> $fRow->id,
+			'fundtype'		=> $fundId->fund_id,
+			'purpose'		=> $key,
+			'ac'			=> $acno,
+			'cr'			=> $_POST['totalAmount'],
+			'balance'		=> $nBalance,
+			'payment_date'	=> $payment_date,
+			'inby'			=> $user
+		);
+		
+		$moneyinfo=array(
+			'trackid'		    => (string)$_POST['dagNo'],
+			'bno'			    => NULL,
+			'm_r_n'			    => NULL,
+			'inno'			    => $voucherno,
+			'fiscal_year_id'    => json_encode($_POST['fiscalYear']),
+			'rate_sheet_id'	    => json_encode($_POST['holdingType']),
+			'rate_sheet_amount'	=> json_encode($_POST['totalAmount']),
+			'fee'			    => $_POST['totalAmount'],
+			'discount'		    => $_POST['discount'],
+			'total'			    => $_POST['totalAmount'],
+			'payment_date'	    => $payment_date,
+			'status'		    => 4
+		);
+		
+		//get fund sub category last balance [ Individual sub category last balance]
+		$scrow=$this->transition->get_fund_sub_category_last_balance($fRow->id);
+		$snBalance=($scrow->balance+$money);
+		
+		$sLedg=array(
+			'mc_id'			=> $fRow->mc_id,
+			'subid'			=> $fRow->id,
+			'fund_id'		=> $fundId->fund_id,
+			'trno'			=> $transno,
+			'voucherno'		=> $voucherno,
+			'vtype'			=> 'C',
+			'sub_title'		=> $fRow->sub_title,
+			'cr'			=> $_POST['totalAmount'],
+			'balance'		=> $snBalance,
+			'payment_date'	=> $payment_date
+		);
+		
+		if(array_key_exists("holding_money_receipt",$this->session->all_userdata())){
+			$this->session->unset_userdata('holding_money_receipt');
+		}
+		$sData=array(
+			'holdingNumber'	=>(string)$_POST['dagNo'],
+			'vno'			=>$voucherno
+		);
+
+		$this->session->set_userdata('holding_money_receipt', $sData);
+
+		$holdingPaymentData = array(
+			'is_paid'     => 1,
+			'type'        => 1,
+			'status'      => 3,
+			'voucherno'   => $voucherno,
+			'payment_date'=> $payment_date,
+			'updated_by'  => $this->session->userdata('id'),
+			'updated_ip'  => $this->input->ip_address(),
+			'updated_date'=> date("Y-m-d H:i:s"),
+		);
+
+		try {
+			
+		    $this->db->trans_begin();
+			$this->mgenerate->common_insert("transaction",$transaction_info);
+			$this->mgenerate->common_insert("credit_voucher",$voucher_info);
+			$this->mgenerate->common_insert("money",$moneyinfo);
+			$this->mgenerate->common_insert("fund_sub_ctg",$sLedg);
+			$this->mgenerate->common_insert("ledger",$ledg);
+			
+			$this->db->where('id',$paymentId)->update('payment_log_bosotbita',$holdingPaymentData);
+			
+			//update bank account............
+			$this->mgenerate->common_update_bankLedger("acinfo", "balance", "acno", $acno, $_POST['totalAmount']);
+			$this->mgenerate->common_update_bankLedger("mainctg", "balance", "id", $fRow->mc_id, $_POST['totalAmount']);
+			$this->mgenerate->common_update_bankLedger("subctg", "balance", "id",$fRow->id, $_POST['totalAmount']);
+		$this->db->trans_complete();
+
+		}
+		catch (Exception $e){
+			$this->db->trans_rollback();
+			echo "<pre>";
+			print_r($e); exit;
+		}
+
+		if($this->db->trans_status() === TRUE){
+			redirect('Admin/holdingTaxGenerateInvoiceList', 'location');
+		}
+		else {
+			$this->db->trans_rollback();
+			
+			redirect('Admin/holdingTaxGenerateInvoiceList', 'location');
+		}
+		
+	}
+	// holding tax bill collection
+	public function holdingTaxBillCollection(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxBillCollection', $data);
+		$this->load->view('admin/footer');
+	}
+	public function taxHoldingTaxSend(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/taxHoldingTaxSend', $data);
+		$this->load->view('admin/footer');
+	}
+
 	public function taxCollectionPage(){
 		$this->load->view('admin/taxPage/taxCollectionPage');
+	}
+	public function taxGeneratePage(){
+		$data['fiscal_year'] = $this->setup->get_fiscal_year();
+		$data['rate_sheet']  = $this->setup->get_current_active_rate_sheet();
+	
+		$this->load->view('admin/taxPage/taxGeneratePage', $data);
 	}
 	public function tradlicencePesajibiKorCollectionPage(){
 		$this->load->view('admin/taxPage/tradlicencePesajibiKorCollectionPage');
@@ -253,6 +479,21 @@ class Admin extends CI_Controller {
 			// echo json_encode(['status' => 'error', 'message' => 'Oops!!! birthCertificate Id Already exist']); exit;
 		// }
 		$response = $this->manageAdmin->tax_registration_operation($receive);
+		echo json_encode($response);exit;
+	}
+	public function UpdatenewBosotbitaTaxCollection()
+	{	$receive = $this->input->post();
+		// check required value
+		$check_required_field = $this->_check_holding_tax_registration_form_required_field($receive);
+		if($check_required_field['status'] !== 'success'){
+			echo json_encode($check_required_field);exit;
+		}
+		// check duplicate dagno
+		$is_duplicate = $this->setup->is_insert_duplicate('holdingclientinfo', 'dag_no', $receive['dagNo']);
+		if($is_duplicate){
+			echo json_encode(['status' => 'error', 'message' => 'Oops!!! Dag number Already exist']); exit;
+		}
+		$response = $this->manageAdmin->tax_registration_operation_update($receive);
 		echo json_encode($response);exit;
 	}
 	// old bosodbit tax collection .........
@@ -468,6 +709,233 @@ class Admin extends CI_Controller {
 			echo $bcomname.",".$oType.",".$gram.",".$wordno.",".$mobileno;
 		}
 	}
+
+
+
+	// Tax Generate
+	public function searchHoldingTaxGenerate()
+	{
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (string) trim($receive['fiscal_year']);
+		$rateSheet   = (string) trim($receive['rateSheet']);
+
+		$response = $this->manageAdmin->get_rateSheet_wise_tax_person($rateSheet);
+
+		// echo "<pre>"; 
+		// print_r($response);exit;
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	      => $response,
+				'fiscal_year' => $fiscal_year,
+				'rateSheet'   => $rateSheet,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/taxPage/history/bosodBitaInformationList.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		 
+		}
+
+		public function holdingTaxGenerateAction(){
+			$fiscal_year     = $this->input->post('fiscal_year');
+			$rate_sheet_id   = $this->input->post('rateSheet');
+			$id              = $this->input->post('id');
+			$user_id         = $this->input->post('user_id');
+			$mobile          = $this->input->post('user_mobile');
+			$holding_no      = $this->input->post('holding_no');
+			$amount          = $this->input->post('amount');
+			$due_amount      = $this->input->post('due_amount');
+			$discount_amount = $this->input->post('discount_amount');
+			$total_amount    = $this->input->post('total_amount');
+			
+
+			$has_duplicate_year_rate_sheet = $this->setup->check_duplicate_fiscal_year_rate_sheet($fiscal_year, $rate_sheet_id);
+
+			
+			if($has_duplicate_year_rate_sheet == true){
+				echo "Duplicate fiscal Year & Rate sheet";exit;
+			}
+						
+			//echo $this->db->last_query($has_duplicate_year_rate_sheet);exit;
+
+			$this->db->trans_start();
+			$data = [];
+			$i = 1;
+			foreach($id as $key => $item){
+				$holding_count = $this->db->query("SELECT count(id) as totalInv FROM payment_log_bosotbita")->result();
+			    $invoiceNo     =  $holding_count[0]->totalInv+1;
+
+				$data = [
+					'holding_info_id'=> $item,
+					'invoice'        => $invoiceNo,
+					'fisyal_year_id' => $fiscal_year,
+					'rate_sheet_id'  => $rate_sheet_id,
+					'holding_no'     => $holding_no[$key],
+					'amount'         => $amount[$key],
+					'due_amount'     => $due_amount[$key],
+					'discount'       => $discount_amount[$key],
+					'total'          => $total_amount[$key],
+					'is_paid'        => 0,
+					'status'         => 0,
+					'is_active'      =>1,
+					'created_by'     => $this->session->userdata('id'),
+					'created_date'   => date("Y-m-d H:i:s"),
+					'created_ip'     => $this->input->ip_address(),
+				];
+				
+				$this->db->insert('payment_log_bosotbita', $data);
+				$insert_id = $this->db->insert_id();
+				$invoice_data = [
+					'user_id'      => $user_id[$key],
+					'trackid'      => NULL,
+					'record_id'    => $insert_id,
+					'fee'          => $amount[$key],
+					'total_fee'    => $total_amount[$key],
+					'account_no'   => NULL,
+					'invoice_date' => date("Y-m-d"),
+					'type'         => 25,
+					'is_paid'      => 0,
+					'is_active'    => 1,
+					'created_by'   => $this->session->userdata('id'),
+					'created_ip'   => $this->input->ip_address(),
+					'created_at'   => date("Y-m-d H:i:s"),
+				];
+
+				$this->db->insert('end_user_invoice', $invoice_data);
+
+				$message = "আপনার হোল্ডিং ট্যাক্স ,".$total_amount[$key]." টাকা,অনুগ্রপূর্বক ট্যাক্স পরিশোধ করুন ।";
+				$sms_send = $this->EndUser->smsSendAction($message, $mobile[$key]);
+				$sms_data = [
+					'trackid'=> $insert_id,
+					'mobile' => $mobile[$key],
+					'msg'    => $message,
+				];
+				$inbox = $this->EndUser->smsInboxAction($sms_data);
+
+			}
+			$this->db->trans_complete();
+			
+			if($this->db->trans_status() === TRUE){
+				redirect("Admin/holdingTaxGenerateInvoiceList");
+			}
+			else {
+				redirect("Admin/holdingTaxGenerateInvoiceList");
+			}
+
+			// echo "<pre>";
+			// print_r($data);
+			// exit; 
+		}
+
+
+	// bill collection
+	public function searchHoldingTaxBillColleaction()
+	{
+		$receive     = (array)$this->input->post();
+		$invoice     =  trim($receive['invoice']);
+		$holding_no  =  trim($receive['holding_no']);
+
+		$response = $this->setup->holding_tax_bill_collection_info_row($receive);
+
+		// echo "<pre>"; 
+		// //echo $this->db->last_query();
+		// print_r($response);exit;
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	     => $response,
+				'invoice'    => $invoice,
+				'holding_no' => $holding_no,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/holdingTax/bosodBitaInformationRow.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		 
+		}	
+
+	// holding tax sms send
+	public function searchHoldingTaxSmsSend()
+	{
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (string) trim($receive['fiscal_year']);
+		$rateSheet   = (string) trim($receive['rateSheet']);
+
+		$response = $this->setup->get_holding_tax_person_count($receive);
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	      => $response,
+				'fiscal_year' => $fiscal_year,
+				'rateSheet'   => $rateSheet,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/holdingTax/bosodBitaInformationSms.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		}
+	public function holdingTaxSmsSendAction(){
+		$receive     = (array)$this->input->post();
+		$fiscal_year = (int) trim($receive['fiscal_year']);
+		$rateSheet   = (int) trim($receive['rateSheet']);
+		$messageTxt  = trim($receive['message']);
+
+		$response    = $this->setup->get_holding_tax_person_data($receive);
+		$this->db->trans_begin();
+		$sms_data =[];
+		foreach($response['data'] as $item){
+			$message = "নাম ".$item->name." টাকা ".$item->totalAmount." ।  ".$messageTxt;
+				$sms_data = [
+					'trackid'=> $item->taxId,
+					'mobile' => $item->mobile_number,
+					'msg'    => $message,
+				];
+				$sms_send = $this->EndUser->smsSendAction($message, $item->mobile_number);
+				$inbox    = $this->EndUser->smsInboxAction($sms_data);
+
+		}
+
+		$this->db->trans_commit();
+
+		if($inbox == FALSE){
+			$error_message = $this->db->error()['message'];
+			$this->db->trans_rollback();
+			//return ['status' => 'error', 'message' => $error_message];
+			echo "<script>window.history.back();alert('SMS Send Failed');</script>";
+		}
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			// return ['status' => 'error', 'message' => 'Sms Send  failed'];
+			echo "<script>window.history.back();alert('SMS Send Failed');</script>";
+		}else{
+			// return ['status' => 'success', 'message' => 'SMS Send Successfully'];
+			echo "<script>window.history.back();alert('SMS Send Successfully');</script>";
+		}
+
+	}	
+
 	/*============ bosodbita kor end=======================*/
 	
 	/*============ daily submit section start =============*/

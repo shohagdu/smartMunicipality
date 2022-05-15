@@ -223,6 +223,21 @@ class Validation extends CI_Controller {
 			'valid' => $isAvailable,
 		));
 	}
+	// check duplicate holding no
+	public function check_unique_holding_no(){
+		$holding_no = $_POST['holdingNumber'];
+		$tbl = $_GET['tbl'];
+		$query = $this->db->select('holding_no')->from($tbl)->where('holding_no', $holding_no)->get();
+		if($query->num_rows() > 0){
+			$isAvailable = false;
+		}
+		else{
+			$isAvailable = true;
+		}
+		echo json_encode(array(
+			'valid' => $isAvailable,
+		));
+	}
 	// check duplicate mobile number
 	public function check_unique_mobile_number(){
 		$mobile_number = $_POST['mobileNo'];
@@ -444,4 +459,20 @@ class Validation extends CI_Controller {
 			'valid' => $isAvailable,
 		));
 	}
+	public function check_exists_fiscal_year(){
+		$fisyal_year_id = (string)trim($_POST['fisyal_year_id']);
+		$rateSheet      = (string)trim($_POST['rateSheet']);
+		$tbl = $_GET['tbl'];
+		$query = $this->db->select('fisyal_year_id')->from($tbl)->where('fisyal_year_id', $fisyal_year_id)->get();
+		if($this->db->affected_rows()>0){
+			$isAvailable = false;
+		}
+		else{
+			$isAvailable = true;
+		}
+		echo json_encode(array(
+			'valid' => $isAvailable,
+		));
+	}
+
 }

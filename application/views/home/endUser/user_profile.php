@@ -276,6 +276,8 @@ label{
 													নাগরিক সনদপত্র
 												<?php  }else if($item->type == 20 ){ ?>		
 													ওয়ারিশ  সনদপত্র
+												<?php  }else if($item->type == 25 ){ ?>
+													হোল্ডিং ট্যাক্স 
 												<?php  }else{?>
 													অন্যান্য
 												<?php }?>

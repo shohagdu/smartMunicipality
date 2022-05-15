@@ -257,13 +257,34 @@ class Manage_admin extends CI_Model{
 			'dag_no'			   => (string) trim($receive['dagNo']),
 			'mobile_number'		   => (!empty($receive['mobileNo']) ? (string) trim($receive['mobileNo']) : null),
 			'registration_date'	   => date('Y-m-d H:i:s'),
+			'due'		           => (string) trim($receive['due']),
 			'is_active'            => 1,
 			'created_by'           => (int) $this->session->userdata('id'),
 			'created_ip'           => (string) $this->input->ip_address()
 		];
+
+		$end_user_data = [
+			'name'   		      => (string) trim($receive['name']),
+			'bfname'		      => (string) trim($receive['fatherName']),
+			'p_wordno'			  => (int) trim($receive['wordNo']),
+			'nid'		          => (!empty($receive['nationalId']) ? (string) trim($receive['nationalId']) : null),
+			'birthcertificate_no' => (!empty($receive['birthCertificateId']) ? (string) trim($receive['birthCertificateId']) : null),
+			'per_gram'			   => (string) trim($receive['village']),
+			'holding_no'		   => (string) trim($receive['holdingNumber']),
+			'mobile'		       => (!empty($receive['mobileNo']) ? (string) trim($receive['mobileNo']) : null),
+			'password'	           => md5(12345),
+			'created_at'	       => date('Y-m-d H:i:s'),
+			'is_active'            => 1,
+			'created_by'           => (int) $this->session->userdata('id'),
+			'created_ip'           => (string) $this->input->ip_address()
+		];
+
+		// echo "<pre>";
+		// print_r($end_user_data);exit;
 		
 		$this->db->trans_begin();
 		$this->db->insert("holdingclientinfo",$param);
+		$this->db->insert("end_users",$end_user_data);
 		if($this->db->error()['code'] > 0){
 			$error_message = $this->db->error()['message'];
 			$this->db->trans_rollback();
@@ -278,6 +299,64 @@ class Manage_admin extends CI_Model{
 			return ['status' => 'success', 'message' => 'Add successfully'];
 		}
 	}
+
+	public function tax_registration_operation_update($receive){
+		$id =  trim($receive['id']);
+		$param = [
+			'rate_sheet_id'	       => (int) trim($receive['rateSheet']),
+			'name'   		       => (string) trim($receive['name']),
+			'fathername'		   => (string) trim($receive['fatherName']),
+			'wordno'			   => (int) trim($receive['wordNo']),
+			'national_id'		   => (!empty($receive['nationalId']) ? (string) trim($receive['nationalId']) : null),
+			'birth_certificate_id' => (!empty($receive['birthCertificateId']) ? (string) trim($receive['birthCertificateId']) : null),
+			'village'			   => (string) trim($receive['village']),
+			'holding_no'		   => (string) trim($receive['holdingNumber']),
+			'dag_no'			   => (string) trim($receive['dagNo']),
+			'mobile_number'		   => (!empty($receive['mobileNo']) ? (string) trim($receive['mobileNo']) : null),
+			'registration_date'	   => date('Y-m-d H:i:s'),
+			'due'		           => (string) trim($receive['due']),
+			'is_active'            => 1,
+			'updated_by'           => (int) $this->session->userdata('id'),
+			'updated_ip'           => (string) $this->input->ip_address()
+		];
+
+		// $end_user_data = [
+		// 	'name'   		      => (string) trim($receive['name']),
+		// 	'bfname'		      => (string) trim($receive['fatherName']),
+		// 	'p_wordno'			  => (int) trim($receive['wordNo']),
+		// 	'nid'		          => (!empty($receive['nationalId']) ? (string) trim($receive['nationalId']) : null),
+		// 	'birthcertificate_no' => (!empty($receive['birthCertificateId']) ? (string) trim($receive['birthCertificateId']) : null),
+		// 	'per_gram'			   => (string) trim($receive['village']),
+		// 	'holding_no'		   => (string) trim($receive['holdingNumber']),
+		// 	'mobile'		       => (!empty($receive['mobileNo']) ? (string) trim($receive['mobileNo']) : null),
+		// 	'password'	           => md5(12345),
+		// 	'created_at'	       => date('Y-m-d H:i:s'),
+		// 	'is_active'            => 1,
+		// 	'updated_by'           => (int) $this->session->userdata('id'),
+		// 	'updated_ip'           => (string) $this->input->ip_address()
+		// ];
+
+		// echo "<pre>";
+		// print_r($param);exit;
+		
+		$this->db->trans_begin();
+		$this->db->where('id', $id)->update("holdingclientinfo",$param);
+		// $this->db->insert("end_users",$end_user_data);
+		if($this->db->error()['code'] > 0){
+			$error_message = $this->db->error()['message'];
+			$this->db->trans_rollback();
+			return ['status' => 'error', 'message' => $error_message];
+		}
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			return ['status' => 'error', 'message' => 'Insert failed'];
+		}
+		else{
+			$this->db->trans_commit();
+			return ['status' => 'success', 'message' => 'Add successfully'];
+		}
+	}
+
 	public function exists_holding_person($id){
 		$query = $this->db->select('id')->get_where('holdingclientinfo', ['md5(id)' => $id]);
 		
@@ -347,6 +426,36 @@ class Manage_admin extends CI_Model{
 			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
 		}	
 	}
+	public function get_holding_list(){
+		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, label.rate_sheet_label as holding_label, occupation.title as profession, classification.title as shreni, rate.amount', false)
+				->join('holding_rate_sheet as rate', 'rate.id = info.rate_sheet_id', 'LEFT') 
+				->join('holding_rate_sheet_label as label', 'label.id = rate.label_id')
+				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=rate.classification_id')
+				->where(['info.is_active' => 1])
+				->order_by('info.id', 'DESC')
+				->get('holdingclientinfo as info');
+		if($query->num_rows() > 0){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}	
+	}
+
+	public function get_holding_tax_person($id){
+		$query = $this->db->select('info.id as id, info.name, info.fathername, info.due,info.rate_sheet_id, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, label.rate_sheet_label as holding_label, occupation.title as profession, classification.title as shreni, rate.amount', false)
+				->join('holding_rate_sheet as rate', 'rate.id = info.rate_sheet_id', 'LEFT')
+				->join('holding_rate_sheet_label as label', 'label.id = rate.label_id')
+				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=rate.classification_id')
+				->where(['info.is_active' => 1, 'info.id' => $id])
+				->get('holdingclientinfo as info');
+		if($query->num_rows() > 0){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->row()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}	
+	}
 	// for website data show
 	public function get_bosotbita_history_for_website($dag_no){
 	
@@ -357,6 +466,23 @@ class Manage_admin extends CI_Model{
 					->order_by('year.id', 'DESC')
 					->get('payment_log_bosotbita as log');
 					
+		if($query->num_rows() > 0){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+	}
+	// holding info get
+	public function get_rateSheet_wise_tax_person($rate_sheet){
+		$query = $this->db->select('info.id as id, info.name, info.fathername, info.national_id, info.birth_certificate_id, info.village, info.wordno, info.holding_no, info.dag_no, info.due, info.mobile_number, DATE_FORMAT(info.registration_date,"%Y-%m-%d %h:%i:%s %p") as registration_date, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, rate.amount, user.id as userId, user.mobile as userMobile', false)
+				->join('holding_rate_sheet as rate', 'rate.id = info.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id = rate.label_id')
+				->join('snf_global_form as occupation','occupation.id=rate.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=rate.classification_id')
+				->join('end_users as user', 'user.holding_no=info.holding_no')
+				->where(['info.is_active' => 1, 'info.rate_sheet_id' => $rate_sheet])
+				->get('holdingclientinfo as info');
+				
 		if($query->num_rows() > 0){
 			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
 		}else{

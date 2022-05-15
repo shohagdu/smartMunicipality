@@ -159,6 +159,7 @@
 		'mobile'		=> $mob,
 		'email'			=> $email,
 		'attachment'	=> $attachment,
+		'payment_method'=> $payment_method,
 		'profile'		=> $profile_info
 	);
 	

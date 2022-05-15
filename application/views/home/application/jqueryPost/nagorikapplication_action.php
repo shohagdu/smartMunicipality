@@ -58,10 +58,14 @@
 		if($this->db->affected_rows()>0){ echo "6";exit;}
 	} */
 	
-	// $holding = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get();
-	// if($holding->num_rows() < 1){
-	// 	echo "আপনার হোল্ডিং নম্বরটি আমাদের কাছে নাই! দয়া করে সর্বপ্রথম হোল্ডিং নম্বরটি নিবন্ধন করূন, এই জন্য আপনাকে আমাদের ইউনিয়ন পরিষদ আসতে হবে!";exit;
-	// }
+	$holding = $this->db->select('holding_no')->from("holdingclientinfo")->where('holding_no',$holding_no)->get();
+	if($holding->num_rows() < 1){
+		echo "আপনার হোল্ডিং নম্বরটি আমাদের কাছে নাই! দয়া করে সর্বপ্রথম হোল্ডিং নম্বরটি নিবন্ধন করূন, এই জন্য আপনাকে আমাদের ইউনিয়ন পরিষদ আসতে হবে!";exit;
+	}
+	$holdingDue = $this->db->select('holding_no')->from("payment_log_bosotbita")->where('holding_no',$holding_no)->where('is_paid', 0)->get();
+	if($holdingDue->num_rows() > 0){
+		echo "আপনার হোল্ডিং ট্যাক্স বকেয়া আছে, আগে ট্যাক্স বকেয়া পরিশোধ করে আবেদন করুন !";exit;
+	}
 	
 	if(($gender=='female' || $gender=='male') && ($mstatus==2)){
 		$eHname = "";

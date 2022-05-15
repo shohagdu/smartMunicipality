@@ -232,6 +232,333 @@ class Setup_model extends CI_Model{
 			return false;
 		}
 	}
+	// duplicate invoice generate
+	public function check_duplicate_fiscal_year_rate_sheet($fiscal_year, $rate_sheet_id){
+		$query = $this->db->select('id')->get_where('payment_log_bosotbita', [
+			'fisyal_year_id' => $fiscal_year,
+			'rate_sheet_id'  => $rate_sheet_id,
+		]);
+		
+		if($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	// holding registration list
+	function getAlHoldingInfo($postData=null){
+
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $searchValue = !empty($postData['search']['value'])?$postData['search']['value']:''; // Search value
+        // Custom search filter
+        $rate_sheet_id = !empty($postData['rate_sheet_id'])?$postData['rate_sheet_id']:'';
+        ## Search
+        $search_arr = array();
+        $searchQuery = "";
+        if($searchValue != ''){
+            $search_arr[] = " (holdingclientinfo.name like '%".$searchValue."%' or 
+			holdingclientinfo.national_id like '%".$searchValue."%' or 
+			holdingclientinfo.mobile_number like '%".$searchValue."%' or 
+			holdingclientinfo.birth_certificate_id like'%".$searchValue."%' ) ";
+        }
+        if($rate_sheet_id != ''){
+            $search_arr[] = " holdingclientinfo.rate_sheet_id='".$rate_sheet_id."' ";
+        }
+
+        if(count($search_arr) > 0){
+            $searchQuery = implode(" and ",$search_arr);
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('holdingclientinfo')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get('holdingclientinfo')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select("holdingclientinfo.id, holdingclientinfo.name ,holdingclientinfo.holding_no, holdingclientinfo.fathername,holdingclientinfo.village, holdingclientinfo.mobile_number,  CONCAT(label.rate_sheet_label,'-',occupation.title,'-', classification.title) as rate_sheet_label, rate.amount");
+        if($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+        
+		$this->db->join('holding_rate_sheet as rate', 'rate.id = holdingclientinfo.rate_sheet_id', 'left'); 
+		$this->db->join('holding_rate_sheet_label as label', 'label.id = rate.label_id');
+		$this->db->join('snf_global_form as occupation','occupation.id=rate.occupation_id');
+		$this->db->join('snf_global_form as classification', 'classification.id=rate.classification_id');
+        $this->db->order_by('holdingclientinfo.id', 'ASC');
+        $this->db->limit($rowperpage, $start);
+        $record = $this->db->get('holdingclientinfo');
+        if(!empty($record->num_rows()>0)) {
+            $records = $record->result();
+            $data = array();
+            $i = $start + 1;
+            foreach ($records as $slKey => $record) {
+                $action = '';
+                $action .= '<a href="' . base_url('Admin/holdingRegisterEdit?id=' . $record->id) . '"  id="' . $record->id . '" class="btn btn-info btn-xs" title="Edit"><i class="glyphicon glyphicon-pencil"></i> Edit </a>';
+                
+                $data[] = array(
+                    "holding_no" => $record->holding_no,
+                    "name" => $record->name,
+                    "fathername" => $record->fathername,
+                    "village" => $record->village,
+                    "rate_sheet_label" => $record->rate_sheet_label,
+                    "amount" => $record->amount,
+                    "mobile_number" => $record->mobile_number,
+                    "action" => $action,
+                    "slNo" => $i++,
+                );
+            }
+        }
+
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+        );
+
+        return $response;
+    }
+	function getAlHoldingInvoiceInfo($postData=null){
+
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $searchValue = !empty($postData['search']['value'])?$postData['search']['value']:''; // Search value
+        // Custom search filter
+        $rate_sheet_id = !empty($postData['rate_sheet_id'])?$postData['rate_sheet_id']:'';
+        ## Search
+        $search_arr = array();
+        $searchQuery = "";
+        if($searchValue != ''){
+            $search_arr[] = " (holdingclientinfo.name like '%".$searchValue."%' or 
+			holdingclientinfo.national_id like '%".$searchValue."%' or 
+			holdingclientinfo.mobile_number like '%".$searchValue."%' or 
+			holdingclientinfo.birth_certificate_id like'%".$searchValue."%' ) ";
+        }
+        if($rate_sheet_id != ''){
+            $search_arr[] = "payment_log_bosotbita.rate_sheet_id='".$rate_sheet_id."' ";
+        }
+
+        if(count($search_arr) > 0){
+            $searchQuery = implode(" and ",$search_arr);
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('payment_log_bosotbita')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get('payment_log_bosotbita')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select("payment_log_bosotbita.id as paymentId, payment_log_bosotbita.total as totalAmount, payment_log_bosotbita.type as paymentType, payment_log_bosotbita.due_amount, payment_log_bosotbita.discount, holdingclientinfo.id, holdingclientinfo.name ,holdingclientinfo.holding_no, holdingclientinfo.fathername,holdingclientinfo.village, holdingclientinfo.mobile_number,  CONCAT(label.rate_sheet_label,'-',occupation.title,'-', classification.title) as rate_sheet_label, rate.amount");
+        if($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+        
+		$this->db->join('holdingclientinfo', 'holdingclientinfo.holding_no = payment_log_bosotbita.holding_no', 'left'); 
+		$this->db->join('holding_rate_sheet as rate', 'rate.id = payment_log_bosotbita.rate_sheet_id', 'left'); 
+		$this->db->join('holding_rate_sheet_label as label', 'label.id = rate.label_id');
+		$this->db->join('snf_global_form as occupation','occupation.id=rate.occupation_id');
+		$this->db->join('snf_global_form as classification', 'classification.id=rate.classification_id');
+        $this->db->order_by('payment_log_bosotbita.id', 'DESC');
+        $this->db->limit($rowperpage, $start);
+        $record = $this->db->get('payment_log_bosotbita');
+        if(!empty($record->num_rows()>0)) {
+            $records = $record->result();
+            $data = array();
+            $i = $start + 1;
+            foreach ($records as $slKey => $record) {
+                $action = '';
+                $action .= '<a href="' . base_url('Money_receipt/bosodbitaTaxInvoice?id=' . $record->paymentId) . '"  id="' . $record->paymentId . '" class="btn btn-info btn-xs" target="_blank" title="INV"><i class="glyphicon glyphicon-book"></i> Invoice </a>';
+                if($record->paymentType == 2){
+					$action .= '<a href="' . base_url('Admin/holdingTaxPayment?id=' . sha1($record->paymentId)) . '"  id="' . $record->paymentId . '" class="btn btn-warning btn-xs"  style="margin-left:10px" title="Pay"><i class="glyphicon glyphicon-usd"></i> Accept </a>';
+				}else{
+					$action .= '<a href="' . base_url('Admin/holdingTaxPayment?id=' . sha1($record->paymentId)) . '"  id="' . $record->paymentId . '" class="btn btn-success btn-xs" style="margin-left:10px" title="Pay"><i class="glyphicon glyphicon-usd"></i> Payment </a>';
+				}
+                $data[] = array(
+                    "holding_no" => $record->holding_no,
+                    "name" => $record->name,
+                    "fathername" => $record->fathername,
+                    "village" => $record->village,
+                    "rate_sheet_label" => $record->rate_sheet_label,
+                    "amount" => ($record->totalAmount + $record->due_amount)-$record->discount,
+                    "mobile_number" => $record->mobile_number,
+                    "action" => $action,
+                    "slNo" => $i++,
+                );
+            }
+        }
+
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+        );
+
+        return $response;
+    }
+
+	public function holding_tax_invoice_list_data($receive, $search_content){
+
+		$query = $this->db->select('*')->from('payment_log_bosotbita')->where('is_paid', 0)->get();
+
+		return $query->result();
+
+		// echo "<pre>";
+		// print_r($query);exit;
+	}
+	public function holding_tax_invoice_list(){
+
+		$query = $this->db->select('holdinfo.* , plb.id as paymentID,plb.invoice,plb.total, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label,plb.type as paymentType ' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->where(['plb.is_active' => 1, 'plb.is_paid'=> 0])
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->result();
+
+	}
+	public function holding_tax_invoice_info($id){
+		
+		$query = $this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id')
+				->where('sha1(plb.id)', $id)
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->row();
+
+	}
+	public function holding_tax_invoice_info_user($holding_no){
+		
+		$query = $this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' )
+		        ->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no')
+				->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id')
+				->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id')
+				->join('snf_global_form as occupation','occupation.id=hrs.occupation_id')
+				->join('snf_global_form as classification', 'classification.id=hrs.classification_id')
+				->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id')
+				->where('plb.holding_no', $holding_no)
+				->order_by('plb.id', 'DESC')
+				->get('payment_log_bosotbita as plb');
+
+		return $query->row();
+
+	}
+	public function holding_tax_bill_collection_info_row($receive){
+
+		$invoice    = $receive['invoice'];
+		$holding_no = $receive['holding_no'];
+		
+		$this->db->select('holdinfo.*, plb.id as paymentID,plb.invoice,plb.due_amount,plb.total,plb.fisyal_year_id,plb.rate_sheet_id, plb.discount, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label, fisYear.full_year as FiscalYear' );
+		$this->db->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no');
+		$this->db->join('holding_rate_sheet as hrs','hrs.id=plb.rate_sheet_id');
+		$this->db->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id');
+		$this->db->join('snf_global_form as occupation','occupation.id=hrs.occupation_id');
+		$this->db->join('snf_global_form as classification', 'classification.id=hrs.classification_id');
+		$this->db->join('tbl_fiscal_year as fisYear', 'fisYear.id=plb.fisyal_year_id');
+		$this->db->where('plb.is_active', 1);
+
+		if(!empty($invoice)){
+			$this->db->where('plb.invoice', $invoice);
+		}
+		if(!empty($holding_no)){
+			$this->db->where('plb.holding_no', $holding_no);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita as plb');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->row()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+	}
+
+	public function get_holding_tax_person_count($receive){
+
+		$fisyal_year_id = $receive['fiscal_year'];
+		$rate_sheet_id  = $receive['rateSheet'];
+		
+		$this->db->select('count(id) as totalHoldingPerson' );
+	
+		$this->db->where('is_paid', 0);
+
+		if(!empty($fisyal_year_id)){
+			$this->db->where('fisyal_year_id', $fisyal_year_id);
+		}
+		if(!empty($rate_sheet_id)){
+			$this->db->where('rate_sheet_id', $rate_sheet_id);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+	}
+	public function get_holding_tax_person_data($receive){
+
+		$fisyal_year_id = $receive['fiscal_year'];
+		$rate_sheet_id  = $receive['rateSheet'];
+		
+		$this->db->select('holdinfo.name, holdinfo.holding_no, holdinfo.mobile_number,plb.id as taxId, plb.total as totalAmount');
+		$this->db->join('holdingclientinfo as holdinfo', 'holdinfo.holding_no = plb.holding_no');
+		$this->db->where('plb.is_paid', 0);
+
+		if(!empty($fisyal_year_id)){
+			$this->db->where('plb.fisyal_year_id', $fisyal_year_id);
+		}
+		if(!empty($rate_sheet_id)){
+			$this->db->where('plb.rate_sheet_id', $rate_sheet_id);
+		}
+		
+		$query =  $this->db->get('payment_log_bosotbita as plb');
+
+		if($query !=""){
+			return ['status' => 'success', 'message' => 'Information found', 'data'=> $query->result()];
+		}else{
+			return ['status' => 'error', 'message' => 'Information not found', 'data'=> null];
+		}
+
+	}
+	
 	// check duplicate  for update
 	public function is_update_duplicate($table, $column, $where){
 		$query = $this->db->select("$column")
@@ -839,6 +1166,33 @@ class Setup_model extends CI_Model{
             return ['status'=>'error','message'=>'No Data found','data'=>''];
         }
     }
+    function get_receive_holding_tax_info($where=NULL)
+    {
+        $this->db->select('receive.*,info.name,info.fathername,info.holding_no,info.mobile_number, info.village,info.wordno,year.full_year, CONCAT(label.rate_sheet_label,"-",occupation.title,"-", classification.title) as rate_sheet_label');
+        $this->db->from('payment_log_bosotbita as receive');
+        $this->db->join('holdingclientinfo as info','info.holding_no=receive.holding_no',"left");
+        $this->db->join('tbl_fiscal_year as year','year.id=receive.fisyal_year_id',"left");
+		$this->db->join('holding_rate_sheet as hrs','hrs.id=receive.rate_sheet_id',"left");
+		$this->db->join('holding_rate_sheet_label as label', 'label.id=hrs.label_id',"left");
+		$this->db->join('snf_global_form as occupation','occupation.id=hrs.occupation_id',"left");
+		$this->db->join('snf_global_form as classification', 'classification.id=hrs.classification_id',"left");
+
+        if(!empty($where)){
+            $this->db->where($where);
+        }else {
+            $this->db->where('receive.is_active !=', 0);
+        }
+        $this->db->order_by('receive.holding_no','ASC');
+        $query= $this->db->get();
+
+        if($query->num_rows()>0){
+            return ['status'=>'success','message'=>'Successfully Data found','data'=>$query->result()];
+        }else{
+            return ['status'=>'error','message'=>'No Data found','data'=>''];
+        }
+    }
+
+
 
     function getPorichoyApiInfo($data,$apiURL,$apiKey){
         $url = $apiURL;

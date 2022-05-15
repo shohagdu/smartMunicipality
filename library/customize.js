@@ -166,9 +166,77 @@ $(document).ready(function(){
     //     vgd_applicant_data.draw();
     // });
 
-
+        var holding_tax_data_dataTable = $('#holding_registration_list_data').DataTable({
+        "processing":true,
+        "serverSide":true,
+        "order":[],
+        "ajax":{
+            url:"Admin/get_holding_person_list_data",
+            type:"POST",
+            'data': function(data){
+                data.rate_sheet_id = $('#rate_sheet_id').val();
+            }
+        },
+        'columns': [
+            { data: 'slNo' },
+            { data: 'holding_no' },
+            { data: 'name' },
+            { data: 'fathername' },
+            { data: 'village' },
+            { data: 'rate_sheet_label' },
+            { data: 'amount' },
+            { data: 'mobile_number' },
+            { data: 'action' },
+        ],
+        "columnDefs":[
+            {
+                "targets":[0, 3, 4],
+                "orderable":false,
+            },
+        ],
+    });
+    $('#rate_sheet_id').change(function(){
+        holding_tax_data_dataTable.draw();
+    });    
+ 
+    // holding tax invoice
+    var holding_tax_invoice_data_dataTable = $('#holding_invoice_list_data').DataTable({
+        "processing":true,
+        "serverSide":true,
+        "order":[],
+        "ajax":{
+            url:"Admin/get_holding_tax_invoice_list_data",
+            type:"POST",
+            'data': function(data){
+                data.rate_sheet_id = $('#rate_sheet_id').val();
+            }
+        },
+        'columns': [
+            { data: 'slNo' },
+            { data: 'holding_no' },
+            { data: 'name' },
+            { data: 'fathername' },
+            { data: 'village' },
+            { data: 'rate_sheet_label' },
+            { data: 'amount' },
+            { data: 'mobile_number' },
+            { data: 'action' },
+        ],
+        "columnDefs":[
+            {
+                "targets":[0, 3, 4],
+                "orderable":false,
+            },
+        ],
+    });
+    $('#rate_sheet_id').change(function(){
+        holding_tax_invoice_data_dataTable.draw();
+    });    
 
 });
+
+
+
 // Food Program
 function addFoodProgram() {
     $("#programInfoForm")[0].reset();

@@ -198,9 +198,9 @@
 							</li>
 							
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="100" data-close-others="false">ইউনিয়ন পরিষদ &nbsp;
+								<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="100" data-close-others="false">ইউনিয়ন পরিষদ &nbsp;
 								<b class="caret"></b>
-								</a>
+								</a> -->
 								<ul class="dropdown-menu">
 									<!-- <li><a href="home/voterList">ভোটার তালিকা</a></li>
 									<li class="divider"></li>
@@ -208,21 +208,21 @@
 									<li class="divider"></li>
 									<li><a href="home/poorman">দুস্থদের তালিকা </a></li> -->
 									<!-- <li class="divider"></li> -->
-									<li><a href="home/widow">বিধবাদের তালিকা </a></li>
-									<li class="divider"></li>
+									<!-- <li><a href="home/widow">বিধবাদের তালিকা </a></li>
+									<li class="divider"></li> -->
 									<!-- <li><a href="home/foreignMan">প্রবাসীদের তালিকা </a></li>
 									<li class="divider"></li> -->
-									<li><a href="home/oldmanStipend">বয়স্কভাতা</a></li>
-									<li class="divider"></li>
+									<!-- <li><a href="home/oldmanStipend">বয়স্কভাতা</a></li> -->
+									<!-- <li class="divider"></li>
 									<li><a href="home/motherVata">মাতৃত্বকালীন ভাতা </a></li>
 									<li class="divider"></li>
 									<li><a href="home/autistic">প্রতিবন্ধী ভাতা</a></li>
-									<li class="divider"></li>
+									<li class="divider"></li> -->
 									<!-- <li><a href="home/autisticStudent">প্রতিবন্ধী ছাত্র/ছাত্রী</a></li>
 									<li class="divider"></li> -->
 								</ul>
 							</li>
-						    <li> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+						    <li style="width:180px"> &nbsp;</li>
 							<?php if(empty($this->session->userdata('id'))){  ?>
 							<li><a href="home/signup">  নিবন্ধন করুন </a></li>
 							<li><a href="home/login">  লগইন  </a></li>
