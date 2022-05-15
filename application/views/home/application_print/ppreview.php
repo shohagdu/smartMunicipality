@@ -1,35 +1,30 @@
-<script>
+﻿<script>
 	window.onbeforeunload = function(){ return 'আপনি যদি পেজটি  Reload দেন তাহলে আপনাকে নতুন করে ডাটা এন্ট্রি দিতে হবে.';};
 </script>
 <?php
 if(isset($_GET['scode'])){$scode=$this->input->get('scode',TRUE);}
-else if(isset($_GET['pcode'])){ $scode=$this->input->get('pcode',TRUE); }
-else {$scode=$this->session->userdata('sCode');}
+
 $scode=chop($scode,'/');
-$query=$this->db->select('*')->from('otherserviceinfo')->where('trackid',$scode)->get();
+$query=$this->db->select('*')->from('personalinfo')->where('trackid',$scode)->get();
 $row=$query->row();
-$serviceId = $row->serviceId;
-$query2=$this->db->select('listName')->from('otherservicelist')->where('id',$serviceId)->get()->row();
-$listName = $query2->listName;
 ?>
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
 <base href="<?php echo base_url();?>">
 	<meta charset="UTF-8">
-	<title><?php echo $listName;?> এর আবেদন পত্র</title>
+	<title> নাগরিক আবেদন পত্র</title>
 	<link rel="stylesheet" type="text/css" href="certificate_css/citizen.css" media="all" />
 	<link href="certificate_css/print_for.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
-    <a href="index.php/home/profile"> Profile </a>
 	<?php if($this->session->userdata('sCode')){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
 			<img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php }?>
-	<a  target='_blank' href="<?php if($this->session->userdata('sCode') || ($_GET['pcode'])){?>javaScript:window.print();<?php } if(isset($_GET['scode'])){?>home/ppreview?pcode=<?php echo $scode;}?>">
+	<a  href="javaScript:window.print();">
 		<img src="<?php echo base_url();?>library/print.png"/>
 	</a>
 </div>
@@ -70,7 +65,7 @@ $listName = $query2->listName;
 						<!-----------header area start--------------->
 			<div class="header_area">
 				<div class="fix structure header_section"> 
-					<h2><?php echo $listName;?>  এর আবেদন  পত্র </h2>
+					<h2> নাগরিক সনদ পত্রের আবেদন  </h2>
 					<span> আবেদনের তারিখ: <input type="text" name="" id="" readonly value="<?php $cdate=date('d/m/Y',strtotime($row->insert_time));echo $this->web->banDate($cdate);?>"/></span>
 				</div>
 			</div>
@@ -134,30 +129,15 @@ $listName = $query2->listName;
 							<tr>
 								<td>&nbsp;ধর্ম</td>
 								<td style="border-left:none;"><span>&nbsp;:&nbsp;<?php echo $row->religion?></span></td>
-								<?php 
-									if($listName=='মুক্তিযোদ্ধা সনদ' || $listName=='মুক্তিযোদ্ধা ওয়ারিশ সনদ'){
-								?>
-								<td style="border-left:none;">সেক্টর নং </td>
-								<td style="border-left:none;"><span>&nbsp;:&nbsp;<?php echo $this->web->banDate($row->sector_no);?></span></td>
-								<?php }else{?>
 								<td style="border-left:none;">জন্মসনদ নং </td>
 								<td style="border-left:none;"><span>&nbsp;:&nbsp;<?php echo $this->web->banDate($row->bcno);?></span></td>
-								<?php }?>
 							</tr>
 							<tr>
 								<td>&nbsp;বৈবাহিক অবস্থা </td>
 								<td style="border-left:none;"><span>&nbsp;:&nbsp;<?php if($row->mstatus=='1') echo 'বিবাহিত'; 
 										if($row->mstatus=='2') echo 'অবিবাহিত'; ?></span></td>
-										
-								<?php 
-									if($listName=='মুক্তিযোদ্ধা সনদ' || $listName=='মুক্তিযোদ্ধা পোষ্য সনদ'){
-								?>
-								<td style="border-left:none;border-bottom:none;">মুক্তিবার্তা নং </td>
-								<td style="border-left:none;border-bottom:none;"><span>&nbsp;:&nbsp;<?php echo $this->web->banDate($row->mukti_sonod)?></span></td>
-								<?php }else{?>
 								<td style="border-left:none;border-bottom:none;">পাসপোর্ট নং </td>
 								<td style="border-left:none;border-bottom:none;"><span>&nbsp;:&nbsp;<?php echo $this->web->banDate($row->pno)?></span></td>
-								<?php }?>
 							</tr>
 							
 							<tr style="height:100px;">
@@ -209,7 +189,7 @@ $listName = $query2->listName;
 					<ol style="padding-left:40px;list-style:none;">
 						<li> ১) &nbsp; এলাকার গন্যমান্য ২ জন ব্যাক্তি এবং ওয়ার্ড মেম্বার কর্তৃক  সত্যায়িত করে পরিষদে জমা ।</li>
 						<li> ২) &nbsp;১ কপি পাসপোর্ট সাইজ ছবি,(সত্যায়িত)</li>
-						<li>৩)&nbsp; আবেদন পত্রের অবস্থান জানার জন্য <font style="color:blue;">http://<?php echo $this->web->getUrl();?>/Otrack</font>  প্রবেশ করান  এবং অবস্থাটি জানুন ।</li>
+						<li>৩)&nbsp; আবেদন পত্রের অবস্থান জানার জন্য <font style="color:blue;">http://<?php echo $this->web->getUrl();?>/Ntrack</font>  প্রবেশ করান  এবং অবস্থাটি জানুন ।</li>
 					</ol>
 				</div>
 			</div>
@@ -230,7 +210,7 @@ $listName = $query2->listName;
 							<td colspan="3"></td>
 							<td rowspan="4" style="height:140px;width:160px; border-top:1px solid black; border-left:1px solid black;">
 								<br/>
-								<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2F<?php echo $all_data->web_link;?>/index.php/home/opreview?pcode=<?php echo $row->trackid;?>%2F&choe=UTF-8" style="height:120px;width:130px;">
+								<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2F<?php echo $all_data->web_link;?>/index.php/home/ppreview?pcode=<?php echo $row->trackid;?>%2F&choe=UTF-8" style="height:120px;width:130px;">
 							</td>
 						</tr>
 						<tr style="height:30px;">
@@ -271,7 +251,7 @@ $listName = $query2->listName;
 						
 					</div>
 					<div id="footer_section_right">
-						<p> Develop By: Step Technology<br />
+						<p> Develop By: Step Technology <br />
 							www.steptechbd.com
 						</p>
 					</div>

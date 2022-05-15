@@ -28,19 +28,38 @@
 				return false;
 			}
 
-			else if(nid=='' || birth_id ==''){
-				document.getElementById('error').innerHTML='অনুগ্রহপূর্বক ন্যাশনাল আইডি অথবা জন্ম নিবন্ধন দিন ';
-				return false;
+			// else if(nid=='' || birth_id ==''){
+			// 	document.getElementById('error').innerHTML='অনুগ্রহপূর্বক ন্যাশনাল আইডি অথবা জন্ম নিবন্ধন দিন ';
+			// 	return false;
+			// }
+			else if(nid==''){
+				if(birth_id ==''){
+					document.getElementById('error').innerHTML='অনুগ্রহপূর্বক জন্ম নিবন্ধন দিন ';
+					return false;
+				}else{
+					if(birth_idLenght < 15 || birth_idLenght > 17){
+						document.getElementById('error').innerHTML='আপনার জন্ম নিবন্ধন নং  সঠিক না  ';
+						return false;
+					}
+				}
+				// document.getElementById('error').innerHTML='অনুগ্রহপূর্বক ন্যাশনাল আইডি  দিন ';
+				// return false;
 			}
-			else if(nidLenght < 10 || nidLenght > 17){
-				document.getElementById('error').innerHTML='আপনার ন্যাশনাল আইডি সঠিক না  ';
-				return false;
+			else if(nid !=''){
+				 if(nidLenght < 10 || nidLenght > 17){
+					document.getElementById('error').innerHTML='আপনার ন্যাশনাল আইডি সঠিক না  ';
+					return false;
+				 }
 			}
+			// else if(nidLenght < 10 || nidLenght > 17){
+			// 	document.getElementById('error').innerHTML='আপনার ন্যাশনাল আইডি সঠিক না  ';
+			// 	return false;
+			// }
 
-			else if(birth_idLenght < 15 || birth_idLenght > 17){
-				document.getElementById('error').innerHTML='আপনার জন্ম নিবন্ধন নং  সঠিক না  ';
-				return false;
-			}
+			// else if(birth_idLenght < 15 || birth_idLenght > 17){
+			// 	document.getElementById('error').innerHTML='আপনার জন্ম নিবন্ধন নং  সঠিক না  ';
+			// 	return false;
+			// }
 			else if(password==''){
 				document.getElementById('error').innerHTML='অনুগ্রহপূর্বক পাসওয়ার্ড দিন ';
 				return false;

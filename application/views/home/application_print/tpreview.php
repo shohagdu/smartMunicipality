@@ -3,8 +3,7 @@
 </script>
 <?php
 if(isset($_GET['scode'])){$scode=$this->input->get('scode',TRUE);}
-else if(isset($_GET['pcode'])){ $scode=$this->input->get('pcode',TRUE);}
-else {$scode=$this->session->userdata('trackid');}
+
 $scode=chop($scode,'/');
 $query=$this->db->select('*')->from('tradelicense')->where('trackid',$scode)->get();
 $row=$query->row();
@@ -32,7 +31,7 @@ $row=$query->row();
 			<img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php //}?>
-	<a  target='_blank' href="javaScript:window.print();<?php if(isset($_GET['scode'])){?>home/tpreview?pcode=<?php echo $scode;}?>" title="Print">
+	<a  href="javaScript:window.print();" title="Print">
 		<img src="<?php echo base_url();?>library/print.png"/>
 	</a>
 </div>

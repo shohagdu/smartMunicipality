@@ -262,6 +262,7 @@ $row=$query->row();
 			
 		</div>
 	</div>
+	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 </body>
 </html>
 <?php $this->session->unset_userdata('sCode');

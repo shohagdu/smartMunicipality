@@ -87,7 +87,7 @@
 											<label for="Birth-date" class="col-sm-6 control-label">জম্ম তারিখ  <span>*</span></label>
 											<div class="col-sm-6 date">
 												<div class="input-group input-append date" id="datePicker">
-													<input type="text" class="form-control" name="dofb" value="<?php echo $profile_info->dofb; ?>" />
+													<input type="text" class="form-control" name="dofb" id="dofb" value="<?php echo $profile_info->dofb; ?>" />
 													<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 												</div>
 											</div>
