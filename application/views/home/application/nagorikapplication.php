@@ -281,7 +281,7 @@
 												<div class="form-group">
 													<label for="District-english" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="p_dis" id="p_dis" class="form-control" value="<?php echo $profile_info->p_dis; ?>" placeholder=""/>
+														<input type="text" name="p_dis" id="p_dis" class="district_en form-control" value="<?php echo $profile_info->p_dis; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -292,7 +292,7 @@
 												<div class="form-group">
 													<label for="Thana-english" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="p_thana" id="p_thana" class="form-control"  value="<?php echo $profile_info->p_thana; ?>" placeholder=""/>
+														<input type="text" name="p_thana" id="p_thana" class="upazila_en form-control"  value="<?php echo $profile_info->p_thana; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -354,7 +354,7 @@
 												<div class="form-group">
 													<label for="District-bangla" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="pb_dis" id="pb_dis" class="form-control" value="<?php echo $profile_info->pb_dis; ?>" placeholder=""/>
+														<input type="text" name="pb_dis" id="pb_dis" class="district_bn form-control" value="<?php echo $profile_info->pb_dis; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -365,7 +365,7 @@
 												<div class="form-group">
 													<label for="Thana-bangla" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="pb_thana" id="pb_thana" class="form-control" value="<?php echo $profile_info->pb_thana; ?>" placeholder=""/>
+														<input type="text" name="pb_thana" id="pb_thana" class="upazila_bn form-control" value="<?php echo $profile_info->pb_thana; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -438,7 +438,7 @@
 												<div class="form-group">
 													<label for="District-english" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="per_dis" id="per_dis" class="form-control" value="<?php echo $profile_info->per_dis; ?>" placeholder=""/>
+														<input type="text" name="per_dis" id="per_dis" class="present_district_en form-control" value="<?php echo $profile_info->per_dis; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -511,7 +511,7 @@
 												<div class="form-group">
 													<label for="District-bangla" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="perb_dis" id="perb_dis" class="form-control" value="<?php echo $profile_info->perb_dis; ?>" placeholder=""/>
+														<input type="text" name="perb_dis" id="perb_dis" class=" form-control" value="<?php echo $profile_info->perb_dis; ?>" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -614,6 +614,7 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-12"> 
+									
 										<div class="form-group">
 											<label for="payment_method" class="col-sm-3 control-label"> পেমেন্ট মেথড </label>
 											<div class="col-sm-3">
@@ -626,7 +627,6 @@
 										</div>
 									</div>
 								</div>
-	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
 										<?php if(!empty($this->session->userdata('id'))){ ?>
@@ -642,3 +642,25 @@
 		</div><!-- left Content End-->
 		
 		<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>
+		<script type="text/javascript">
+        $(document).ready(function(){
+ 
+			$('.district_en').autocomplete({
+                source: "<?php echo site_url('home/district_en');?>",
+            });
+
+			$('.district_bn').autocomplete({
+                source: "<?php echo site_url('home/district_bn');?>",
+            });
+
+			$('.upazila_en').autocomplete({
+                source: "<?php echo site_url('home/upazila_en');?>",
+            });
+			$('.upazila_bn').autocomplete({
+                source: "<?php echo site_url('home/upazila_bn');?>",
+            });
+ 
+        });
+    </script>
+		
+

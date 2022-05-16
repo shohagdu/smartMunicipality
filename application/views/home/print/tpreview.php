@@ -27,13 +27,14 @@ $row=$query->row();
 <body style="">
 
 <div style="left:300px;margin-top:10px;position:middle;background:#666;" align="center" id="bar">
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 	<?php //if($this->session->userdata('sCode')){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
 			<img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php //}?>
 	<a  target='_blank' href="javaScript:window.print();<?php if(isset($_GET['scode'])){?>home/tpreview?pcode=<?php echo $scode;}?>" title="Print">
-		<img src="<?php echo base_url();?>library/print.png"/>
+		<img src="<?php echo base_url();?>library/print.png"/> প্রিন্ট  করুন
 	</a>
 </div>
 <br/>
@@ -217,7 +218,7 @@ $row=$query->row();
 			
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	
 </body>
 <?php
 //$this->session->unset_userdata('trackid');

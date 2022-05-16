@@ -320,4 +320,24 @@ class End_user extends CI_Model{
 			return false;
 		}
 	}
+	function district_en($title){
+        $this->db->like('name', $title , 'both');
+        $this->db->limit(10);
+        return $this->db->get('districts')->result();
+    }
+	function district_bn($title){
+        $this->db->like('bn_name', $title , 'both');
+        $this->db->limit(10);
+        return $this->db->get('districts')->result();
+    }
+	function upazila_en($title){
+        $this->db->like('name', $title , 'both');
+        $this->db->limit(10);
+        return $this->db->get('upazilas')->result();
+    }
+	function upazila_bn($title){
+        $this->db->like('bn_name', $title , 'both');
+        $this->db->limit(10);
+        return $this->db->get('upazilas')->result();
+    }
 } 

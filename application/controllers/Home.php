@@ -1015,6 +1015,66 @@ public function searchRegisterUser(){
 
 	}
 }
+	function get_autocomplete(){
+        if (isset($_GET['term'])) {
+            $result = $this->EndUser->search_blog($_GET['term']);
+            if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'label' => $row->name,
+                );
+                echo json_encode($arr_result);
+            }
+        }
+    }
+	function district_en(){
+        if (isset($_GET['term'])) {
+            $result = $this->EndUser->district_en($_GET['term']);
+            if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'label' => $row->name,
+                );
+                echo json_encode($arr_result);
+            }
+        }
+    }
+	function district_bn(){
+        if (isset($_GET['term'])) {
+            $result = $this->EndUser->district_bn($_GET['term']);
+            if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'label' => $row->bn_name,
+                );
+                echo json_encode($arr_result);
+            }
+        }
+    }
+	function upazila_en(){
+        if (isset($_GET['term'])) {
+            $result = $this->EndUser->upazila_en($_GET['term']);
+            if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'label' => $row->name,
+                );
+                echo json_encode($arr_result);
+            }
+        }
+    }
+	function upazila_bn(){
+        if (isset($_GET['term'])) {
+            $result = $this->EndUser->upazila_bn($_GET['term']);
+            if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'label' => $row->bn_name,
+                );
+                echo json_encode($arr_result);
+            }
+        }
+    }
 }
 
 /* End of file welcome.php */

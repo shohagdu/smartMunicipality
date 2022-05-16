@@ -24,9 +24,10 @@ $this->session->unset_userdata('wCode');
 </head>
 <body>
 <div style="left:300px;margin-top:10px;position:middle;background:#666;" align="center" id="bar">
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 	<?php //if($this->session->userdata('sCode')){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
-			<img src="<?php echo base_url();?>img/home.png">
+			<img src="<?php echo base_url();?>img/home.png"> প্রিন্ট  করুন
 		</a>
 	<?php //}?>
 	<a  target='_blank' href="javaScript:window.print();<?php if(isset($_GET['scode'])){?>home/tpreview?pcode=<?php echo $scode;}?>" title="Print">
@@ -249,6 +250,6 @@ document.getElementById('total').innerHTML='<?php echo $this->web->banDate($tota
 			<!------------------ footer area end-------------------->
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	
 </body>
 </html>

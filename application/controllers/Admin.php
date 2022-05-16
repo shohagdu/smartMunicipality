@@ -435,6 +435,37 @@ class Admin extends CI_Controller {
 	public function tradlicenceHoldingTaxCollectionPage(){
 		$this->load->view('admin/taxPage/tradlicenceHoldingTaxCollectionPage');
 	}
+	public function holdingTaxPaymentHistoryInfo(){
+		$this->load->view('admin/topBar');
+		$this->load->view('admin/leftMenu');
+		$this->load->view('admin/holdingTax/holdingTaxPaymentHistory');
+		$this->load->view('admin/footer');
+	}
+	public function searchHoldingPaymentHistoryList()
+	{
+		$receive     = (array)$this->input->post();
+		$holding_no  =  trim($receive['holding_no']);
+
+		$response = $this->setup->holding_tax_payment_history_info_list($receive);
+
+		if($response['status'] !== 'success'){
+			echo json_encode($response);exit;
+		}else{
+			
+			$all_info = [
+				'info'	     => $response,
+				'holding_no' => $holding_no,
+			];
+
+			$feedback =[
+				'status'	=> $response['status'],
+				'message'   => $response['message'],
+				'data'		=> $this->load->view('admin/holdingTax/bosodBitaPaymentInformationList.php', $all_info, true)
+			];
+			echo json_encode($feedback);exit;
+		}
+		 
+		}	
 	protected function _check_holding_tax_registration_form_required_field($receive){
 		if(trim($receive['name']) == ''){
 			return ['status' => 'error', 'message' => 'Name field is required'];

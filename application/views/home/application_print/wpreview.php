@@ -6,7 +6,7 @@ if(isset($_GET['id']))
 {
 $scode=$this->input->get('id',true);
 }
-else {$scode=$this->session->userdata('wCode');}
+
 $query=$this->db->select('*')->from('tbl_warishesinfo')->where('trackid',$scode)->get();
 $row=$query->row();
 $scode=chop($scode,'/');
@@ -23,14 +23,15 @@ $this->session->unset_userdata('wCode');
 	<link rel="stylesheet" type="text/css" href="certificate_css/oarish_application.css" media="all" />
 </head>
 <body>
-<div style="left:300px;margin-top:10px;position:middle;background:#666;" align="center" id="bar">
-	<?php //if($this->session->userdata('sCode')){?>
+<div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	<?php if(isset($_GET['id'])){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
-			<img src="<?php echo base_url();?>img/home.png">
+		হোম  <img src="<?php echo base_url();?>img/home.png">
 		</a>
-	<?php //}?>
-	<a  target='_blank' href="javaScript:window.print();<?php if(isset($_GET['scode'])){?>home/tpreview?pcode=<?php echo $scode;}?>" title="Print">
-		<img src="<?php echo base_url();?>library/print.png"/>
+	<?php }?>
+	<a  href="javaScript:window.print();"> 
+		<img src="<?php echo base_url();?>library/print.png"/> প্রিন্ট করুন
 	</a>
 </div>
 <br />
@@ -249,6 +250,6 @@ document.getElementById('total').innerHTML='<?php echo $this->web->banDate($tota
 			<!------------------ footer area end-------------------->
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	
 </body>
 </html>

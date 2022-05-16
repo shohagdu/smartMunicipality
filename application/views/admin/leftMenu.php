@@ -136,6 +136,7 @@
                                 <li><a href="Admin/holdingTaxGenerate"> বসতভিটার  বিল জেনারেট   </a></li>
                                 <li><a  href="Admin/holdingTaxGenerateInvoiceList" >বসতভিটার  বিল জেনারেট তালিকা  </a></li>
                                 <li><a  href="Admin/holdingTaxBillCollection" >বসতভিটার  বিল ক্যালেকশন   </a></li>
+								<li><a  href="Admin/holdingTaxPaymentHistoryInfo" >বসতভিটার পেমেন্ট হিস্টরি  </a></li>
                                 <li><a  href="DailyReports/paidHoldingTaxCollectionReport" target='_blank'> ট্যাক্স প্রদানকারী তালিকা </a></li>
                                 <li><a   href="DailyReports/dueHoldingTaxCollectionReport" href="#" target='_blank'>ট্যাক্স  বকেয়া ধারীদের  তালিকা </a></li>
 								<li><a href="Admin/taxHoldingTaxSend"> বসতভিটা ট্যাক্সের এস এম এস পাঠান </a></li>

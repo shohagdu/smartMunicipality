@@ -1,6 +1,7 @@
 ﻿<script>
 	window.onbeforeunload = function(){ return 'আপনি যদি পেজটি  Reload দেন তাহলে আপনাকে নতুন করে ডাটা এন্ট্রি দিতে হবে.';};
 </script>
+
 <?php
 if(isset($_GET['scode'])){$scode=$this->input->get('scode',TRUE);}
 
@@ -19,13 +20,14 @@ $row=$query->row();
 </head>
 <body>
 <div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
-	<?php if($this->session->userdata('sCode')){?>
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	<?php if(isset($_GET['scode'])){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
-			<img src="<?php echo base_url();?>img/home.png">
+		হোম  <img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php }?>
-	<a  href="javaScript:window.print();">
-		<img src="<?php echo base_url();?>library/print.png"/>
+	<a  href="javaScript:window.print();"> 
+		<img src="<?php echo base_url();?>library/print.png"/> প্রিন্ট করুন
 	</a>
 </div>
 <br/>
@@ -261,7 +263,7 @@ $row=$query->row();
 			
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	
 </body>
 </html>
 <?php $this->session->unset_userdata('sCode');

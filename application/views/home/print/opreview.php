@@ -23,14 +23,14 @@ $listName = $query2->listName;
 </head>
 <body>
 <div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
-    <a href="index.php/home/profile"> Profile </a>
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 	<?php if($this->session->userdata('sCode')){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
 			<img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php }?>
 	<a  target='_blank' href="<?php if($this->session->userdata('sCode') || ($_GET['pcode'])){?>javaScript:window.print();<?php } if(isset($_GET['scode'])){?>home/ppreview?pcode=<?php echo $scode;}?>">
-		<img src="<?php echo base_url();?>library/print.png"/>
+		<img src="<?php echo base_url();?>library/print.png"/> প্রিন্ট করুন 
 	</a>
 </div>
 <br/>
@@ -281,7 +281,6 @@ $listName = $query2->listName;
 			
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 </body>
 </html>
 <?php $this->session->unset_userdata('sCode');

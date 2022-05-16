@@ -3,8 +3,7 @@
 </script>
 <?php
 if(isset($_GET['scode'])){$scode=$this->input->get('scode',TRUE);}
-else if(isset($_GET['pcode'])){ $scode=$this->input->get('pcode',TRUE); }
-else {$scode=$this->session->userdata('sCode');}
+
 $scode=chop($scode,'/');
 $query=$this->db->select('*')->from('otherserviceinfo')->where('trackid',$scode)->get();
 $row=$query->row();
@@ -23,14 +22,14 @@ $listName = $query2->listName;
 </head>
 <body>
 <div style="left:300px;top:5px;position:middle;background:#666;" align="center" id="bar">
-    <a href="index.php/home/profile"> Profile </a>
-	<?php if($this->session->userdata('sCode')){?>
+<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
+	<?php if(isset($_GET['scode'])){?>
 		<a href="" style="margin-right:50px;" title="Back Home Page">
-			<img src="<?php echo base_url();?>img/home.png">
+		হোম  <img src="<?php echo base_url();?>img/home.png">
 		</a>
 	<?php }?>
-	<a  target='_blank' href="<?php if($this->session->userdata('sCode') || ($_GET['pcode'])){?>javaScript:window.print();<?php } if(isset($_GET['scode'])){?>home/ppreview?pcode=<?php echo $scode;}?>">
-		<img src="<?php echo base_url();?>library/print.png"/>
+	<a  href="javaScript:window.print();"> 
+		<img src="<?php echo base_url();?>library/print.png"/> প্রিন্ট করুন
 	</a>
 </div>
 <br/>
@@ -281,7 +280,6 @@ $listName = $query2->listName;
 			
 		</div>
 	</div>
-	<h2 style=" text-align: center; font-size:19px">  আপনার আবেদনটি যাচাই বাছাইয়ের জন্য অপেক্ষমান আছে... ।  <a href="index.php/home/profile"> প্রোফাইলে যান  </a> </h2>
 </body>
 </html>
 <?php $this->session->unset_userdata('sCode');

@@ -232,12 +232,12 @@ label{
 										<td>
 											<?php if($warish_data->is_process==0){?>
 												<span class="badge badgePrimary">Pending</span>
-												<a href='index.php/home/application_wpreview?scode=<?php echo $warish_data->trackid?>'>View </a>
+												<a href='index.php/home/application_wpreview?id=<?php echo $warish_data->trackid?>'>View </a>
 											<?php }else if($warish_data->is_process==3){?>
 												<span class="badge badgeSuccess"> Complte</span>
 											<?php }else{ ?>
 												<span class="badge badgeWarning"> Processing  </span>
-												<a href='index.php/home/application_wpreview?scode=<?php echo $warish_data->trackid?>'>View </a>
+												<a href='index.php/home/application_wpreview?id=<?php echo $warish_data->trackid?>'>View </a>
 											<?php }?>
 										
 										</td>
