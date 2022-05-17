@@ -258,7 +258,7 @@
 												<div class="form-group">
 													<label for="District" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="be_dis" id="be_dis" class="form-control" placeholder=""/>
+														<input type="text" name="be_dis" id="be_dis" class="district_en form-control" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -269,7 +269,7 @@
 												<div class="form-group">
 													<label for="Thana" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="be_thana" id="be_thana" class="form-control" placeholder=""/>
+														<input type="text" name="be_thana" id="be_thana" class="upazila_en form-control" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -332,7 +332,7 @@
 												<div class="form-group">
 													<label for="District-bangla" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="bb_dis" id="bb_dis" class="form-control" placeholder=""/>
+														<input type="text" name="bb_dis" id="bb_dis" class="district_bn form-control" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -343,7 +343,7 @@
 												<div class="form-group">
 													<label for="Thana-bangla" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="bb_thana" id="bb_thana" class="form-control" placeholder=""/>
+														<input type="text" name="bb_thana" id="bb_thana" class="upazila_bn form-control" placeholder=""/>
 													</div>
 												</div>
 											</div>
@@ -447,7 +447,6 @@
 								</div>
 								
 							
-	
 								<div class="row">
 									<div class="col-sm-offset-6 col-sm-6 button-style"> 
 									<?php if(!empty($this->session->userdata('id'))){ ?>
@@ -463,3 +462,23 @@
 		</div><!-- left Content End-->
 		
 		<script src="all/custom_js/tradelicense_form.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+	
+				$('.district_en').autocomplete({
+					source: "<?php echo site_url('home/district_en');?>",
+				});
+
+				$('.district_bn').autocomplete({
+					source: "<?php echo site_url('home/district_bn');?>",
+				});
+
+				$('.upazila_en').autocomplete({
+					source: "<?php echo site_url('home/upazila_en');?>",
+				});
+				$('.upazila_bn').autocomplete({
+					source: "<?php echo site_url('home/upazila_bn');?>",
+				});
+	
+			});
+    	</script>

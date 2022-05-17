@@ -249,7 +249,7 @@
 												<div class="form-group">
 													<label for="District" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="p_dis" id="p_dis" class="form-control" />
+														<input type="text" name="p_dis" id="p_dis" class="district_en form-control" />
 													</div>
 												</div>
 											</div>
@@ -260,7 +260,7 @@
 												<div class="form-group">
 													<label for="Thana" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="p_thana" id="p_thana" class="form-control" />
+														<input type="text" name="p_thana" id="p_thana" class="upazila_en form-control" />
 													</div>
 												</div>
 											</div>
@@ -322,7 +322,7 @@
 												<div class="form-group">
 													<label for="District-bangla" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="pb_dis" id="pb_dis" class="form-control" />
+														<input type="text" name="pb_dis" id="pb_dis" class="district_bn form-control" />
 													</div>
 												</div>
 											</div>
@@ -333,7 +333,7 @@
 												<div class="form-group">
 													<label for="Thana-bangla" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="pb_thana" id="pb_thana" class="form-control" />
+														<input type="text" name="pb_thana" id="pb_thana" class="upazila_bn form-control" />
 													</div>
 												</div>
 											</div>
@@ -407,7 +407,7 @@
 												<div class="form-group">
 													<label for="District" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="per_dis" id="per_dis" class="form-control" />
+														<input type="text" name="per_dis" id="per_dis" class="district_en form-control" />
 													</div>
 												</div>
 											</div>
@@ -418,7 +418,7 @@
 												<div class="form-group">
 													<label for="Thana" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="per_thana" id="per_thana" class="form-control" />
+														<input type="text" name="per_thana" id="per_thana" class="upazila_en form-control" />
 													</div>
 												</div>
 											</div>
@@ -481,7 +481,7 @@
 												<div class="form-group">
 													<label for="District-bangla" class="col-sm-6 control-label">জেলা </label>
 													<div class="col-sm-6">
-														<input type="text" name="perb_dis" id="perb_dis" class="form-control" />
+														<input type="text" name="perb_dis" id="perb_dis" class="district_bn form-control" />
 													</div>
 												</div>
 											</div>
@@ -492,7 +492,7 @@
 												<div class="form-group">
 													<label for="Thana-bangla" class="col-sm-6 control-label">উপজেলা/থানা</label>
 													<div class="col-sm-6">
-														<input type="text" name="perb_thana" id="perb_thana" class="form-control" />
+														<input type="text" name="perb_thana" id="perb_thana" class="district_bn form-control" />
 													</div>
 												</div>
 											</div>
@@ -708,3 +708,23 @@
 			</div><!-- row end--->
 		</div><!-- left Content End-->
 		<script src="all/custom_js/oarish_form.js" type="text/javascript"> </script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+	
+				$('.district_en').autocomplete({
+					source: "<?php echo site_url('home/district_en');?>",
+				});
+
+				$('.district_bn').autocomplete({
+					source: "<?php echo site_url('home/district_bn');?>",
+				});
+
+				$('.upazila_en').autocomplete({
+					source: "<?php echo site_url('home/upazila_en');?>",
+				});
+				$('.upazila_bn').autocomplete({
+					source: "<?php echo site_url('home/upazila_bn');?>",
+				});
+	
+			});
+    	</script>

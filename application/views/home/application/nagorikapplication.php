@@ -643,24 +643,24 @@
 		
 		<script src="all/custom_js/nagorick_form.js" type="text/javascript"></script>
 		<script type="text/javascript">
-        $(document).ready(function(){
- 
-			$('.district_en').autocomplete({
-                source: "<?php echo site_url('home/district_en');?>",
-            });
+			$(document).ready(function(){
+	
+				$('.district_en').autocomplete({
+					source: "<?php echo site_url('home/district_en');?>",
+				});
 
-			$('.district_bn').autocomplete({
-                source: "<?php echo site_url('home/district_bn');?>",
-            });
+				$('.district_bn').autocomplete({
+					source: "<?php echo site_url('home/district_bn');?>",
+				});
 
-			$('.upazila_en').autocomplete({
-                source: "<?php echo site_url('home/upazila_en');?>",
-            });
-			$('.upazila_bn').autocomplete({
-                source: "<?php echo site_url('home/upazila_bn');?>",
-            });
- 
-        });
-    </script>
+				$('.upazila_en').autocomplete({
+					source: "<?php echo site_url('home/upazila_en');?>",
+				});
+				$('.upazila_bn').autocomplete({
+					source: "<?php echo site_url('home/upazila_bn');?>",
+				});
+	
+			});
+    	</script>
 		
 
